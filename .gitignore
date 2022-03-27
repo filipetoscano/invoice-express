@@ -1,0 +1,13 @@
+/.nuget/
+/.vs/
+/build/
+/node_modules/
+
+bin/
+obj/
+*.csproj.user
+
+!/bin/
+
+.yarn/*
+!.yarn/releases
