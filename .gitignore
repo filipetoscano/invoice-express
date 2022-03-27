@@ -11,3 +11,5 @@ obj/
 
 .yarn/*
 !.yarn/releases
+
+/tools/InvoiceExpress.Cli/*.json
