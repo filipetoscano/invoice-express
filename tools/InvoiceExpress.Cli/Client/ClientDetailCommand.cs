@@ -36,6 +36,10 @@ public class ClientDetailCommand
             client = res!.Result!;
         }
 
+
+        /*
+         * 
+         */
         var json = JsonSerializer.Serialize( client, new JsonSerializerOptions() { WriteIndented = true } );
         Console.WriteLine( json );
 

@@ -5,11 +5,11 @@ using System.Text.Json;
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "create", Description = "Create a client record" )]
-public class ClientCreateCommand
+[Command( "create", Description = "Create a VAT rate" )]
+public class VatCreateCommand
 {
     /// <summary />
-    [Argument( 0, Description = "Client record, in JSON file" )]
+    [Argument( 0, Description = "VAT rate, in JSON file" )]
     [Required]
     [FileExists]
     public string FilePath { get; set; } = default!;
@@ -22,15 +22,14 @@ public class ClientCreateCommand
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath );
-        var client = JsonSerializer.Deserialize<Client>( json )!;
+        var vat = JsonSerializer.Deserialize<Tax>( json )!;
 
 
         /*
          * 
          */
-        var res = await api.ClientCreateAsync( client );
-
-        Console.WriteLine( res.Result!.Id );
+        var res = await api.TaxCreateAsync( vat );
+        Console.Write( res.Result!.Id );
 
         return 0;
     }

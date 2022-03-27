@@ -12,8 +12,14 @@ namespace InvoiceExpress;
 public enum Country
 {
     /// <summary>
-    /// Portugal
+    /// PT, Portugal
     /// </summary>
     [EnumMember( Value = "Portugal" )]
     PT,
+
+    /// <summary>
+    /// ES, Spain
+    /// </summary>
+    [EnumMember( Value = "Spain" )]
+    ES,
 }

@@ -10,7 +10,7 @@ namespace InvoiceExpress;
 /// <remarks>
 /// invoicexpress expects date in dd/MM/yyyy format, rather than yyyy-MM-dd.
 /// </remarks>
-public class NonIsoDateFormatter : JsonConverter<DateOnly>
+public class NonIsoDateConverter : JsonConverter<DateOnly>
 {
     /// <summary />
     public override DateOnly Read( ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options )

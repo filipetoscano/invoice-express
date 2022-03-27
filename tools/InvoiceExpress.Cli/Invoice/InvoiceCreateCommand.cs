@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "update", Description = "Updates a client record" )]
-public class ClientUpdateCommand
+[Command( "create", Description = "Create an invoice" )]
+public class InvoiceCreateCommand
 {
     /// <summary />
-    [Argument( 0, Description = "Client record, in JSON file" )]
+    [Argument( 0, Description = "Invoice record, in JSON file" )]
     [Required]
     [FileExists]
-    public string File { get; set; } = default!;
+    public string FilePath { get; set; } = default!;
 
 
     /// <summary />

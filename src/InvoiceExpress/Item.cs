@@ -6,10 +6,17 @@ namespace InvoiceExpress;
 public class Item
 {
     /// <summary>
-    /// Name of the item. Must be unique.
+    /// Item identifier.
+    /// </summary>
+    [JsonPropertyName( "Id" )]
+    public int? Id { get; set; }
+
+
+    /// <summary>
+    /// Code of the item. Must be unique.
     /// </summary>
     [JsonPropertyName( "name" )]
-    public string Name { get; set; } = default!;
+    public string Code { get; set; } = default!;
 
     /// <summary>
     /// Item description
@@ -20,6 +27,9 @@ public class Item
     /// <summary>
     /// Item's unit price. Must be a number equal or greater than 0.0.
     /// </summary>
+    /// <remarks>
+    /// This is the price without VAT!
+    /// </remarks>
     [JsonPropertyName( "unit_price" )]
     public decimal UnitPrice { get; set; }
 

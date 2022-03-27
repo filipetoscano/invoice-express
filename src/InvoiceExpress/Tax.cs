@@ -7,6 +7,7 @@ public class Tax
 {
     /// <summary />
     [JsonPropertyName( "id" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public long? Id { get; set; }
 
     /// <summary />
@@ -15,7 +16,6 @@ public class Tax
 
     /// <summary />
     [JsonPropertyName( "value" )]
-    [JsonConverter( typeof( DecimalAsStringConverter ) )]
     public decimal Value { get; set; }
 
     /// <summary />

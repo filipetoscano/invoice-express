@@ -6,6 +6,9 @@ namespace InvoiceExpress.Cli;
 /// <summary />
 [Command( "invexp", Description = "Manage halyard accounts" )]
 [Subcommand( typeof( ClientCommand ) )]
+[Subcommand( typeof( InvoiceCommand ) )]
+[Subcommand( typeof( ItemCommand ) )]
+[Subcommand( typeof( VatCommand ) )]
 [HelpOption]
 public class Program
 {
@@ -23,7 +26,7 @@ public class Program
          * Services
          */
         var services = new ServiceCollection();
-        
+
         services.AddOptions<InvoiceExpressOptions>().Configure( ( opt ) =>
         {
             opt.AccountName = account!;

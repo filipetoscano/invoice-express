@@ -1,4 +1,5 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using ConsoleTables;
+using McMaster.Extensions.CommandLineUtils;
 
 namespace InvoiceExpress.Cli;
 
@@ -20,10 +21,16 @@ public class ClientListCommand
     {
         var res = await api.ClientListAsync( this.Page, this.PageSize );
 
-        foreach ( var client in res!.Result! )
-        {
-            Console.WriteLine( "{0} {1} {2} {3} {4}", client.Id, client.Code, client.Name, client.Country, client.TaxNumber );
-        }
+
+        /*
+         * 
+         */
+        var table = new ConsoleTable( "Id", "Name", "Value", "Country", "VAT #" );
+
+        foreach ( var r in res.Result! )
+            table.AddRow( r.Id, r.Code, r.Name, r.Country, r.TaxNumber );
+
+        table.Write( Format.Minimal );
 
         return 0;
     }

@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "update", Description = "Updates a client record" )]
-public class ClientUpdateCommand
+[Command( "update", Description = "Updates a VAT rate" )]
+public class VatUpdateCommand
 {
     /// <summary />
-    [Argument( 0, Description = "Client record, in JSON file" )]
+    [Argument( 0, Description = "VAT rate, in JSON file" )]
     [Required]
     [FileExists]
     public string File { get; set; } = default!;

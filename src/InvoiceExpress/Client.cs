@@ -37,7 +37,7 @@ public class Client : ClientRef
     /// Client language. May be en, pt or es; defaults to the account language.
     /// </summary>
     /// <remarks>
-    /// In UI, field is set in 'Billing preferences > Language'.
+    /// In UI, field is set in 'Billing preferences > Send Options'.
     /// </remarks>
     [JsonPropertyName( "language" )]
     public string? Language { get; set; }

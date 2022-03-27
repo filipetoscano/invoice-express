@@ -45,14 +45,14 @@ public class Invoice
     /// Invoice date.
     /// </summary>
     [JsonPropertyName( "due_date" )]
-    [JsonConverter( typeof( NonIsoDateFormatter ) )]
+    [JsonConverter( typeof( NonIsoDateConverter ) )]
     public DateOnly Date { get; set; }
 
     /// <summary>
     /// Invoice due date.
     /// </summary>
     [JsonPropertyName( "due_date" )]
-    [JsonConverter( typeof( NonIsoDateFormatter ) )]
+    [JsonConverter( typeof( NonIsoDateConverter ) )]
     public DateOnly DueDate { get; set; }
 
     /// <summary>

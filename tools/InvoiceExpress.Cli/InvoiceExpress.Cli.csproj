@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>invexp</AssemblyName>
@@ -6,7 +6,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
 
+  <PropertyGroup Condition="$(Configuration) == 'Release'">
     <!-- Single file publishing -->
     <ApplicationIcon>App.ico</ApplicationIcon>
     <PublishSingleFile>true</PublishSingleFile>
@@ -15,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ConsoleTables" Version="2.4.2" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
