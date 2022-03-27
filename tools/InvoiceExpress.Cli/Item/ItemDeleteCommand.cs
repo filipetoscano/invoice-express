@@ -5,8 +5,8 @@ using System.Text.Json;
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "get", Description = "Gets an item record" )]
-public class ItemDetailCommand
+[Command( "delete", Description = "Deletes an item record" )]
+public class ItemDeleteCommand
 {
     /// <summary />
     [Argument( 0, Description = "Item identifier" )]
@@ -17,14 +17,7 @@ public class ItemDetailCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
     {
-        var res = await api.ItemGetAsync( this.ItemId );
-
-
-        /*
-         * 
-         */
-        var json = JsonSerializer.Serialize( res.Result!, new JsonSerializerOptions() { WriteIndented = true } );
-        Console.WriteLine( json );
+        var res = await api.ItemDeleteAsync( this.ItemId );
 
         return 0;
     }

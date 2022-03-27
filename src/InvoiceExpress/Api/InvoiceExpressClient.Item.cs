@@ -9,9 +9,12 @@ public partial class InvoiceExpressClient
     /// <summary />
     public async Task<ApiResult<Item>> ItemCreateAsync( Item item )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( "/items.json" )
+            .AddJsonBody( new ItemPayload() { Item = item } );
 
-        throw new NotImplementedException();
+        var resp = await _rest.PostAsync<ItemPayload>( req );
+
+        return Result( resp!.Item );
     }
 
 
@@ -29,17 +32,35 @@ public partial class InvoiceExpressClient
     /// <summary />
     public async Task<ApiResult<Item>> ItemUpdateAsync( Item item )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( $"/items/{ item.Id }.json" )
+            .AddJsonBody( new ItemPayload() { Item = item } );
 
-        throw new NotImplementedException();
+        var resp = await _rest.PutAsync( req );
+
+        return Result( item );
     }
 
 
     /// <summary />
     public async Task<ApiResult> ItemDeleteAsync( int itemId )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( $"/items/{ itemId }.json" );
 
-        throw new NotImplementedException();
+        var resp = await _rest.DeleteAsync( req );
+
+        return new ApiResult();
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<List<Item>>> ItemListAsync( int page, int pageSize )
+    {
+        var req = new RestRequest( "/items.json" )
+            .AddQueryParameter( "page", page )
+            .AddQueryParameter( "per_page", pageSize );
+
+        var resp = await _rest.GetAsync<ItemListPayload>( req );
+
+        return Result( resp!.Items );
     }
 }

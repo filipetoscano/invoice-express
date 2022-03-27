@@ -5,6 +5,7 @@ namespace InvoiceExpress.Cli;
 /// <summary />
 [Command( "item", Description = "Item operations (list / create / update" )]
 [Subcommand( typeof( ItemCreateCommand ) )]
+[Subcommand( typeof( ItemDeleteCommand ) )]
 [Subcommand( typeof( ItemDetailCommand ) )]
 [Subcommand( typeof( ItemListCommand ) )]
 [Subcommand( typeof( ItemUpdateCommand ) )]

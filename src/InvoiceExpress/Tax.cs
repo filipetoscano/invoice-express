@@ -16,14 +16,17 @@ public class Tax
 
     /// <summary />
     [JsonPropertyName( "value" )]
-    public decimal Value { get; set; }
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public decimal? Value { get; set; }
 
     /// <summary />
     [JsonPropertyName( "region" )]
-    public TaxRegion? Region { get; set; } = default!;
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public TaxRegion? Region { get; set; }
 
     /// <summary />
     [JsonPropertyName( "default_tax" )]
     [JsonConverter( typeof( BooleanAsNumberConverter ) )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public bool? IsDefaultTax { get; set; }
 }
