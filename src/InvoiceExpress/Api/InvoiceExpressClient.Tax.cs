@@ -7,21 +7,10 @@ namespace InvoiceExpress;
 public partial class InvoiceExpressClient
 {
     /// <summary />
-    public async Task<ApiResult<List<Tax>>> TaxListAsync()
-    {
-        var req = new RestRequest( "/taxes.json" );
-
-        var resp = await _rest.GetAsync<TaxListPayload>( req );
-
-        return Result( resp!.Taxes );
-    }
-
-
-    /// <summary />
     public async Task<ApiResult<Tax>> TaxCreateAsync( Tax item )
     {
         var req = new RestRequest( "/taxes.json" )
-            .AddJsonBody( new TaxPayload() { Tax = item }, "application/json" );
+            .AddJsonBody( new TaxPayload() { Tax = item } );
 
         var resp = await _rest.PostAsync<TaxPayload>( req );
 
@@ -55,5 +44,16 @@ public partial class InvoiceExpressClient
         await Task.Delay( 0 );
 
         throw new NotImplementedException();
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<List<Tax>>> TaxListAsync()
+    {
+        var req = new RestRequest( "/taxes.json" );
+
+        var resp = await _rest.GetAsync<TaxListPayload>( req );
+
+        return Result( resp!.Taxes );
     }
 }
