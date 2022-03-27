@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{DA723758-803A-4642-B5D7-9D87E16FE81A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{926E6B15-2004-46CC-B704-7FDB0E755705}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D754FB9-1914-41EC-B468-6946D96C3D81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{CAC9B80A-B362-4135-AC30-8013D0DB6124}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceExpress", "src\InvoiceExpress\InvoiceExpress.csproj", "{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceExpress.Tests", "tests\InvoiceExpress.Tests\InvoiceExpress.Tests.csproj", "{C699B750-2736-4914-B2E7-4B88C45B1081}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceExpress.Json.Tests", "tests\InvoiceExpress.Json.Tests\InvoiceExpress.Json.Tests.csproj", "{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceExpress.Cli", "tools\InvoiceExpress.Cli\InvoiceExpress.Cli.csproj", "{5AE30567-4FB5-4C40-810E-FE55CB4B2739}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C699B750-2736-4914-B2E7-4B88C45B1081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C699B750-2736-4914-B2E7-4B88C45B1081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C699B750-2736-4914-B2E7-4B88C45B1081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C699B750-2736-4914-B2E7-4B88C45B1081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE30567-4FB5-4C40-810E-FE55CB4B2739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE30567-4FB5-4C40-810E-FE55CB4B2739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE30567-4FB5-4C40-810E-FE55CB4B2739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE30567-4FB5-4C40-810E-FE55CB4B2739}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4E3ADAB-CD9A-4B2E-AE44-16F28F669BA1} = {926E6B15-2004-46CC-B704-7FDB0E755705}
+		{C699B750-2736-4914-B2E7-4B88C45B1081} = {5D754FB9-1914-41EC-B468-6946D96C3D81}
+		{C65C93C6-BA5C-496C-B246-C2B22D4AA6E2} = {5D754FB9-1914-41EC-B468-6946D96C3D81}
+		{5AE30567-4FB5-4C40-810E-FE55CB4B2739} = {CAC9B80A-B362-4135-AC30-8013D0DB6124}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15EEB6F3-A067-45F5-987C-824BD8FDEAF9}
+	EndGlobalSection
+EndGlobal
