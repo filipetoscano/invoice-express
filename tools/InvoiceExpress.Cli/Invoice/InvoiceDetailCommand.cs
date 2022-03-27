@@ -3,7 +3,7 @@
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "detail", Description = "Gets an invoice" )]
+[Command( "get", Description = "Gets an invoice" )]
 public class InvoiceDetailCommand
 {
     /// <summary />
