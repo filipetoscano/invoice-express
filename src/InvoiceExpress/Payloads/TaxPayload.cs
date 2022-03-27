@@ -3,9 +3,9 @@
 namespace InvoiceExpress.Payloads;
 
 /// <summary />
-public class ItemGetResponse
+public class TaxPayload
 {
     /// <summary />
-    [JsonPropertyName( "item" )]
-    public Item Item { get; set; } = default!;
+    [JsonPropertyName( "tax" )]
+    public Tax Tax { get; set; } = default!;
 }

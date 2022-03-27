@@ -18,7 +18,7 @@ public partial class InvoiceExpressClient
     {
         var req = new RestRequest( $"/clients/{ id }.json" );
 
-        var resp = await _rest.GetAsync<ClientGetResponse>( req );
+        var resp = await _rest.GetAsync<ClientPayload>( req );
 
         return Result( resp!.Client );
     }
@@ -30,7 +30,7 @@ public partial class InvoiceExpressClient
         var req = new RestRequest( $"/clients/find-by-code.json" )
             .AddQueryParameter( "client_code", code );
 
-        var resp = await _rest.GetAsync<ClientGetResponse>( req );
+        var resp = await _rest.GetAsync<ClientPayload>( req );
 
         return Result( resp!.Client );
     }
@@ -50,7 +50,7 @@ public partial class InvoiceExpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync<ClientsListResponse>( req );
+        var resp = await _rest.GetAsync<ClientListPayload>( req );
 
         return Result( resp!.Clients );
     }

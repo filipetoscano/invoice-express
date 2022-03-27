@@ -20,7 +20,7 @@ public partial class InvoiceExpressClient
     {
         var req = new RestRequest( $"/items/{ itemId }.json" );
 
-        var resp = await _rest.GetAsync<ItemGetResponse>( req );
+        var resp = await _rest.GetAsync<ItemPayload>( req );
 
         return Result( resp!.Item );
     }

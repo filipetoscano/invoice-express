@@ -11,7 +11,7 @@ public partial class InvoiceExpressClient
     {
         var req = new RestRequest( "/taxes.json" );
 
-        var resp = await _rest.GetAsync<TaxListResponse>( req );
+        var resp = await _rest.GetAsync<TaxListPayload>( req );
 
         return Result( resp!.Taxes );
     }
@@ -21,9 +21,9 @@ public partial class InvoiceExpressClient
     public async Task<ApiResult<Tax>> TaxCreateAsync( Tax item )
     {
         var req = new RestRequest( "/taxes.json" )
-            .AddJsonBody( new TaxGetResponse() { Tax = item }, "application/json" );
+            .AddJsonBody( new TaxPayload() { Tax = item }, "application/json" );
 
-        var resp = await _rest.PostAsync<TaxGetResponse>( req );
+        var resp = await _rest.PostAsync<TaxPayload>( req );
 
         return Result( resp!.Tax );
     }
@@ -34,7 +34,7 @@ public partial class InvoiceExpressClient
     {
         var req = new RestRequest( $"/taxes/{ taxId }.json" );
 
-        var resp = await _rest.GetAsync<TaxGetResponse>( req );
+        var resp = await _rest.GetAsync<TaxPayload>( req );
 
         return Result( resp!.Tax );
     }

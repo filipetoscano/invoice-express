@@ -3,7 +3,7 @@
 namespace InvoiceExpress.Payloads;
 
 /// <summary />
-public class ClientGetResponse
+public class ClientPayload
 {
     /// <summary />
     [JsonPropertyName( "client" )]
