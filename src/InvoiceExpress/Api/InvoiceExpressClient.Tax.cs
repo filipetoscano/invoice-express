@@ -3,14 +3,13 @@ using RestSharp;
 
 namespace InvoiceExpress;
 
-/// <summary />
 public partial class InvoiceExpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Tax>> TaxCreateAsync( Tax item )
+    public async Task<ApiResult<Tax>> TaxCreateAsync( Tax tax )
     {
         var req = new RestRequest( "/taxes.json" )
-            .AddJsonBody( new TaxPayload() { Tax = item } );
+            .AddJsonBody( new TaxPayload() { Tax = tax } );
 
         var resp = await _rest.PostAsync<TaxPayload>( req );
 
@@ -30,20 +29,25 @@ public partial class InvoiceExpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Tax>> TaxUpdateAsync( Tax tax )
+    public async Task<ApiResult> TaxUpdateAsync( Tax tax )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( $"/taxes/{ tax.Id }.json" )
+            .AddJsonBody( new TaxPayload() { Tax = tax } );
 
-        throw new NotImplementedException();
+        var resp = await _rest.PutAsync( req );
+
+        return new ApiResult();
     }
 
 
     /// <summary />
     public async Task<ApiResult> TaxDeleteAsync( int taxId )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( $"/taxes/{ taxId }.json" );
 
-        throw new NotImplementedException();
+        var resp = await _rest.DeleteAsync( req );
+
+        return new ApiResult();
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceExpress.Cli;
 
@@ -7,9 +8,15 @@ namespace InvoiceExpress.Cli;
 public class VatDeleteCommand
 {
     /// <summary />
+    [Argument( 0, Description = "VAT rate identifier" )]
+    [Required]
+    public int RateId { get; set; }
+
+
+    /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
     {
-        await Task.Delay( 0 );
+        var res = await api.TaxDeleteAsync( this.RateId );
 
         return 0;
     }

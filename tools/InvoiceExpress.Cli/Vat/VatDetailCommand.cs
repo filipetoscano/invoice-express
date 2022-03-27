@@ -11,14 +11,13 @@ public class VatDetailCommand
     /// <summary />
     [Argument( 0, Description = "VAT rate identifier" )]
     [Required]
-    public string Identifier { get; set; } = default!;
+    public int RateId { get; set; }
 
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
     {
-        var id = int.Parse( this.Identifier );
-        var res = await api.TaxGetAsync( id );
+        var res = await api.TaxGetAsync( this.RateId );
 
 
         /*

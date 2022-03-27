@@ -22,7 +22,7 @@ public partial class InvoiceExpressClient
 
         _rest = new RestClient( rco )
             .UseJson()
-            .AddDefaultHeader( "User-Agent", "invoice-express-csharp" )
+            .AddDefaultHeader( "User-Agent", "invoice-express-csharp/1.0" )
             .AddDefaultQueryParameter( "api_key", _options.ApiKey );
 
         _rest.AcceptedContentTypes = new string[] { "application/json" };

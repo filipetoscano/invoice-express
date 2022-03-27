@@ -3,7 +3,6 @@ using RestSharp;
 
 namespace InvoiceExpress;
 
-/// <summary />
 public partial class InvoiceExpressClient
 {
     /// <summary />
@@ -30,14 +29,14 @@ public partial class InvoiceExpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Item>> ItemUpdateAsync( Item item )
+    public async Task<ApiResult> ItemUpdateAsync( Item item )
     {
         var req = new RestRequest( $"/items/{ item.Id }.json" )
             .AddJsonBody( new ItemPayload() { Item = item } );
 
         var resp = await _rest.PutAsync( req );
 
-        return Result( item );
+        return new ApiResult();
     }
 
 
@@ -53,7 +52,7 @@ public partial class InvoiceExpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Item>>> ItemListAsync( int page, int pageSize )
+    public async Task<ApiResult<List<Item>>> ItemListAsync( int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/items.json" )
             .AddQueryParameter( "page", page )
