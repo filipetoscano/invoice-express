@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InvoiceExpress;
+namespace InvoiceExpress.Json;
 
 /// <summary>
 /// Marshals C# date to the non-ISO date format.

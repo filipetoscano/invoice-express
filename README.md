@@ -13,7 +13,8 @@ for production use.
 The roadmap is currently as follows:
 
 * Invoice methods
-* Quotes methods
+* Quote methods
+* CI/CD using github actions
 * Error handling / throwing
 * Logging support
 * Polly support
@@ -40,3 +41,5 @@ References
 
 * https://www.invoicexpress.com/api-v2/documentation/getting-started
 * https://nif.marcosantos.me/
+* https://github.com/actions/setup-dotnet
+* https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net

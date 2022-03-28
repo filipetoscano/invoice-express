@@ -4,10 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InvoiceExpress.Cli;
 
 /// <summary />
-[Command( "invexp", Description = "Manage halyard accounts" )]
+[Command( "invexp", Description = "Manage invoice express account" )]
 [Subcommand( typeof( ClientCommand ) )]
 [Subcommand( typeof( InvoiceCommand ) )]
 [Subcommand( typeof( ItemCommand ) )]
+[Subcommand( typeof( SequenceCommand ) )]
 [Subcommand( typeof( VatCommand ) )]
 [HelpOption]
 public class Program
