@@ -1,7 +1,7 @@
 InvoiceXpress
 ==========================================================================
 
-C# client for [Invoice Xpress](https://www.invoicexpress.com/), an online
+.NET client for [Invoice Xpress](https://www.invoicexpress.com/), an online
 invoicing software for entities based in Portugal -- certified by the 
 [Portuguese Tax and Customs Authority](https://info.portaldasfinancas.gov.pt/pt/docs/Conteudos_1pagina/Pages/portuguese-tax-system.aspx).
 
@@ -24,6 +24,9 @@ The roadmap is currently as follows:
 
 Installing via NuGet
 --------------------------------------------------------------------------
+
+Package is published in the [NuGet](https://www.nuget.org/packages/InvoiceXpress/)
+gallery.
 
 Using command-line:
 
@@ -69,3 +72,4 @@ References
 * https://nif.marcosantos.me/
 * https://github.com/actions/setup-dotnet
 * https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+* https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list_one.xml (ISO 4217 currency codes)
