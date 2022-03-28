@@ -3,11 +3,11 @@
 namespace InvoiceXpress;
 
 /// <summary />
-public class InvoiceStateChange
+public class EstimateStateChange
 {
     /// <summary />
-    [JsonPropertyName( "status" )]
-    public InvoiceState State { get; set; }
+    [JsonPropertyName( "state" )]
+    public EstimateState State { get; set; }
 
     /// <summary />
     public string Message { get; set; } = default!;

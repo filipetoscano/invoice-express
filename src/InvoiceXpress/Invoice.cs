@@ -13,7 +13,7 @@ public class Invoice
 
     /// <summary />
     [JsonPropertyName( "id" )]
-    public string? Id { get; set; }
+    public int? Id { get; set; }
 
     /// <summary>
     /// Id of the document sequence for this invoice. If not specified, the default
@@ -131,7 +131,7 @@ public class InvoiceX
 {
     /// <summary />
     [JsonPropertyName( "status" )]
-    public string Status { get; set; } = default!;
+    public InvoiceState Status { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "archived" )]

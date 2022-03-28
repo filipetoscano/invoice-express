@@ -3,7 +3,7 @@
 namespace InvoiceXpress;
 
 /// <summary />
-public class InvoiceItem : Item
+public class DocumentItem : Item
 {
     /// <summary>
     /// Quantity. Must be a number equal or greater than 0.

@@ -6,7 +6,7 @@ namespace InvoiceXpress;
 
 /// <summary />
 [JsonConverter( typeof( EnumConverter ) )]
-public enum InvoiceStatus
+public enum InvoiceState
 {
     /// <summary />
     [EnumMember( Value = "draft" )]

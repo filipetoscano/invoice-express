@@ -1,5 +1,6 @@
 ﻿using InvoiceXpress.Payloads;
 using RestSharp;
+using System.Text.Json;
 
 namespace InvoiceXpress;
 
@@ -49,8 +50,11 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync<ClientListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Result( resp!.Clients );
+        Console.WriteLine( resp.Content );
+        var obj = JsonSerializer.Deserialize<ClientListPayload>( resp.Content! );
+
+        return Result( new List<Client>() );
     }
 }

@@ -10,7 +10,7 @@ public struct InvoiceSearch
     public List<InvoiceType>? Type { get; set; }
 
     /// <summary />
-    public List<InvoiceStatus>? Status { get; set; }
+    public List<InvoiceState>? Status { get; set; }
 
     /// <summary />
     public DateOnly? DateFrom { get; set; }
