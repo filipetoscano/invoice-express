@@ -1,7 +1,9 @@
-invoice-express
+InvoiceXpress
 ==========================================================================
 
-C# client for [Invoic Express](https://www.invoicexpress.com/) API.
+C# client for [Invoice Xpress](https://www.invoicexpress.com/), an online
+invoicing software for entities based in Portugal -- certified by the 
+[Portuguese Tax and Customs Authority](https://info.portaldasfinancas.gov.pt/pt/docs/Conteudos_1pagina/Pages/portuguese-tax-system.aspx).
 
 
 Status / Roadmap
@@ -26,13 +28,37 @@ Installing via NuGet
 Using command-line:
 
 ```
-dotnet add package InvoiceExpress
+dotnet add package InvoiceXpress
 ```
 
 Inside Visual Studio, using Package Manager Console:
 
 ```
-Install-Package InvoiceExpress
+Install-Package InvoiceXpress
+```
+
+
+Running cli locally
+--------------------------------------------------------------------------
+
+.NET 6 SDK is required to compile.
+
+In Windows:
+
+```
+> set INVEXP_API=apikey
+> set INVEXP_ACCOUNT=accountname
+> cd tools\InvoiceXpress.Cli
+> dotnet run -- client list
+```
+
+In Linux / `bash`:
+
+```
+> export INVEXP_API=apikey
+> export INVEXP_ACCOUNT=accountname
+> cd tools/InvoiceXpress.Cli
+> dotnet run -- client list
 ```
 
 
