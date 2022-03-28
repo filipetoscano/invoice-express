@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXpress.Json.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXpress.Tests", "tests\InvoiceXpress.Tests\InvoiceXpress.Tests.csproj", "{405CBE74-F646-44F0-87C4-52B9D7997EBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceXpress.CountryGen", "tools\InvoiceXpress.CountryGen\InvoiceXpress.CountryGen.csproj", "{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{405CBE74-F646-44F0-87C4-52B9D7997EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{405CBE74-F646-44F0-87C4-52B9D7997EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{405CBE74-F646-44F0-87C4-52B9D7997EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{5AE30567-4FB5-4C40-810E-FE55CB4B2739} = {CAC9B80A-B362-4135-AC30-8013D0DB6124}
 		{63C86D6D-0848-4EB1-9898-350D647D4580} = {5D754FB9-1914-41EC-B468-6946D96C3D81}
 		{405CBE74-F646-44F0-87C4-52B9D7997EBE} = {5D754FB9-1914-41EC-B468-6946D96C3D81}
+		{301CF9D1-3FCC-4DD9-802F-AB420CB811AC} = {CAC9B80A-B362-4135-AC30-8013D0DB6124}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15EEB6F3-A067-45F5-987C-824BD8FDEAF9}
