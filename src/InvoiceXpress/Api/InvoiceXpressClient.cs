@@ -3,13 +3,13 @@ using HttpTracer.Logger;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace InvoiceExpress;
+namespace InvoiceXpress;
 
 /// <summary />
-public partial class InvoiceExpressClient
+public partial class InvoiceXpressClient
 {
     /// <summary />
-    public InvoiceExpressClient( IOptions<InvoiceExpressOptions> options )
+    public InvoiceXpressClient( IOptions<InvoiceXpressOptions> options )
     {
         _options = options.Value;
 
@@ -22,7 +22,7 @@ public partial class InvoiceExpressClient
 
         _rest = new RestClient( rco )
             .UseJson()
-            .AddDefaultHeader( "User-Agent", "invoice-express-csharp/1.0" )
+            .AddDefaultHeader( "User-Agent", "invoice-xpress-csharp/1.0" )
             .AddDefaultQueryParameter( "api_key", _options.ApiKey );
 
         _rest.AcceptedContentTypes = new string[] { "application/json" };
@@ -37,5 +37,5 @@ public partial class InvoiceExpressClient
 
 
     private readonly RestClient _rest;
-    private readonly InvoiceExpressOptions _options;
+    private readonly InvoiceXpressOptions _options;
 }

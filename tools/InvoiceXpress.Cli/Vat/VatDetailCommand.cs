@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "get", Description = "Gets a VAT rate" )]
@@ -15,7 +15,7 @@ public class VatDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         var res = await api.TaxGetAsync( this.RateId );
 

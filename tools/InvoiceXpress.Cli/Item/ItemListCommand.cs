@@ -1,7 +1,7 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "list", Description = "Lists items" )]
@@ -17,7 +17,7 @@ public class ItemListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         var res = await api.ItemListAsync( Page, PageSize );
 

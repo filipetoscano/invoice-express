@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "client", Description = "Client operations (list / create / update" )]

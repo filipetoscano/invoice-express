@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xunit;
 
-namespace InvoiceExpress.Json.Tests;
+namespace InvoiceXpress.Json.Tests;
 
 /// <summary />
 public class EnumAsNumberConverterTests

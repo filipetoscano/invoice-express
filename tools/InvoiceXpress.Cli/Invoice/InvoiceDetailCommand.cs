@@ -1,13 +1,13 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "get", Description = "Gets an invoice" )]
 public class InvoiceDetailCommand
 {
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         await Task.Delay( 0 );
 

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\InvoiceExpress\InvoiceExpress.csproj" />
+    <ProjectReference Include="..\..\src\InvoiceXpress\InvoiceXpress.csproj" />
   </ItemGroup>
 
 </Project>

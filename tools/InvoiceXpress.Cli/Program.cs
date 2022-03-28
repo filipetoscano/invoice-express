@@ -1,10 +1,10 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "invexp", Description = "Manage invoice express account" )]
+[Command( "invxp", Description = "Manage invoicexpress account" )]
 [Subcommand( typeof( ClientCommand ) )]
 [Subcommand( typeof( InvoiceCommand ) )]
 [Subcommand( typeof( ItemCommand ) )]
@@ -28,13 +28,13 @@ public class Program
          */
         var services = new ServiceCollection();
 
-        services.AddOptions<InvoiceExpressOptions>().Configure( ( opt ) =>
+        services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
         {
             opt.AccountName = account!;
             opt.ApiKey = apiKey!;
         } );
 
-        services.AddSingleton<InvoiceExpressClient>();
+        services.AddSingleton<InvoiceXpressClient>();
 
         var sp = services.BuildServiceProvider();
 

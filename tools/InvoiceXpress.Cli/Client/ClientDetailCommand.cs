@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "get", Description = "Retrieves a client record" )]
@@ -19,7 +19,7 @@ public class ClientDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         Client client;
 

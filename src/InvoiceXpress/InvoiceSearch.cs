@@ -1,4 +1,4 @@
-﻿namespace InvoiceExpress;
+﻿namespace InvoiceXpress;
 
 /// <summary />
 public struct InvoiceSearch

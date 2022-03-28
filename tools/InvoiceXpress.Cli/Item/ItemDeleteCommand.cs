@@ -1,8 +1,7 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
-namespace InvoiceExpress.Cli;
+namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "delete", Description = "Deletes an item record" )]
@@ -15,7 +14,7 @@ public class ItemDeleteCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceExpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         var res = await api.ItemDeleteAsync( this.ItemId );
 

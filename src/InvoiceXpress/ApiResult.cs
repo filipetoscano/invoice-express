@@ -1,10 +1,10 @@
-﻿namespace InvoiceExpress;
-
+﻿namespace InvoiceXpress;
 
 /// <summary />
 public class ApiResult
 {
 }
+
 
 /// <summary />
 public class ApiResult<T> : ApiResult

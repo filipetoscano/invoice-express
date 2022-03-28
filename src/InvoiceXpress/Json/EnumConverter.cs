@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InvoiceExpress.Json;
+namespace InvoiceXpress.Json;
 
 /// <summary />
 public class EnumConverter : JsonConverterFactory

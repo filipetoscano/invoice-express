@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>invexp</AssemblyName>
+    <AssemblyName>invxp</AssemblyName>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\InvoiceExpress\InvoiceExpress.csproj" />
+    <ProjectReference Include="..\..\src\InvoiceXpress\InvoiceXpress.csproj" />
   </ItemGroup>
 
 </Project>

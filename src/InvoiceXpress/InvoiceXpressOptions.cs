@@ -1,7 +1,7 @@
-﻿namespace InvoiceExpress;
+﻿namespace InvoiceXpress;
 
 /// <summary />
-public class InvoiceExpressOptions
+public class InvoiceXpressOptions
 {
     /// <summary>
     /// Name of the account.

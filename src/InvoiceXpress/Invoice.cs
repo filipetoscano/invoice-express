@@ -1,8 +1,8 @@
-﻿using InvoiceExpress.Json;
+﻿using InvoiceXpress.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace InvoiceExpress;
+namespace InvoiceXpress;
 
 /// <summary />
 public class Invoice

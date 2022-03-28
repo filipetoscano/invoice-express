@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace InvoiceExpress.Payloads;
+namespace InvoiceXpress.Payloads;
 
 /// <summary />
 public class ClientPayload

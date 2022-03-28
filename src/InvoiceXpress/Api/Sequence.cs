@@ -1,9 +1,9 @@
-﻿using InvoiceExpress.Payloads;
+﻿using InvoiceXpress.Payloads;
 using RestSharp;
 
-namespace InvoiceExpress;
+namespace InvoiceXpress;
 
-public partial class InvoiceExpressClient
+public partial class InvoiceXpressClient
 {
     /// <summary />
     public async Task<ApiResult<Sequence>> SequenceCreateAsync( SequenceRef item )

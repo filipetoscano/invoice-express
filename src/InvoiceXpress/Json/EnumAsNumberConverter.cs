@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace InvoiceExpress.Json;
+namespace InvoiceXpress.Json;
 
 /// <summary>
 /// Marshals a C# enum as the underlying numeric value, rather

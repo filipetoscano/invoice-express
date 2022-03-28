@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace InvoiceExpress;
+namespace InvoiceXpress;
 
 /// <summary />
 public class InvoiceItem : Item

@@ -1,8 +1,8 @@
-﻿using InvoiceExpress.Json;
+﻿using InvoiceXpress.Json;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace InvoiceExpress;
+namespace InvoiceXpress;
 
 /// <summary />
 [JsonConverter( typeof( EnumConverter ) )]
