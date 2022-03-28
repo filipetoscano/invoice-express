@@ -7,35 +7,42 @@ public class Country
 {
     /// <summary />
     [JsonPropertyName( "name" )]
-    public string Name { get; set; } = default!;
+    public CountryName Name { get; set; } = default!;
 
     /// <summary>
     /// 2 letter code.
     /// </summary>
-    [JsonPropertyName( "alpha-2" )]
+    [JsonPropertyName( "cca2" )]
     public string Alpha2 { get; set; } = default!;
 
     /// <summary>
     /// 3 letter code.
     /// </summary>
-    [JsonPropertyName( "alpha-3" )]
+    [JsonPropertyName( "cca3" )]
     public string Alpha3 { get; set; } = default!;
 
     /// <summary>
     /// Three digit country-code.
     /// </summary>
-    [JsonPropertyName( "country-code" )]
+    [JsonPropertyName( "ccn3" )]
     public string CountryCode { get; set; } = default!;
 
     /// <summary>
-    /// Region
+    /// Flag emoji
     /// </summary>
-    [JsonPropertyName( "region" )]
-    public string Region { get; set; } = default!;
+    [JsonPropertyName( "flag" )]
+    public string? Flag { get; set; }
+}
 
-    /// <summary>
-    /// Region
-    /// </summary>
-    [JsonPropertyName( "sub-region" )]
-    public string SubRegion { get; set; } = default!;
+
+/// <summary />
+public class CountryName
+{
+    /// <summary />
+    [JsonPropertyName( "common" )]
+    public string Common { get; set; } = default!;
+
+    /// <summary />
+    [JsonPropertyName( "official" )]
+    public string Official { get; set; } = default!;
 }

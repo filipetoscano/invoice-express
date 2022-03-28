@@ -1,15 +1,27 @@
 ﻿using InvoiceXpress.CountryGen;
 using RestSharp;
 using System.Text;
+using System.Text.Json;
 
 
 /*
  * ISO-3166 list of countries
  */
-var api = new RestClient( "https://raw.githubusercontent.com/" ).UseJson();
-var req = new RestRequest( "/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json" );
+List<Country> all;
 
-var resp = await api.GetAsync<List<Country>>( req );
+if ( Environment.GetEnvironmentVariable( "IE_API" ) == "1" )
+{
+    var api = new RestClient( "https://restcountries.com/" ).UseJson();
+    var req = new RestRequest( "/v3.1/all" );
+
+    var resp = await api.GetAsync<List<Country>>( req );
+    all = resp!;
+}
+else
+{
+    var json = await File.ReadAllTextAsync( "all.json" );
+    all = JsonSerializer.Deserialize<List<Country>>( json! )!;
+}
 
 
 /*
@@ -39,43 +51,27 @@ foreach ( var l in html )
 var map = new Dictionary<string, string>();
 
 // Not available in Invoice Express: 
-map.Add( "AQ", "##skip" );  // AQ / Antarctica
-map.Add( "AX", "##skip" );  // AX / Åland Islands
+map.Add( "AQ", "##skip" );                       // Antarctica
+map.Add( "AX", "##skip" );                       // Åland Islands
+map.Add( "SS", "##skip" );                       // South Sudan
 
 // Need remapping
-//map.Add( "BA", "Bosnia-Herzegovina" );
-//map.Add( "BN", "Brunei" );
-//map.Add( "BO", "Bolivia" );
-//map.Add( "CD", "Congo" );
-//map.Add( "CV", "Cape Verde" );
-//map.Add( "CZ", "Czech Republic" );
-//map.Add( "FK", "Falkland Islands" );
-//map.Add( "FO", "Faeroe Islands (Føroyar)" );
-//map.Add( "GB", "UK" );
-//map.Add( "KP", "Korea, North" );
-//map.Add( "KR", "Korea, South" );
-//map.Add( "LA", "Laos" );
-//map.Add( "MD", "Moldova" );
-//map.Add( "MF", "Martinique" );
-//map.Add( "MK", "Macedonia (Former Yug. Rep.)" );
-//map.Add( "IR", "Iran" );
-//map.Add( "MO", "Macau" );
-//map.Add( "PN", "Pitcairn Island" );
-//map.Add( "PS", "Palestine" );
-//map.Add( "RE", "Reunion" );
-//map.Add( "RU", "Russia" );
-//map.Add( "SN", "Sénégal" );
-//map.Add( "ST", "São Tomé and Príncipe" );
-//map.Add( "SY", "Syria" );
-//map.Add( "SZ", "Swaziland" );
-//map.Add( "TO", "Togo" );
-//map.Add( "TW", "Taiwan" );
-//map.Add( "TZ", "Tanzania" );
-//map.Add( "US", "United States" );
-//map.Add( "VA", "Vatican" );
-//map.Add( "VE", "Venezuela" );
-//map.Add( "VN", "Vietnam" );
-//map.Add( "WS", "Western Samoa" );
+map.Add( "BA", "Bosnia-Herzegovina" );           // Bosnia and Herzegovina
+map.Add( "CD", "Congo" );                        // DR Congo
+map.Add( "CZ", "Czech Republic" );               // Czechia
+map.Add( "FO", "Faeroe Islands (Føroyar)" );     // Faeroe Islands
+map.Add( "GB", "UK" );                           // United Kingdom
+map.Add( "KP", "Korea, North" );                 // North Korea
+map.Add( "KR", "Korea, South" );                 // South Korea
+map.Add( "MK", "Macedonia (Former Yug. Rep.)" ); // North Macedonia
+map.Add( "PN", "Pitcairn Island" );              // Pitcairn Islands
+map.Add( "RE", "Reunion" );                      // Réunion
+map.Add( "SN", "Sénégal" );                      // Senegal
+map.Add( "SZ", "Swaziland" );                    // Eswatini
+map.Add( "TO", "Togo" );                         // Tonga
+map.Add( "VA", "Vatican" );                      // Vatican City
+map.Add( "WF", "Wallis and Futuna Islands" );    // Wallis and Futuna
+map.Add( "WS", "Western Samoa" );                // Samoa
 
 
 /*
@@ -96,15 +92,14 @@ namespace InvoiceXpress;
 /// </remarks>
 [JsonConverter( typeof( EnumConverter ) )]
 public enum Country
-{
-" );
+{" );
 
 var fg = Console.ForegroundColor;
 var issueCount = 0;
 
-foreach ( var country in resp!.OrderBy( x => x.Alpha2 ) )
+foreach ( var country in all!.OrderBy( x => x.Alpha2 ) )
 {
-    var ieName = country.Name;
+    var ieName = country.Name.Common;
 
     /*
      * Exceptions!
@@ -123,7 +118,7 @@ foreach ( var country in resp!.OrderBy( x => x.Alpha2 ) )
     if ( iec.Contains( ieName ) == false )
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine( "warn: issue with country {0} / {1}", country.Alpha2, country.Name );
+        Console.WriteLine( "warn: issue with country {0} / {1}", country.Alpha2, country.Name.Common );
         Console.ForegroundColor = fg;
 
         issueCount++;
@@ -132,7 +127,7 @@ foreach ( var country in resp!.OrderBy( x => x.Alpha2 ) )
 
 
     sb.AppendLine( $"    /// <summary>" );
-    sb.AppendLine( $"    /// { country.Alpha2 }, { country.Name }" );
+    sb.AppendLine( $"    /// { country.Alpha2 }, { country.Name.Common }" );
     sb.AppendLine( $"    /// </summary>" );
     sb.AppendLine( $"    [EnumMember( Value = \"{ ieName }\" )]" );
     sb.AppendLine( $"    { country.Alpha2 }," );
@@ -151,7 +146,7 @@ if ( issueCount > 0 )
     Console.WriteLine( "err: {0} issues with country mapping", issueCount );
     Console.ForegroundColor = fg;
 
-    return 1;
+    // return 1;
 }
 
 
