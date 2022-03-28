@@ -219,7 +219,7 @@ public enum Country
     /// <summary>
     /// CD, DR Congo
     /// </summary>
-    [EnumMember( Value = "Congo" )]
+    [EnumMember( Value = "Congo, Democratic Republic" )]
     CD,
 
     /// <summary>
@@ -227,6 +227,12 @@ public enum Country
     /// </summary>
     [EnumMember( Value = "Central African Republic" )]
     CF,
+
+    /// <summary>
+    /// CG, Republic of the Congo
+    /// </summary>
+    [EnumMember( Value = "Congo" )]
+    CG,
 
     /// <summary>
     /// CH, Switzerland

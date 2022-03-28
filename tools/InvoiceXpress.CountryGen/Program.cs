@@ -52,12 +52,12 @@ var map = new Dictionary<string, string>();
 
 // Not available in Invoice Express: 
 map.Add( "AQ", "##skip" );                       // Antarctica
-map.Add( "AX", "##skip" );                       // Åland Islands
 map.Add( "SS", "##skip" );                       // South Sudan
 
 // Need remapping
 map.Add( "BA", "Bosnia-Herzegovina" );           // Bosnia and Herzegovina
-map.Add( "CD", "Congo" );                        // DR Congo
+map.Add( "CD", "Congo, Democratic Republic" );   // DR Congo
+map.Add( "CG", "Congo" );                        // Republic of the Congo
 map.Add( "CZ", "Czech Republic" );               // Czechia
 map.Add( "FO", "Faeroe Islands (Føroyar)" );     // Faeroe Islands
 map.Add( "GB", "UK" );                           // United Kingdom

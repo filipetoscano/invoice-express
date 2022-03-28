@@ -32,6 +32,12 @@ public class Country
     /// </summary>
     [JsonPropertyName( "flag" )]
     public string? Flag { get; set; }
+
+    /// <summary>
+    /// Is independent?
+    /// </summary>
+    [JsonPropertyName( "independent" )]
+    public bool? IsIndependent { get; set; }
 }
 
 
