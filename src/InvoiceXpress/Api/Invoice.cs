@@ -11,7 +11,7 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult<Invoice>> InvoiceCreateAsync( Invoice invoice )
     {
-        var entityType = ToEntityType( InvoiceType.Invoice );
+        var entityType = ToEntityType( invoice.Type );
         var req = new RestRequest( $"/{ entityType }.json" )
             .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
 
@@ -42,7 +42,7 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult> InvoiceUpdateAsync( Invoice invoice )
     {
-        var entityType = ToEntityType( InvoiceType.Invoice );
+        var entityType = ToEntityType( invoice.Type );
         var req = new RestRequest( $"/{ entityType }/{ invoice.Id }.json" )
             .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
 
@@ -126,17 +126,23 @@ public partial class InvoiceXpressClient
             case InvoiceType.Receipt:
                 return "receipts";
 
-            case InvoiceType.MossInvoice:
-                return "vat_moss_invoices";
-
             case InvoiceType.CreditNote:
                 return "credit_notes";
 
             case InvoiceType.DebitNote:
                 return "debit_notes";
 
+            case InvoiceType.MossInvoice:
+                return "vat_moss_invoices";
+
+            case InvoiceType.MossReceipt:
+                return "vat_moss_receipts";
+
+            case InvoiceType.MossCreditNote:
+                return "vat_moss_credit_notes";
+
             default:
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( $"Unsupported invoice type { type }" );
         }
     }
 }

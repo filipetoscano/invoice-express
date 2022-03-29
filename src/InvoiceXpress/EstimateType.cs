@@ -14,6 +14,6 @@ public enum EstimateType
     Proforma,
 
     /// <summary />
-    [EnumMember( Value = "FeeNote" )]
+    [EnumMember( Value = "FeesNote" )]
     FeeNote,
 }

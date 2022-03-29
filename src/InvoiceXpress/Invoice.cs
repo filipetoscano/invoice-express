@@ -15,6 +15,10 @@ public class Invoice
     [JsonPropertyName( "id" )]
     public int? Id { get; set; }
 
+    /// <summary />
+    [JsonPropertyName( "type" )]
+    public InvoiceType Type { get; set; }
+
     /// <summary>
     /// Id of the document sequence for this invoice. If not specified, the default
     /// sequence will be used.

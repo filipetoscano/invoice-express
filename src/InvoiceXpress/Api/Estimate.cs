@@ -9,12 +9,16 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult<Estimate>> EstimateCreateAsync( Estimate estimate )
     {
         var entityType = ToEntityType( EstimateType.Quote );
+
         var req = new RestRequest( $"/{ entityType }.json" )
             .AddJsonBody( new EstimatePayload() { Estimate = estimate } );
 
         var resp = await _rest.PostAsync<EstimatePayload>( req );
 
-        return Result( resp!.Estimate );
+        if ( resp == null )
+            throw new InvalidOperationException();
+
+        return Result( resp.Estimate );
     }
 
 
@@ -26,7 +30,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<EstimatePayload>( req );
 
-        return Result( resp!.Estimate );
+        if ( resp == null )
+            throw new InvalidOperationException();
+
+        return Result( resp.Estimate );
     }
 
 
@@ -34,6 +41,7 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult> EstimateUpdateAsync( Estimate estimate )
     {
         var entityType = ToEntityType( EstimateType.Quote );
+
         var req = new RestRequest( $"/{ entityType }/{ estimate.Id }.json" )
             .AddJsonBody( new EstimatePayload() { Estimate = estimate } );
 
@@ -47,8 +55,10 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult> EstimateStateChangeAsync( EstimateType type, int estimateId, EstimateStateChange change )
     {
         var entityType = ToEntityType( type );
+        var payload = EstimateStateChangePayload.From( type, change );
+
         var req = new RestRequest( $"/{ entityType }/{ estimateId }.json" )
-            .AddJsonBody( new EstimateStateChangePayload() { Estimate = change } );
+            .AddJsonBody( payload );
 
         var resp = await _rest.PutAsync( req );
 
@@ -66,21 +76,21 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    private string ToEntityType( EstimateType type )
+    private static string ToEntityType( EstimateType type )
     {
         switch ( type )
         {
             case EstimateType.Quote:
-                return "invoices";
+                return "quote";
 
             case EstimateType.Proforma:
                 return "proforma";
 
             case EstimateType.FeeNote:
-                return "fee_note";
+                return "fees_note";
 
             default:
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( $"Unsupported estimate type { type }" );
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress.Payloads;
 
 /// <summary />
+[JsonConverter( typeof( InvoicePayloadConverter ) )]
 public class InvoicePayload
 {
     /// <summary />
-    [JsonPropertyName( "invoice" )]
     public Invoice Invoice { get; set; } = default!;
 }
