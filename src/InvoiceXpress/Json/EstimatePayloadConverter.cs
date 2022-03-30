@@ -65,6 +65,5 @@ public class EstimatePayloadConverter : JsonConverter<EstimatePayload>
         writer.WritePropertyName( elementName );
         JsonSerializer.Serialize( writer, value.Estimate, options );
         writer.WriteEndObject();
-        writer.WriteEndObject();
     }
 }

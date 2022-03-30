@@ -24,6 +24,5 @@ public class InvoiceStateChangePayloadConverter : JsonConverter<InvoiceStateChan
         writer.WritePropertyName( elementName );
         JsonSerializer.Serialize( writer, value.Change, options );
         writer.WriteEndObject();
-        writer.WriteEndObject();
     }
 }

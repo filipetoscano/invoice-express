@@ -24,6 +24,5 @@ public class EstimateStateChangePayloadConverter : JsonConverter<EstimateStateCh
         writer.WritePropertyName( elementName );
         JsonSerializer.Serialize( writer, value.Change, options );
         writer.WriteEndObject();
-        writer.WriteEndObject();
     }
 }

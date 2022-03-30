@@ -65,6 +65,5 @@ public class InvoicePayloadConverter : JsonConverter<InvoicePayload>
         writer.WritePropertyName( elementName );
         JsonSerializer.Serialize( writer, value.Invoice, options );
         writer.WriteEndObject();
-        writer.WriteEndObject();
     }
 }
