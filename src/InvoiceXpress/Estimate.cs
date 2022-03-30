@@ -96,20 +96,3 @@ public class Estimate
     [JsonPropertyName( "items" )]
     public List<DocumentItem> Items { get; set; } = default!;
 }
-
-
-/// <summary />
-public class ForeignCurrency
-{
-    /// <summary />
-    [JsonPropertyName( "rate" )]
-    public decimal ExchangeRage { get; set; }
-
-    /// <summary />
-    [JsonPropertyName( "currency" )]
-    public string CurrencyCode { get; set; } = default!;
-
-    /// <summary />
-    [JsonPropertyName( "total" )]
-    public decimal TotalAmount { get; set; }
-}

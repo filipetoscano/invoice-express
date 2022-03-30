@@ -64,7 +64,7 @@ public partial class InvoiceXpressClient
             Change = change,
         };
 
-        var req = new RestRequest( $"/{ entityName }/{ estimateId }.json" )
+        var req = new RestRequest( $"/{ entityName }/{ estimateId }/change-state.json" )
             .AddJsonBody( payload );
 
         var resp = await _rest.PutAsync( req );

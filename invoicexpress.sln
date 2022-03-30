@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{DA7237
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
+		.github\workflows\package.yml = .github\workflows\package.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -24,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXpress.Json.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXpress.Tests", "tests\InvoiceXpress.Tests\InvoiceXpress.Tests.csproj", "{405CBE74-F646-44F0-87C4-52B9D7997EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceXpress.CountryGen", "tools\InvoiceXpress.CountryGen\InvoiceXpress.CountryGen.csproj", "{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXpress.CountryGen", "tools\InvoiceXpress.CountryGen\InvoiceXpress.CountryGen.csproj", "{301CF9D1-3FCC-4DD9-802F-AB420CB811AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

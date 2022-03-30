@@ -1,6 +1,7 @@
 ﻿using InvoiceXpress.Payloads;
 using InvoiceXpress.Rest;
 using RestSharp;
+using System.Globalization;
 
 namespace InvoiceXpress;
 
@@ -60,8 +61,10 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change )
     {
         var entityType = InvoiceEntity.ToEntityName( type );
-        var req = new RestRequest( $"/{ entityType }/{ invoiceId }.json" )
-            .AddJsonBody( new InvoiceStateChangePayload() { Change = change } );
+        var payload = new InvoiceStateChangePayload() { Change = change };
+
+        var req = new RestRequest( $"/{ entityType }/{ invoiceId }/change-state.json" )
+            .AddJsonBody( payload );
 
         var resp = await _rest.PutAsync( req );
 
@@ -102,10 +105,48 @@ public partial class InvoiceXpressClient
     /// <remarks>
     /// See https://www.invoicexpress.com/api-v2/invoices/list-all
     /// </remarks>
-    public async Task<ApiResult<Invoice>> InvoiceList( InvoiceSearch search, int page, int pageSize = 20 )
+    public async Task<ApiResult<List<Invoice>>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20 )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( "/invoices.json" )
+            .AddQueryParameter( "page", page )
+            .AddQueryParameter( "per_page", pageSize )
+            .AddQueryParameter( "non_archived", "false" );
 
-        throw new NotImplementedException();
+        if ( search.Text != null )
+            req.AddQueryParameter( "text", search.Text );
+
+        // type[]
+        // status[]
+
+        if ( search.DateFrom.HasValue == true )
+            req.AddQueryParameter( "date[from]", V( search.DateFrom.Value ) );
+
+        if ( search.DateTo.HasValue == true )
+            req.AddQueryParameter( "date[to]", V( search.DateTo.Value ) );
+
+        if ( search.DueDateFrom.HasValue == true )
+            req.AddQueryParameter( "due_date[from]", V( search.DueDateFrom.Value ) );
+
+        if ( search.DueDateTo.HasValue == true )
+            req.AddQueryParameter( "due_date[to]", V( search.DueDateTo.Value ) );
+
+        if ( search.TotalBeforeTaxesFrom.HasValue == true )
+            req.AddQueryParameter( "total_before_taxes[from]", search.TotalBeforeTaxesFrom.Value );
+
+        if ( search.TotalBeforeTaxesTo.HasValue == true )
+            req.AddQueryParameter( "total_before_taxes[to]", search.TotalBeforeTaxesTo.Value );
+
+        // archived
+
+        var resp = await _rest.GetAsync<InvoiceListPayload>( req );
+
+        return Result( resp!.Invoices );
+    }
+
+
+    /// <summary />
+    private string V( DateOnly value )
+    {
+        return value.ToString( "dd/MM/yyyy", CultureInfo.InvariantCulture );
     }
 }

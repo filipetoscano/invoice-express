@@ -54,6 +54,10 @@ public class Program
         {
             return app.Execute( args );
         }
+        catch ( UnrecognizedCommandParsingException )
+        {
+            return 8000;
+        }
         catch ( Exception ex )
         {
             Console.WriteLine( "err: " + ex.ToString() );

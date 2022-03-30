@@ -7,7 +7,7 @@ public class InvoiceListPayload
 {
     /// <summary />
     [JsonPropertyName( "invoices" )]
-    public List<Estimate> Invoices { get; set; } = default!;
+    public List<Invoice> Invoices { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "pagination" )]

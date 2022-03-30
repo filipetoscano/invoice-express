@@ -7,6 +7,7 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( EstimateCreateCommand ) )]
 [Subcommand( typeof( EstimateDetailCommand ) )]
 [Subcommand( typeof( EstimateListCommand ) )]
+[Subcommand( typeof( EstimateStateChangeCommand ) )]
 [Subcommand( typeof( EstimateUpdateCommand ) )]
 public class EstimateCommand
 {

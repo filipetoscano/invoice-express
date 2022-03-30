@@ -11,18 +11,18 @@ public class EstimateDetailCommand
     /// <summary />
     [Argument( 0, Description = "Estimate type" )]
     [Required]
-    public EstimateType EstimateType { get; set; }
+    public EstimateType? EstimateType { get; set; }
 
     /// <summary />
     [Argument( 1, Description = "Estimate identifier" )]
     [Required]
-    public int EstimateId { get; set; }
+    public int? EstimateId { get; set; }
 
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.EstimateGetAsync( this.EstimateType, this.EstimateId );
+        var res = await api.EstimateGetAsync( this.EstimateType!.Value, this.EstimateId!.Value );
 
 
         /*

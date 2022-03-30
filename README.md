@@ -15,7 +15,7 @@ for production use.
 The roadmap is currently as follows:
 
 * Invoice methods
-* Quote methods
+* Estimate methods
 * CI/CD using github actions
 * Error handling / throwing
 * Logging support
