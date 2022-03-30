@@ -6,8 +6,8 @@
     <Copyright>Copyright © Filipe Toscano</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/filipetoscano/invoice-express</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/filipetoscano/invoice-express.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/filipetoscano/invoicexpress</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/filipetoscano/invoicexpress.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <DebugType>portable</DebugType>
@@ -15,7 +15,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
     <IsPackable>false</IsPackable>
-    <PackageIconUrl>https://media.githubusercontent.com/media/filipetoscano/invoice-express/master/docs/img/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://media.githubusercontent.com/media/filipetoscano/invoicexpress/master/docs/img/icon.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
