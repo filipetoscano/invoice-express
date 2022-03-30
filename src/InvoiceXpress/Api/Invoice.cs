@@ -1,4 +1,5 @@
 ﻿using InvoiceXpress.Payloads;
+using InvoiceXpress.Rest;
 using RestSharp;
 
 namespace InvoiceXpress;
@@ -11,7 +12,7 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult<Invoice>> InvoiceCreateAsync( Invoice invoice )
     {
-        var entityType = ToEntityType( invoice.Type );
+        var entityType = InvoiceEntity.ToEntityName( invoice.Type );
         var req = new RestRequest( $"/{ entityType }.json" )
             .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
 
@@ -27,7 +28,7 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceType type, int invoiceId )
     {
-        var entityType = ToEntityType( type );
+        var entityType = InvoiceEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityType }/{ invoiceId }.json" );
 
         var resp = await _rest.GetAsync<InvoicePayload>( req );
@@ -42,7 +43,7 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult> InvoiceUpdateAsync( Invoice invoice )
     {
-        var entityType = ToEntityType( invoice.Type );
+        var entityType = InvoiceEntity.ToEntityName( invoice.Type );
         var req = new RestRequest( $"/{ entityType }/{ invoice.Id }.json" )
             .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
 
@@ -58,9 +59,9 @@ public partial class InvoiceXpressClient
     /// </remarks>
     public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change )
     {
-        var entityType = ToEntityType( type );
+        var entityType = InvoiceEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityType }/{ invoiceId }.json" )
-            .AddJsonBody( new InvoiceStateChangePayload() { Invoice = change } );
+            .AddJsonBody( new InvoiceStateChangePayload() { Change = change } );
 
         var resp = await _rest.PutAsync( req );
 
@@ -106,43 +107,5 @@ public partial class InvoiceXpressClient
         await Task.Delay( 0 );
 
         throw new NotImplementedException();
-    }
-
-
-    /// <summary />
-    private string ToEntityType( InvoiceType type )
-    {
-        switch ( type )
-        {
-            case InvoiceType.Invoice:
-                return "invoices";
-
-            case InvoiceType.InvoiceReceipt:
-                return "invoice_receipts";
-
-            case InvoiceType.SimplifiedInvoice:
-                return "simplified_invoices";
-
-            case InvoiceType.Receipt:
-                return "receipts";
-
-            case InvoiceType.CreditNote:
-                return "credit_notes";
-
-            case InvoiceType.DebitNote:
-                return "debit_notes";
-
-            case InvoiceType.MossInvoice:
-                return "vat_moss_invoices";
-
-            case InvoiceType.MossReceipt:
-                return "vat_moss_receipts";
-
-            case InvoiceType.MossCreditNote:
-                return "vat_moss_credit_notes";
-
-            default:
-                throw new InvalidOperationException( $"Unsupported invoice type { type }" );
-        }
     }
 }

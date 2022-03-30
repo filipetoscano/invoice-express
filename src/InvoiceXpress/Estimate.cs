@@ -8,14 +8,17 @@ public class Estimate
 {
     /// <summary />
     [JsonPropertyName( "id" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public int? Id { get; set; }
 
     /// <summary />
     [JsonPropertyName( "status" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public EstimateState? State { get; set; }
 
     /// <summary />
     [JsonPropertyName( "archived" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public bool? IsArchived { get; set; }
 
     /// <summary />
@@ -24,6 +27,7 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "sequence_number" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public string? SequenceNumber { get; set; }
 
     /// <summary />
@@ -38,5 +42,6 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "reference" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public string? Reference { get; set; }
 }

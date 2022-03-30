@@ -10,5 +10,6 @@ public class EstimateStateChange
     public EstimateState State { get; set; }
 
     /// <summary />
+    [JsonPropertyName( "message" )]
     public string Message { get; set; } = default!;
 }

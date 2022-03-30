@@ -1,4 +1,5 @@
 ﻿using InvoiceXpress.Payloads;
+using InvoiceXpress.Rest;
 using RestSharp;
 
 namespace InvoiceXpress;
@@ -8,10 +9,11 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Estimate>> EstimateCreateAsync( Estimate estimate )
     {
-        var entityType = ToEntityType( EstimateType.Quote );
+        var entityName = EstimateEntity.ToEntityName( estimate.Type );
+        var payload = new EstimatePayload() { Estimate = estimate };
 
-        var req = new RestRequest( $"/{ entityType }.json" )
-            .AddJsonBody( new EstimatePayload() { Estimate = estimate } );
+        var req = new RestRequest( $"/{ entityName }.json" )
+            .AddJsonBody( payload );
 
         var resp = await _rest.PostAsync<EstimatePayload>( req );
 
@@ -25,8 +27,8 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Estimate>> EstimateGetAsync( EstimateType type, int estimateId )
     {
-        var entityType = ToEntityType( type );
-        var req = new RestRequest( $"/{ entityType }/{ estimateId }.json" );
+        var entityName = EstimateEntity.ToEntityName( type );
+        var req = new RestRequest( $"/{ entityName }/{ estimateId }.json" );
 
         var resp = await _rest.GetAsync<EstimatePayload>( req );
 
@@ -40,10 +42,11 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult> EstimateUpdateAsync( Estimate estimate )
     {
-        var entityType = ToEntityType( EstimateType.Quote );
+        var entityName = EstimateEntity.ToEntityName( estimate.Type );
+        var payload = new EstimatePayload() { Estimate = estimate };
 
-        var req = new RestRequest( $"/{ entityType }/{ estimate.Id }.json" )
-            .AddJsonBody( new EstimatePayload() { Estimate = estimate } );
+        var req = new RestRequest( $"/{ entityName }/{ estimate.Id }.json" )
+            .AddJsonBody( payload );
 
         await _rest.PutAsync( req );
 
@@ -54,10 +57,14 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult> EstimateStateChangeAsync( EstimateType type, int estimateId, EstimateStateChange change )
     {
-        var entityType = ToEntityType( type );
-        var payload = EstimateStateChangePayload.From( type, change );
+        var entityName = EstimateEntity.ToEntityName( type );
+        var payload = new EstimateStateChangePayload()
+        {
+            EstimateType = type,
+            Change = change,
+        };
 
-        var req = new RestRequest( $"/{ entityType }/{ estimateId }.json" )
+        var req = new RestRequest( $"/{ entityName }/{ estimateId }.json" )
             .AddJsonBody( payload );
 
         var resp = await _rest.PutAsync( req );
@@ -72,25 +79,5 @@ public partial class InvoiceXpressClient
         await Task.Delay( 0 );
 
         throw new NotImplementedException();
-    }
-
-
-    /// <summary />
-    private static string ToEntityType( EstimateType type )
-    {
-        switch ( type )
-        {
-            case EstimateType.Quote:
-                return "quote";
-
-            case EstimateType.Proforma:
-                return "proforma";
-
-            case EstimateType.FeeNote:
-                return "fees_note";
-
-            default:
-                throw new InvalidOperationException( $"Unsupported estimate type { type }" );
-        }
     }
 }

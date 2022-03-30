@@ -7,6 +7,11 @@
 public static class VatExemption
 {
     /// <summary>
+    /// Without tax exemption.
+    /// </summary>
+    public const string M00 = "M00";
+
+    /// <summary>
     /// Artigo 16.º n.º 6 alínea c) do CIVA
     /// </summary>
     public const string M01 = "M01";
