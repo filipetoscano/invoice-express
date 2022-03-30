@@ -74,10 +74,14 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Estimate>> EstimateList( InvoiceSearch search, int page, int pageSize = 20 )
+    public async Task<ApiResult<List<Estimate>>> EstimateListAsync( int page, int pageSize = 20 )
     {
-        await Task.Delay( 0 );
+        var req = new RestRequest( "/estimates.json" )
+            .AddQueryParameter( "page", page )
+            .AddQueryParameter( "per_page", pageSize );
 
-        throw new NotImplementedException();
+        var resp = await _rest.GetAsync<EstimateListPayload>( req );
+
+        return Result( resp!.Estimates );
     }
 }

@@ -50,11 +50,8 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync< ClientListPayload>( req );
 
-        Console.WriteLine( resp.Content );
-        var obj = JsonSerializer.Deserialize<ClientListPayload>( resp.Content! );
-
-        return Result( new List<Client>() );
+        return Result( resp!.Clients );
     }
 }

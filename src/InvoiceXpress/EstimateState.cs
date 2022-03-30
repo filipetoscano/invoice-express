@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
@@ -7,6 +9,7 @@ namespace InvoiceXpress;
 /// See https://www.invoicexpress.com/api-v2/estimates/change-state-1 for list
 /// of possible estimate state transitions.
 /// </remarks>
+[JsonConverter( typeof( EnumConverter ) )]
 public enum EstimateState
 {
     /// <summary>
