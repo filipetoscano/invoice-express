@@ -102,7 +102,7 @@ public class Client : ClientRef
     /// In UI, field is set in 'Billing preferences > Remarks'.
     /// </remarks>
     [JsonPropertyName( "observations" )]
-    public string? Observations { get; set; }
+    public string? Remarks { get; set; }
 
     /// <summary />
     /// <remarks>
