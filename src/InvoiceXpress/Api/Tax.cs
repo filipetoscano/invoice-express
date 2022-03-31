@@ -8,8 +8,19 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Tax>> TaxCreateAsync( Tax tax )
     {
+        var payload = new
+        {
+            tax = new VatRateEx()
+            {
+                Name = tax.Name,
+                Value = tax.Value,
+                Region = tax.Region,
+                IsDefaultTax = tax.IsDefaultTax,
+            },
+        };
+
         var req = new RestRequest( "/taxes.json" )
-            .AddJsonBody( new TaxPayload() { Tax = tax } );
+            .AddJsonBody( payload );
 
         var resp = await _rest.PostAsync<TaxPayload>( req );
 
