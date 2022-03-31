@@ -3,7 +3,7 @@
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "vat", Description = "VAT rate operations (list / create / update" )]
+[Command( "vat", Description = "VAT rate operations" )]
 [Subcommand( typeof( VatCreateCommand ) )]
 [Subcommand( typeof( VatDeleteCommand ) )]
 [Subcommand( typeof( VatDetailCommand ) )]

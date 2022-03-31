@@ -3,9 +3,8 @@
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "saft", Description = "SAF-T operations" )]
-[Subcommand( typeof( SaftExportCommand ) )]
-public class SaftCommand
+[Command( "guide", Description = "Guide operations (delivery, shipping and return delivery notes)" )]
+public class GuideCommand
 {
     /// <summary />
     private int OnExecute( CommandLineApplication app )

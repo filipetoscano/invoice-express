@@ -8,9 +8,6 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/create
-    /// </remarks>
     public async Task<ApiResult<Invoice>> InvoiceCreateAsync( Invoice invoice )
     {
         var entityType = InvoiceEntity.ToEntityName( invoice.Type );
@@ -24,9 +21,6 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/get
-    /// </remarks>
     public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceType type, int invoiceId )
     {
         var entityType = InvoiceEntity.ToEntityName( type );
@@ -39,9 +33,6 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/update
-    /// </remarks>
     public async Task<ApiResult> InvoiceUpdateAsync( Invoice invoice )
     {
         var entityType = InvoiceEntity.ToEntityName( invoice.Type );
@@ -55,9 +46,6 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/change-state
-    /// </remarks>
     public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change )
     {
         var entityType = InvoiceEntity.ToEntityName( type );
@@ -73,9 +61,6 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/related-documents
-    /// </remarks>
     public async Task<ApiResult<List<Invoice>>> InvoiceRelatedDocumentsAsync( InvoiceType type, int invoiceId )
     {
         var req = new RestRequest( $"/document/{ invoiceId }/related_documents.json" );
@@ -87,9 +72,6 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/generate-payment
-    /// </remarks>
     public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceType type, int invoiceId, InvoicePayment payment )
     {
         var req = new RestRequest( $"/document/{ invoiceId }/partial_payments.json" )
@@ -102,9 +84,14 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    /// <remarks>
-    /// See https://www.invoicexpress.com/api-v2/invoices/list-all
-    /// </remarks>
+    public async Task<ApiResult> InvoicePaymentCancelAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
+    }
+
+
+    /// <summary />
     public async Task<ApiResult<List<Invoice>>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/invoices.json" )
@@ -148,5 +135,29 @@ public partial class InvoiceXpressClient
     private string V( DateOnly value )
     {
         return value.ToString( "dd/MM/yyyy", CultureInfo.InvariantCulture );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> InvoiceSendByEmailAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> InvoicePdfGenerateAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> InvoiceQrCodeImageAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
     }
 }

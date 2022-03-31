@@ -3,7 +3,7 @@
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "client", Description = "Client operations (list / create / update" )]
+[Command( "client", Description = "Client/customer operations" )]
 [Subcommand( typeof( ClientCreateCommand ) )]
 [Subcommand( typeof( ClientDetailCommand ) )]
 [Subcommand( typeof( ClientListCommand ) )]

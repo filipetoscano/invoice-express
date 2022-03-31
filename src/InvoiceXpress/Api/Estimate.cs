@@ -84,4 +84,20 @@ public partial class InvoiceXpressClient
 
         return Result( resp!.Estimates );
     }
+
+
+    /// <summary />
+    public async Task<ApiResult> EstimateSendByEmailAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> EstimatePdfGenerateAsync()
+    {
+        await Task.Delay( 0 );
+        throw new NotImplementedException();
+    }
 }

@@ -3,9 +3,8 @@
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "saft", Description = "SAF-T operations" )]
-[Subcommand( typeof( SaftExportCommand ) )]
-public class SaftCommand
+[Command( "po", Description = "Purchase order operations" )]
+public class PurchaseOrderCommand
 {
     /// <summary />
     private int OnExecute( CommandLineApplication app )

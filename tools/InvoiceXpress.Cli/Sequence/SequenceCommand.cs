@@ -3,7 +3,7 @@
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "sequence", Description = "Sequence operations (list / create / update" )]
+[Command( "sequence", Description = "Sequence operations" )]
 [Subcommand( typeof( SequenceCreateCommand ) )]
 [Subcommand( typeof( SequenceDetailCommand ) )]
 [Subcommand( typeof( SequenceListCommand ) )]
