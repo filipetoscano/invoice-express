@@ -7,7 +7,7 @@ public class EstimateStateChange
 {
     /// <summary />
     [JsonPropertyName( "state" )]
-    public EstimateState State { get; set; }
+    public EstimateAction Action { get; set; }
 
     /// <summary />
     [JsonPropertyName( "message" )]

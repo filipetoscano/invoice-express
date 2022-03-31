@@ -7,7 +7,7 @@ public class InvoiceStateChange
 {
     /// <summary />
     [JsonPropertyName( "status" )]
-    public InvoiceState State { get; set; }
+    public InvoiceAction Action { get; set; }
 
     /// <summary />
     public string Message { get; set; } = default!;
