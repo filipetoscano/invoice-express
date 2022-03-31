@@ -86,6 +86,7 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "multicurrency" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public ForeignCurrency? ForeignCurrency { get; set; }
 
     /// <summary />
