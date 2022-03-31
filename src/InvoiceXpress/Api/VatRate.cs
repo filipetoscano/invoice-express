@@ -6,7 +6,7 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Tax>> TaxCreateAsync( Tax tax )
+    public async Task<ApiResult<VatRate>> VatRateCreateAsync( VatRate tax )
     {
         var payload = new
         {
@@ -15,35 +15,35 @@ public partial class InvoiceXpressClient
                 Name = tax.Name,
                 Value = tax.Value,
                 Region = tax.Region,
-                IsDefaultTax = tax.IsDefaultTax,
+                IsDefaultRate = tax.IsDefaultRate,
             },
         };
 
         var req = new RestRequest( "/taxes.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync<TaxPayload>( req );
+        var resp = await _rest.PostAsync<VatRatePayload>( req );
 
-        return Result( resp!.Tax );
+        return Result( resp!.VatRate );
     }
 
 
     /// <summary />
-    public async Task<ApiResult<Tax>> TaxGetAsync( int taxId )
+    public async Task<ApiResult<VatRate>> VatRateGetAsync( int taxId )
     {
         var req = new RestRequest( $"/taxes/{ taxId }.json" );
 
-        var resp = await _rest.GetAsync<TaxPayload>( req );
+        var resp = await _rest.GetAsync<VatRatePayload>( req );
 
-        return Result( resp!.Tax );
+        return Result( resp!.VatRate );
     }
 
 
     /// <summary />
-    public async Task<ApiResult> TaxUpdateAsync( Tax tax )
+    public async Task<ApiResult> VatRateUpdateAsync( VatRate tax )
     {
         var req = new RestRequest( $"/taxes/{ tax.Id }.json" )
-            .AddJsonBody( new TaxPayload() { Tax = tax } );
+            .AddJsonBody( new VatRatePayload() { VatRate = tax } );
 
         var resp = await _rest.PutAsync( req );
 
@@ -52,7 +52,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> TaxDeleteAsync( int taxId )
+    public async Task<ApiResult> VatRateDeleteAsync( int taxId )
     {
         var req = new RestRequest( $"/taxes/{ taxId }.json" );
 
@@ -63,12 +63,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Tax>>> TaxListAsync()
+    public async Task<ApiResult<List<VatRate>>> VatRateListAsync()
     {
         var req = new RestRequest( "/taxes.json" );
 
-        var resp = await _rest.GetAsync<TaxListPayload>( req );
+        var resp = await _rest.GetAsync<VatRateListPayload>( req );
 
-        return Result( resp!.Taxes );
+        return Result( resp!.VatRates );
     }
 }

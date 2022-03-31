@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-public class Tax
+public class VatRate
 {
     /// <summary />
     [JsonPropertyName( "id" )]
@@ -29,5 +29,5 @@ public class Tax
     [JsonPropertyName( "default_tax" )]
     [JsonConverter( typeof( BooleanAsNumberConverter ) )]
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public bool? IsDefaultTax { get; set; }
+    public bool? IsDefaultRate { get; set; }
 }

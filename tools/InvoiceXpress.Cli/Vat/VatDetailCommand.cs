@@ -17,7 +17,7 @@ public class VatDetailCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.TaxGetAsync( this.RateId );
+        var res = await api.VatRateGetAsync( this.RateId );
 
 
         /*

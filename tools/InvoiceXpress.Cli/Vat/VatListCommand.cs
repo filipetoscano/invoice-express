@@ -10,7 +10,7 @@ public class VatListCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.TaxListAsync();
+        var res = await api.VatRateListAsync();
 
 
         /*
@@ -19,7 +19,7 @@ public class VatListCommand
         var table = new ConsoleTable( "Id", "Name", "Value", "Region", "D?" );
 
         foreach ( var r in res.Result! )
-            table.AddRow( r.Id, r.Name, r.Value, r.Region, r.IsDefaultTax == true ? "Y" : "N" );
+            table.AddRow( r.Id, r.Name, r.Value, r.Region, r.IsDefaultRate == true ? "Y" : "N" );
 
         table.Write( Format.Minimal );
 

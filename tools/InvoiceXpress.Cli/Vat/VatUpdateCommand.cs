@@ -22,13 +22,13 @@ public class VatUpdateCommand
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath );
-        var vat = JsonSerializer.Deserialize<Tax>( json )!;
+        var vat = JsonSerializer.Deserialize<VatRate>( json )!;
 
 
         /*
          * 
          */
-        await api.TaxUpdateAsync( vat );
+        await api.VatRateUpdateAsync( vat );
 
         return 0;
     }

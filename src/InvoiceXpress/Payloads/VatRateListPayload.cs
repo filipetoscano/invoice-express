@@ -3,9 +3,9 @@
 namespace InvoiceXpress.Payloads;
 
 /// <summary />
-public class TaxListPayload
+public class VatRateListPayload
 {
     /// <summary />
     [JsonPropertyName( "taxes" )]
-    public List<Tax> Taxes { get; set; } = default!;
+    public List<VatRate> VatRates { get; set; } = default!;
 }

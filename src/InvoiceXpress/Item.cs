@@ -46,5 +46,5 @@ public class Item
     /// If not present the default tax is applied to the item.
     /// </remarks>
     [JsonPropertyName( "tax" )]
-    public Tax? Tax { get; set; }
+    public VatRate? Tax { get; set; }
 }

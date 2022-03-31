@@ -16,7 +16,7 @@ public class VatDeleteCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.TaxDeleteAsync( this.RateId );
+        var res = await api.VatRateDeleteAsync( this.RateId );
 
         return 0;
     }

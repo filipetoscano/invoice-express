@@ -10,10 +10,10 @@
 | Clients           |  42% | 3/7
 | Items             | 100% | 5/5
 | Sequences         | 100% | 4/4
-| Taxes / VAT rates |  80% | 4/5
+| Taxes / VAT rates | 100% | 5/5
 | Accounts          |   0% | 0/4
 | SAF-T             |   0% | 0/1
-| *Overall*         |  33% | 20/59
+| *Overall*         |  36% | 21/59
 
 
 Legend:
@@ -121,14 +121,14 @@ Sequences (4/4)
 | ✔️ | [Update](https://www.invoicexpress.com/api-v2/sequences/update-6) |
 
 
-Taxes / VAT rates (4/5)
+VAT rates (5/5)
 -------------------------------------------------------------------------------
 
 | I? | Method                                                                       | Notes |
 |----|------------------------------------------------------------------------------|-------|
 | ✔️ | [List all](https://www.invoicexpress.com/api-v2/taxes/list-all-7) |
 | ✔️ | [Get](https://www.invoicexpress.com/api-v2/taxes/get-7) |
-| ❗ | [Create](https://www.invoicexpress.com/api-v2/taxes/create-7) | See issue #3
+| ✔️ | [Create](https://www.invoicexpress.com/api-v2/taxes/create-7) | See issue #3
 | ✔️ | [Update](https://www.invoicexpress.com/api-v2/taxes/update-7) |
 | ✔️ | [Delete](https://www.invoicexpress.com/api-v2/taxes/delete-7) |
 
