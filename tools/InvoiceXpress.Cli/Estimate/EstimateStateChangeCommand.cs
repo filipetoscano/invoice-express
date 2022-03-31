@@ -18,9 +18,9 @@ public class EstimateStateChangeCommand
     public int? EstimateId { get; set; }
 
     /// <summary />
-    [Argument( 2, Description = "Target state, to change the Estimate document to" )]
+    [Argument( 2, Description = "Action, which will change estimate state" )]
     [Required]
-    public EstimateState? TargetState { get; set; }
+    public EstimateAction? Action { get; set; }
 
     /// <summary />
     [Option( "-m|--message", CommandOptionType.SingleValue, Description = "Message explaining state transition" )]
@@ -32,7 +32,7 @@ public class EstimateStateChangeCommand
     {
         var res = await api.EstimateStateChangeAsync( this.EstimateType!.Value, this.EstimateId!.Value, new EstimateStateChange()
         {
-            State = this.TargetState!.Value,
+            Action = this.Action!.Value,
             Message = this.Message,
         } );
 

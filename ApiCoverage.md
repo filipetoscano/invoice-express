@@ -7,13 +7,13 @@
 | Estimates         |  28% | 2/7
 | Guides            |   0% | 0/8
 | Purchase orders   |   0% | 0/7
-| Clients           |  42% | 3/7
+| Clients           |  71% | 5/7
 | Items             | 100% | 5/5
 | Sequences         | 100% | 4/4
 | Taxes / VAT rates | 100% | 5/5
 | Accounts          |   0% | 0/4
 | SAF-T             |   0% | 0/1
-| *Overall*         |  36% | 21/59
+| *Overall*         |  39% | 23/59
 
 
 Legend:
@@ -84,15 +84,15 @@ Purchase orders (0/7)
 | ❌ | [Change state](https://www.invoicexpress.com/api-v2/purchase-orders/change-state-3) |
 
 
-Clients (3/7)
+Clients (5/7)
 -------------------------------------------------------------------------------
 
 | I? | Method                                                                       | Notes |
 |----|------------------------------------------------------------------------------|-------|
 | ✔️ | [List all](https://www.invoicexpress.com/api-v2/clients/list-all-4) |
 | ✔️ | [Get](https://www.invoicexpress.com/api-v2/clients/get-4) |
-| ❌ | [Create](https://www.invoicexpress.com/api-v2/clients/create-4) |
-| ❌ | [Update](https://www.invoicexpress.com/api-v2/clients/update-4) |
+| ✔️ | [Create](https://www.invoicexpress.com/api-v2/clients/create-4) |
+| ✔️ | [Update](https://www.invoicexpress.com/api-v2/clients/update-4) |
 | ❌ | [Find by name](https://www.invoicexpress.com/api-v2/clients/find-by-name) |
 | ✔️ | [Find by code](https://www.invoicexpress.com/api-v2/clients/find-by-code) |
 | ❌ | [List invoices](https://www.invoicexpress.com/api-v2/clients/list-invoices) |

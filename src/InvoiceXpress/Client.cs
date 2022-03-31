@@ -85,8 +85,9 @@ public class Client : ClientRef
     public string? Phone { get; set; }
 
     /// <summary />
-    [JsonPropertyName( "mobile" )]
-    public string? Mobile { get; set; }
+    /// Note: Not being returned by API
+    //[JsonPropertyName( "mobile" )]
+    //public string? Mobile { get; set; }
 
     /// <summary />
     [JsonPropertyName( "fax" )]
@@ -143,7 +144,8 @@ public class ClientContact
 
     /// <summary />
     [JsonPropertyName( "mobile" )]
-    public int? Mobile { get; set; }
+    [JsonConverter( typeof( PhoneAsNumberConverter ) )]
+    public string? Mobile { get; set; }
 }
 
 

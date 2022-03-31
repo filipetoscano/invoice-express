@@ -28,7 +28,8 @@ public class ClientCreateCommand
         /*
          * 
          */
-        await api.ClientUpdateAsync( client );
+        var res = await api.ClientCreateAsync( client );
+        Console.WriteLine( res.Result!.Id );
 
         return 0;
     }

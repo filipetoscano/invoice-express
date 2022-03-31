@@ -7,9 +7,15 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public Task<ApiResult<Client>> ClientCreateAsync( Client client )
+    public async Task<ApiResult<Client>> ClientCreateAsync( Client client )
     {
-        throw new NotImplementedException();
+        var payload = new ClientPayload() { Client = client };
+        var req = new RestRequest( $"/clients.json" )
+            .AddJsonBody( payload );
+
+        var resp = await _rest.PostAsync<ClientPayload>( req );
+
+        return Result( resp!.Client );
     }
 
 
@@ -37,9 +43,15 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public Task<ApiResult> ClientUpdateAsync( Client client )
+    public async Task<ApiResult> ClientUpdateAsync( Client client )
     {
-        throw new NotImplementedException();
+        var payload = new ClientPayload() { Client = client };
+        var req = new RestRequest( $"/clients/{ client.Id }.json" )
+            .AddJsonBody( payload );
+
+        await _rest.PutAsync( req );
+
+        return new ApiResult();
     }
 
 
