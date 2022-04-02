@@ -19,7 +19,7 @@ public class VatListCommand
         var table = new ConsoleTable( "Id", "Name", "Value", "Region", "D?" );
 
         foreach ( var r in res.Result! )
-            table.AddRow( r.Id, r.Name, r.Value, r.Region, r.IsDefaultRate == true ? "Y" : "N" );
+            table.AddRow( r.Id, r.Code, r.Value, r.Region, r.IsDefaultRate == true ? "Y" : "N" );
 
         table.Write( Format.Minimal );
 

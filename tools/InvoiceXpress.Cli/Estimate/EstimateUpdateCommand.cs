@@ -22,7 +22,7 @@ public class EstimateUpdateCommand
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath );
-        var estimate = JsonSerializer.Deserialize<Estimate>( json )!;
+        var estimate = JsonSerializer.Deserialize<EstimateData>( json )!;
 
 
         /*

@@ -3,7 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
-/// <summary />
+/// <summary>
+/// Value-added tax (VAT) rate definition.
+/// </summary>
 public class VatRate
 {
     /// <summary />
@@ -11,9 +13,11 @@ public class VatRate
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public long? Id { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Unique code of VAT rate.
+    /// </summary>
     [JsonPropertyName( "name" )]
-    public string Name { get; set; } = default!;
+    public string Code { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "value" )]
@@ -30,4 +34,24 @@ public class VatRate
     [JsonConverter( typeof( BooleanAsNumberConverter ) )]
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public bool? IsDefaultRate { get; set; }
+}
+
+
+/// <summary>
+/// Reference to an existing VAT rate.
+/// </summary>
+public struct VatRateRef
+{
+    /// <summary />
+    public VatRateRef( string code )
+    {
+        this.Code = code;
+    }
+
+
+    /// <summary>
+    /// Unique code of VAT rate.
+    /// </summary>
+    [JsonPropertyName( "name" )]
+    public string Code { get; set; } = default!;
 }

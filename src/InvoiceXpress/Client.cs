@@ -4,24 +4,26 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-public class ClientRef
+public interface IClient
 {
-    /// <summary>
-    /// Client code, your specific code for the client.
-    /// </summary>
+}
+
+
+/// <summary />
+public class ClientRef : IClient
+{
+    /// <inheritdoc />
     [JsonPropertyName( "code" )]
     public string Code { get; set; } = default!;
 
-    /// <summary>
-    /// Client name, normally used for a company name.
-    /// </summary>
+    /// <inheritdoc />
     [JsonPropertyName( "name" )]
     public string Name { get; set; } = default!;
 }
 
 
 /// <summary />
-public class Client : ClientRef
+public class Client : IClient
 {
     /// <summary>
     /// Client identifier.
@@ -32,6 +34,14 @@ public class Client : ClientRef
     /// </remarks>
     [JsonPropertyName( "id" )]
     public int? Id { get; set; }
+
+    /// <inheritdoc />
+    [JsonPropertyName( "code" )]
+    public string Code { get; set; } = default!;
+
+    /// <inheritdoc />
+    [JsonPropertyName( "name" )]
+    public string Name { get; set; } = default!;
 
     /// <summary>
     /// Client language. May be en, pt or es; defaults to the account language.
@@ -146,25 +156,4 @@ public class ClientContact
     [JsonPropertyName( "mobile" )]
     [JsonConverter( typeof( PhoneAsNumberConverter ) )]
     public string? Mobile { get; set; }
-}
-
-
-/// <summary />
-[JsonConverter( typeof( EnumAsNumberConverter ) )]
-public enum SendOptions
-{
-    /// <summary>
-    /// Original only.
-    /// </summary>
-    OriginalOnly = 1,
-
-    /// <summary>
-    /// Original, and duplicate.
-    /// </summary>
-    Duplicate = 2,
-
-    /// <summary>
-    /// Original, duplicate and triplicate.
-    /// </summary>
-    Triplicate = 3,
 }

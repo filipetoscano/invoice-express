@@ -8,18 +8,15 @@ public class Estimate
 {
     /// <summary />
     [JsonPropertyName( "id" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary />
     [JsonPropertyName( "status" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public EstimateState? State { get; set; }
+    public EstimateState State { get; set; }
 
     /// <summary />
     [JsonPropertyName( "archived" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public bool? IsArchived { get; set; }
+    public bool IsArchived { get; set; }
 
     /// <summary />
     [JsonPropertyName( "type" )]
@@ -30,15 +27,19 @@ public class Estimate
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public string? SequenceNumber { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Date of issuance of the estimate.
+    /// </summary>
     [JsonPropertyName( "date" )]
     [JsonConverter( typeof( NonIsoDateConverter ) )]
     public DateOnly Date { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Date until which the estimate is valid.
+    /// </summary>
     [JsonPropertyName( "due_date" )]
     [JsonConverter( typeof( NonIsoDateConverter ) )]
-    public DateOnly DueDate { get; set; }
+    public DateOnly ValidUntil { get; set; }
 
     /// <summary />
     [JsonPropertyName( "reference" )]
@@ -54,8 +55,7 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "permalink" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public string? Permalink { get; set; }
+    public string Permalink { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "sum" )]

@@ -12,7 +12,7 @@ public partial class InvoiceXpressClient
         {
             tax = new VatRateEx()
             {
-                Name = tax.Name,
+                Code = tax.Code,
                 Value = tax.Value,
                 Region = tax.Region,
                 IsDefaultRate = tax.IsDefaultRate,

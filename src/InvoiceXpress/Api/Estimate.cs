@@ -7,10 +7,10 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Estimate>> EstimateCreateAsync( Estimate estimate )
+    public async Task<ApiResult<Estimate>> EstimateCreateAsync( EstimateData estimate )
     {
         var entityName = EstimateEntity.ToEntityName( estimate.Type );
-        var payload = new EstimatePayload() { Estimate = estimate };
+        var payload = new EstimateDataPayload() { Estimate = estimate };
 
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
@@ -40,10 +40,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> EstimateUpdateAsync( Estimate estimate )
+    public async Task<ApiResult> EstimateUpdateAsync( EstimateData estimate )
     {
         var entityName = EstimateEntity.ToEntityName( estimate.Type );
-        var payload = new EstimatePayload() { Estimate = estimate };
+        var payload = new EstimateDataPayload() { Estimate = estimate };
 
         var req = new RestRequest( $"/{ entityName }/{ estimate.Id }.json" )
             .AddJsonBody( payload );
