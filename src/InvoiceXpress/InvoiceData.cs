@@ -9,6 +9,7 @@ public class InvoiceData
 {
     /// <summary />
     [JsonPropertyName( "id" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public int? Id { get; set; }
 
     /// <summary />
@@ -59,6 +60,7 @@ public class InvoiceData
 
     /// <summary />
     [JsonPropertyName( "tax_exemption" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public string? TaxExemption { get; set; }
 
     /// <summary>

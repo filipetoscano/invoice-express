@@ -6,9 +6,10 @@ namespace InvoiceXpress;
 public class InvoiceStateChange
 {
     /// <summary />
-    [JsonPropertyName( "status" )]
+    [JsonPropertyName( "state" )]
     public InvoiceAction Action { get; set; }
 
     /// <summary />
+    [JsonPropertyName( "message" )]
     public string Message { get; set; } = default!;
 }

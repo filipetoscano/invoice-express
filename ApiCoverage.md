@@ -3,8 +3,8 @@
 
 | Entity            | %PC  | Progress |
 |-------------------|-----:|---------:|
-| Invoices          |  18% | 2/11     |
-| Estimates         |  28% | 2/7      |
+| Invoices          |  55% | 6/11     |
+| Estimates         | 100% | 7/7      |
 | Guides            |   0% | 0/8      |
 | Purchase orders   |   0% | 0/7      |
 | Clients           |  71% | 5/7      |
@@ -13,7 +13,7 @@
 | Taxes / VAT rates | 100% | 5/5      |
 | Accounts          |   0% | 0/4      |
 | SAF-T             |   0% | 0/1      |
-| *Overall*         |  39% | 23/59    |
+| *Overall*         |  54% | 32/59    |
 
 
 Legend:
@@ -23,7 +23,7 @@ Legend:
 * ❗, Implemented but not working
 
 
-Invoices (2/11)
+Invoices (6/11)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
@@ -32,16 +32,16 @@ Invoices (2/11)
 | ✔️ | `InvoicePdfGenerateAsync`      | [Generate PDF](https://www.invoicexpress.com/api-v2/invoices/generate-pdf) |
 | ✔️ | `InvoiceListAsync`             | [List all](https://www.invoicexpress.com/api-v2/invoices/list-all) |
 | ✔️ | `InvoiceGetAsync`              | [Get](https://www.invoicexpress.com/api-v2/invoices/get) |
-| ❌ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
+| ✔️ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
 | ❌ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) |
-| ❌ | `InvoiceStateChangeAsync`      | [Change state](https://www.invoicexpress.com/api-v2/invoices/change-state) |
+| ✔️ | `InvoiceStateChangeAsync`      | [Change state](https://www.invoicexpress.com/api-v2/invoices/change-state) |
 | ⚠️ | `InvoiceRelatedDocumentsAsync` | [Related documents](https://www.invoicexpress.com/api-v2/invoices/related-documents) |
 | ⚠️ | `InvoicePaymentAsync`          | [Generate payment](https://www.invoicexpress.com/api-v2/invoices/generate-payment) |
 | ❌ | `InvoicePaymentCancelAsync`    | [Cancel payment](https://www.invoicexpress.com/api-v2/invoices/cancel-payment) |
 | ❌ | `InvoiceQrCodeImageAsync`      | [Get QR code](https://www.invoicexpress.com/api-v2/invoices/get-qrcode) |
 
 
-Estimates (2/7)
+Estimates (7/7)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |

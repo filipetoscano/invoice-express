@@ -1,5 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -17,7 +18,18 @@ public class InvoiceCreateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        await Task.Delay( 0 );
+        /*
+         * 
+         */
+        var json = await File.ReadAllTextAsync( this.FilePath );
+        var invoice = JsonSerializer.Deserialize<InvoiceData>( json )!;
+
+
+        /*
+         * 
+         */
+        var res = await api.InvoiceCreateAsync( invoice );
+        Console.WriteLine( res.Result!.Id );
 
         return 0;
     }

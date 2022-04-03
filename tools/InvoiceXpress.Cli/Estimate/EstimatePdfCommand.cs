@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "pdf", Description = "Generates a PDF document" )]
+[Command( "pdf", Description = "Generates a PDF document for a given estimate" )]
 public class EstimatePdfCommand
 {
     /// <summary />
