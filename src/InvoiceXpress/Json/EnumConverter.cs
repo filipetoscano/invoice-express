@@ -22,7 +22,7 @@ public class EnumConverter : JsonConverterFactory
         var jc = Activator.CreateInstance( tt );
 
         if ( jc == null )
-            throw new InvalidOperationException();
+            throw new InvalidOperationException( $"Failed to create converter for { typeToConvert.FullName }.");
 
         return (JsonConverter) jc;
     }
@@ -46,7 +46,21 @@ public class EnumConverter : JsonConverterFactory
 
             var v = reader.GetString();
 
-            var kv = map.Value.Single( x => x.Value == v );
+
+            /*
+             * If no match is found from `SingleOrDefault`, the default for
+             * `KeyValuePair` will be returned -- but since that's a struct,
+             * it will get initialized with the default values for the given
+             * data-types.
+             * 
+             * And since .Key is an enum, the default value will be the 1st
+             * value in the enum! If we want to check that the KVP didn't
+             * exist in the collection, we can check if the value is null!
+             */
+            var kv = map.Value.SingleOrDefault( x => x.Value == v );
+
+            if ( kv.Value == null )
+                throw new JsonException( $"Unable to map value '{ v }' to enum '{ typeof( T ) }'" );
 
             return kv.Key;
         }

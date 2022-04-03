@@ -46,7 +46,7 @@ public class EnumAsNumberConverter : JsonConverterFactory
             var v = reader.GetInt32();
 
             if ( Enum.IsDefined( typeToConvert, v ) == false )
-                throw new InvalidOperationException();
+                throw new JsonException( $"Value '{ v }' is not valid for enum '{ typeof( T ).FullName }'" );
 
             return (T) Enum.ToObject( typeToConvert, v );
         }
