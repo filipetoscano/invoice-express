@@ -59,6 +59,15 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change )
     {
+        if ( type != InvoiceType.Invoice
+            && type != InvoiceType.SimplifiedInvoice
+            && type != InvoiceType.InvoiceReceipt
+            && type != InvoiceType.CreditNote
+            && type != InvoiceType.DebitNote )
+        {
+            throw new InvalidOperationException( $"Cannot change invoice state for document type '{ type }'" );
+        }
+
         var entityType = InvoiceEntity.ToEntityName( type );
         var payload = new InvoiceStateChangePayload() { Change = change };
 
@@ -85,7 +94,7 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceType type, int invoiceId, InvoicePayment payment )
     {
-        var req = new RestRequest( $"/document/{ invoiceId }/partial_payments.json" )
+        var req = new RestRequest( $"/documents/{ invoiceId }/partial_payments.json" )
             .AddJsonBody( new InvoicePaymentPayload() { Payment = payment } );
 
         var resp = await _rest.GetAsync<ReceiptPayload>( req );
@@ -95,10 +104,28 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoicePaymentCancelAsync()
+    public async Task<ApiResult> InvoicePaymentCancelAsync( InvoiceType type, int invoiceId, string message )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        if ( type != InvoiceType.Receipt )
+            throw new InvalidOperationException( $"Cannot cancel payment for document type '{ type }'" );
+
+        var entityType = InvoiceEntity.ToEntityName( type );
+        var payload = new InvoiceStateChangePayload()
+        {
+            InvoiceType = type,
+            Change = new InvoiceStateChange()
+            {
+                Action = InvoiceAction.Cancel,
+                Message = message,
+            },
+        };
+
+        var req = new RestRequest( $"/{ entityType }/{ invoiceId }/change-state.json" )
+            .AddJsonBody( payload );
+
+        var resp = await _rest.PutAsync( req );
+
+        return new ApiResult();
     }
 
 

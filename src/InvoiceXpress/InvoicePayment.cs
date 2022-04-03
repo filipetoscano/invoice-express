@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
+/// <summary />
 public class InvoicePayment
 {
     /// <summary />
@@ -14,8 +15,13 @@ public class InvoicePayment
     public string Remarks { get; set; } = default!;
 
     /// <summary />
+    /// <remarks>
+    /// If not specified, will use the same sequence as the associated
+    /// invoice.
+    /// </remarks>
     [JsonPropertyName( "serie" )]
-    public string Serie { get; set; } = default!;
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public string? SequenceCode { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "amount" )]

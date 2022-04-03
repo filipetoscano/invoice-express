@@ -1,12 +1,11 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "get", Description = "Gets an invoice" )]
-public class InvoiceDetailCommand
+[Command( "pay-cancel", Description = "Cancels an invoice payment (and corresponding receipt)" )]
+public class InvoicePayCancelCommand
 {
     /// <summary />
     [Argument( 0, Description = "Invoice type" )]
@@ -18,18 +17,21 @@ public class InvoiceDetailCommand
     [Required]
     public int? InvoiceId { get; set; }
 
+    /// <summary />
+    [Option( "-m|--message", CommandOptionType.SingleValue, Description = "Message explaining action" )]
+    public string Message { get; set; } = "Cancel payment";
+
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.InvoiceGetAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
-
-
         /*
          * 
          */
-        var json = JsonSerializer.Serialize( res.Result!, new JsonSerializerOptions() { WriteIndented = true } );
-        Console.WriteLine( json );
+        var res = await api.InvoicePaymentCancelAsync(
+            this.InvoiceType!.Value,
+            this.InvoiceId!.Value,
+            this.Message );
 
         return 0;
     }

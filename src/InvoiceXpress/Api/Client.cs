@@ -20,9 +20,9 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Client>> ClientGetAsync( int id )
+    public async Task<ApiResult<Client>> ClientGetAsync( int clientId )
     {
-        var req = new RestRequest( $"/clients/{ id }.json" );
+        var req = new RestRequest( $"/clients/{ clientId }.json" );
 
         var resp = await _rest.GetAsync<ClientPayload>( req );
 
@@ -31,10 +31,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Client>> ClientGetByCodeAsync( string code )
+    public async Task<ApiResult<Client>> ClientGetByCodeAsync( string clientCode )
     {
         var req = new RestRequest( $"/clients/find-by-code.json" )
-            .AddQueryParameter( "client_code", code );
+            .AddQueryParameter( "client_code", clientCode );
 
         var resp = await _rest.GetAsync<ClientPayload>( req );
 
@@ -62,8 +62,32 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync< ClientListPayload>( req );
+        var resp = await _rest.GetAsync<ClientListPayload>( req );
 
         return Result( resp!.Clients );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<List<Invoice>>> ClientInvoiceListAsync( int clientId, int page, int pageSize = 20 )
+    {
+        var payload = new
+        {
+            filter = new
+            {
+                status = new string[] { "final" },
+                by_type = new InvoiceType[] { InvoiceType.Invoice, InvoiceType.SimplifiedInvoice, InvoiceType.Receipt },
+                archived = new string[] { "non_archived" },
+            },
+        };
+
+        var req = new RestRequest( $"/clients/{ clientId }/invoices.json" )
+            .AddJsonBody( payload )
+            .AddQueryParameter( "page", page )
+            .AddQueryParameter( "per_page", pageSize );
+
+        var resp = await _rest.PostAsync<InvoiceListPayload>( req );
+
+        return Result( resp!.Invoices );
     }
 }

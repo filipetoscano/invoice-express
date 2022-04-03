@@ -8,7 +8,10 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( InvoiceDetailCommand ) )]
 [Subcommand( typeof( InvoiceEmailCommand ) )]
 [Subcommand( typeof( InvoiceListCommand ) )]
+[Subcommand( typeof( InvoicePayCommand ) )]
+[Subcommand( typeof( InvoicePayCancelCommand ) )]
 [Subcommand( typeof( InvoicePdfCommand ) )]
+[Subcommand( typeof( InvoiceRelatedCommand ) )]
 [Subcommand( typeof( InvoiceStateChangeCommand ) )]
 [Subcommand( typeof( InvoiceUpdateCommand ) )]
 public class InvoiceCommand

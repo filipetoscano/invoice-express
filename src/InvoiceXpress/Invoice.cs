@@ -27,6 +27,10 @@ public class Invoice
     [JsonPropertyName( "sequence_number" )]
     public string SequenceNumber { get; set; } = default!;
 
+    /// <summary />
+    [JsonPropertyName( "inverted_sequence_number" )]
+    public string InvertedSequenceNumber { get; set; } = default!;
+
     /// <summary>
     /// Invoice date.
     /// </summary>
@@ -75,7 +79,7 @@ public class Invoice
 
     /// <summary />
     [JsonPropertyName( "discount" )]
-    public decimal DiscountAmount { get; set; }
+    public decimal? DiscountAmount { get; set; }
 
     /// <summary />
     [JsonPropertyName( "before_taxes" )]
@@ -93,6 +97,11 @@ public class Invoice
     [JsonPropertyName( "currency" )]
     [JsonConverter( typeof( CurrencyCodeAsNameConverter ) )]
     public string CurrencyCode { get; set; } = default!;
+
+    /// <summary />
+    [JsonPropertyName( "multicurrency" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public ForeignCurrency? ForeignCurrency { get; set; }
 
     /// <summary />
     [JsonPropertyName( "client" )]

@@ -3,7 +3,7 @@
 
 | Entity            | %PC  | Progress |
 |-------------------|-----:|---------:|
-| Invoices          |  55% | 6/11     |
+| Invoices          |  81% | 9/11     |
 | Estimates         | 100% | 7/7      |
 | Guides            |   0% | 0/8      |
 | Purchase orders   |   0% | 0/7      |
@@ -19,11 +19,12 @@
 Legend:
 * ❌, Not implemented
 * ✔️, Implemented and tested
+* 🔸, Partially implemented
 * ⚠️, Implemented but untested
 * ❗, Implemented but not working
 
 
-Invoices (6/11)
+Invoices (9/11)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
@@ -35,9 +36,9 @@ Invoices (6/11)
 | ✔️ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
 | ❌ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) |
 | ✔️ | `InvoiceStateChangeAsync`      | [Change state](https://www.invoicexpress.com/api-v2/invoices/change-state) |
-| ⚠️ | `InvoiceRelatedDocumentsAsync` | [Related documents](https://www.invoicexpress.com/api-v2/invoices/related-documents) |
-| ⚠️ | `InvoicePaymentAsync`          | [Generate payment](https://www.invoicexpress.com/api-v2/invoices/generate-payment) |
-| ❌ | `InvoicePaymentCancelAsync`    | [Cancel payment](https://www.invoicexpress.com/api-v2/invoices/cancel-payment) |
+| ✔️ | `InvoiceRelatedDocumentsAsync` | [Related documents](https://www.invoicexpress.com/api-v2/invoices/related-documents) |
+| ✔️ | `InvoicePaymentAsync`          | [Generate payment](https://www.invoicexpress.com/api-v2/invoices/generate-payment) |
+| ✔️ | `InvoicePaymentCancelAsync`    | [Cancel payment](https://www.invoicexpress.com/api-v2/invoices/cancel-payment) |
 | ❌ | `InvoiceQrCodeImageAsync`      | [Get QR code](https://www.invoicexpress.com/api-v2/invoices/get-qrcode) |
 
 
@@ -95,7 +96,7 @@ Clients (5/7)
 | ✔️ | `ClientUpdateAsync`    | [Update](https://www.invoicexpress.com/api-v2/clients/update-4) |
 | ❌ |                       | [Find by name](https://www.invoicexpress.com/api-v2/clients/find-by-name) |
 | ✔️ | `ClientGetByCodeAsync` | [Find by code](https://www.invoicexpress.com/api-v2/clients/find-by-code) |
-| ❌ |                       | [List invoices](https://www.invoicexpress.com/api-v2/clients/list-invoices) |
+| 🔸 | `ClientInvoiceListAsync` | [List invoices](https://www.invoicexpress.com/api-v2/clients/list-invoices) |
 
 
 Items (5/5)

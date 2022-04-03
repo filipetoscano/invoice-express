@@ -14,7 +14,7 @@ public class ClientDetailCommand
     public string Identifier { get; set; } = default!;
 
     /// <summary />
-    [Option( "--code", CommandOptionType.NoValue, Description = "Identifier is the code parameter" )]
+    [Option( "--code", CommandOptionType.NoValue, Description = "Identifier is the client code, rather than numerical id" )]
     public bool IsCode { get; set; } = false;
 
 
