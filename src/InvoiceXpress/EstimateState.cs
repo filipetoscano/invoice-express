@@ -33,7 +33,7 @@ public enum EstimateState
     /// <summary>
     /// Accepted estimate.
     /// </summary>
-    [EnumMember( Value = "deleted" )]
+    [EnumMember( Value = "accepted" )]
     Accepted,
 
     /// <summary>
