@@ -4,7 +4,7 @@
 /// <remarks>
 /// List of countries as per: https://invoicexpress.com/api-v2/documentation/appendix
 /// </remarks>
-internal partial class IXCountry
+internal partial struct IXCountry
 {
     /// <summary />
     internal IXCountry( string code, string name )

@@ -16,8 +16,8 @@ public class CountryCodeAsNameConverter : JsonConverter<string>
         var name = reader.GetString()!;
         var country = IXCountry.Map.SingleOrDefault( x => x.Name == name );
 
-        if ( country == null )
-            throw new JsonException( $"Country { name } is not supported" );
+        if ( country.Code == null )
+            throw new JsonException( $"Country '{ name }' is not supported" );
 
         return country.Code;
     }
@@ -28,8 +28,8 @@ public class CountryCodeAsNameConverter : JsonConverter<string>
     {
         var country = IXCountry.Map.SingleOrDefault( x => x.Code == value );
 
-        if ( country == null )
-            throw new JsonException( $"Country { value } is not supported" );
+        if ( country.Code == null )
+            throw new JsonException( $"Country code '{ value }' is not supported" );
 
         writer.WriteStringValue( country.Name );
     }
