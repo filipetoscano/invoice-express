@@ -9,6 +9,9 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Estimate>> EstimateCreateAsync( EstimateData estimate )
     {
+        if ( estimate.Id.HasValue == true )
+            throw new ArgumentException( ".Id property is prohibited when creating an estimate", nameof( estimate ) );
+
         var entityName = EstimateEntity.ToEntityName( estimate.Type );
         var payload = new EstimateDataPayload() { Estimate = estimate };
 
@@ -42,6 +45,9 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult> EstimateUpdateAsync( EstimateData estimate )
     {
+        if ( estimate.Id.HasValue == false )
+            throw new ArgumentException( ".Id property is required when updating an estimate", nameof( estimate ) );
+
         var entityName = EstimateEntity.ToEntityName( estimate.Type );
         var payload = new EstimateDataPayload() { Estimate = estimate };
 
@@ -90,22 +96,7 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult> EstimateSendByEmailAsync( EstimateType type, int estimateId, EmailMessage message )
     {
         var entityName = EstimateEntity.ToEntityName( type );
-        var payload = new EmailMessagePayload()
-        {
-            EmailMessage = new EmailMessageEx()
-            {
-                Client = new EmailClient()
-                {
-                    Email = message.To,
-                    SaveEmailAsDefault = message.SaveEmailAsDefault,
-                },
-                Subject = message.Subject,
-                Body = message.Body,
-                BCC =   message.BCC,
-                CC = message.CC,
-                IncludeLogo = message.IncludeLogo,
-            },
-        };
+        var payload = EmailMessagePayload.From( message );
 
         var req = new RestRequest( $"/{ entityName }/{ estimateId }/email-document.json" )
             .AddJsonBody( payload );

@@ -2,17 +2,23 @@
 using InvoiceXpress.Rest;
 using RestSharp;
 using System.Globalization;
+using System.Text.Json;
 
 namespace InvoiceXpress;
 
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Invoice>> InvoiceCreateAsync( Invoice invoice )
+    public async Task<ApiResult<Invoice>> InvoiceCreateAsync( InvoiceData invoice, string? requestUuid = null )
     {
+        if ( invoice.Id.HasValue == true )
+            throw new ArgumentException( ".Id property is prohibited when creating an invoice", nameof( invoice ) );
+
         var entityType = InvoiceEntity.ToEntityName( invoice.Type );
+        var payload = new InvoiceDataPayload() { Invoice = invoice, RequestUuid = requestUuid };
+
         var req = new RestRequest( $"/{ entityType }.json" )
-            .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
+            .AddJsonBody( payload );
 
         var resp = await _rest.PostAsync<InvoicePayload>( req );
 
@@ -33,11 +39,16 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceUpdateAsync( Invoice invoice )
+    public async Task<ApiResult> InvoiceUpdateAsync( InvoiceData invoice )
     {
+        if ( invoice.Id.HasValue == false )
+            throw new ArgumentException( ".Id property is required when updating an invoice", nameof( invoice ) );
+
         var entityType = InvoiceEntity.ToEntityName( invoice.Type );
+        var payload = new InvoiceDataPayload() { Invoice = invoice };
+
         var req = new RestRequest( $"/{ entityType }/{ invoice.Id }.json" )
-            .AddJsonBody( new InvoicePayload() { Invoice = invoice } );
+            .AddJsonBody( payload );
 
         await _rest.PutAsync( req );
 
@@ -102,8 +113,23 @@ public partial class InvoiceXpressClient
         if ( search.Text != null )
             req.AddQueryParameter( "text", search.Text );
 
-        // type[]
-        // status[]
+        if ( search.Type != null && search.Type.Count > 0 )
+        {
+            foreach ( var i in search.Type.Distinct() )
+            {
+                var v = JsonSerializer.Serialize( i )!;
+                req.AddQueryParameter( "type[]", v );
+            }
+        }
+
+        if ( search.State != null && search.State.Count > 0 )
+        {
+            foreach ( var i in search.State.Distinct() )
+            {
+                var v = JsonSerializer.Serialize( i )!;
+                req.AddQueryParameter( "status[]", v );
+            }
+        }
 
         if ( search.DateFrom.HasValue == true )
             req.AddQueryParameter( "date[from]", V( search.DateFrom.Value ) );
@@ -139,18 +165,31 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceSendByEmailAsync()
+    public async Task<ApiResult> InvoiceSendByEmailAsync( InvoiceType type, int invoiceId, EmailMessage message )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        var entityName = InvoiceEntity.ToEntityName( type );
+        var payload = EmailMessagePayload.From( message );
+
+        var req = new RestRequest( $"/{ entityName }/{ invoiceId }/email-document.json" )
+            .AddJsonBody( payload );
+
+        await _rest.PutAsync( req );
+
+        return new ApiResult();
     }
 
 
     /// <summary />
-    public async Task<ApiResult> InvoicePdfGenerateAsync()
+    public async Task<ApiResult> InvoicePdfGenerateAsync( InvoiceType type, int invoiceId, bool secondCopy = false )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        var req = new RestRequest( $"/api/pdf/{ invoiceId }.json" );
+
+        if ( secondCopy == true )
+            req.AddQueryParameter( "second_copy", "true" );
+
+        var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
+
+        return Result( resp!.PdfDocument );
     }
 
 

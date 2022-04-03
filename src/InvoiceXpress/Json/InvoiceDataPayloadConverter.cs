@@ -23,6 +23,13 @@ public class InvoiceDataPayloadConverter : JsonConverter<InvoiceDataPayload>
         writer.WriteStartObject();
         writer.WritePropertyName( elementName );
         JsonSerializer.Serialize( writer, value.Invoice, options );
+
+        if ( value.RequestUuid != null )
+        {
+            writer.WritePropertyName( "proprietary_uid" );
+            writer.WriteStringValue( value.RequestUuid );
+        }
+
         writer.WriteEndObject();
     }
 }

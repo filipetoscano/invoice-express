@@ -10,7 +10,7 @@ public struct InvoiceSearch
     public List<InvoiceType>? Type { get; set; }
 
     /// <summary />
-    public List<InvoiceState>? Status { get; set; }
+    public List<InvoiceState>? State { get; set; }
 
     /// <summary />
     public DateOnly? DateFrom { get; set; }
@@ -32,4 +32,24 @@ public struct InvoiceSearch
 
     /// <summary />
     public string? Reference { get; set; }
+
+
+    /// <summary />
+    public void AddType( InvoiceType type )
+    {
+        if ( Type == null )
+            Type = new List<InvoiceType>();
+
+        Type.Add( type );
+    }
+
+
+    /// <summary />
+    public void AddState( InvoiceState state )
+    {
+        if ( State == null )
+            State = new List<InvoiceState>();
+
+        State.Add( state );
+    }
 }

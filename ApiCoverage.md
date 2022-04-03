@@ -28,8 +28,8 @@ Invoices (2/11)
 
 | I? | Method            | Method                                      | Notes |
 |----|-------------------|---------------------------------------------|-------|
-| ❌ | `InvoiceSendByEmailAsync`      | [Send by Email](https://www.invoicexpress.com/api-v2/invoices/send-by-email) |
-| ❌ | `InvoicePdfGenerateAsync`      | [Generate PDF](https://www.invoicexpress.com/api-v2/invoices/generate-pdf) |
+| ✔️ | `InvoiceSendByEmailAsync`      | [Send by Email](https://www.invoicexpress.com/api-v2/invoices/send-by-email) |
+| ✔️ | `InvoicePdfGenerateAsync`      | [Generate PDF](https://www.invoicexpress.com/api-v2/invoices/generate-pdf) |
 | ✔️ | `InvoiceListAsync`             | [List all](https://www.invoicexpress.com/api-v2/invoices/list-all) |
 | ✔️ | `InvoiceGetAsync`              | [Get](https://www.invoicexpress.com/api-v2/invoices/get) |
 | ❌ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
