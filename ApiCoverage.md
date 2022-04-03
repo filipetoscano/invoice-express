@@ -46,13 +46,13 @@ Estimates (2/7)
 
 | I? | Method            | Method                                      | Notes |
 |----|-------------------|---------------------------------------------|-------|
-| ❌ | `EstimateSendByEmailAsync` | [Send by Email](https://www.invoicexpress.com/api-v2/estimates/send-by-email-1) |
-| ❌ | `EstimatePdfGenerateAsync` | [Generate PDF](https://www.invoicexpress.com/api-v2/estimates/generate-pdf-1) |
+| ✔️ | `EstimateSendByEmailAsync` | [Send by Email](https://www.invoicexpress.com/api-v2/estimates/send-by-email-1) |
+| ✔️ | `EstimatePdfGenerateAsync` | [Generate PDF](https://www.invoicexpress.com/api-v2/estimates/generate-pdf-1) |
 | ✔️ | `EstimateListAsync`        | [List all](https://www.invoicexpress.com/api-v2/estimates/list-all-1) |
 | ✔️ | `EstimateGetAsync`         | [Get](https://www.invoicexpress.com/api-v2/estimates/get-1) |
-| ❌ | `EstimateCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/estimates/create-1) |
-| ❌ | `EstimateUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/estimates/update-1) |
-| ❌ | `EstimateStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/estimates/change-state-1) |
+| ✔️ | `EstimateCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/estimates/create-1) | Only with existing client and items
+| ✔️ | `EstimateUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/estimates/update-1) |
+| ✔️ | `EstimateStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/estimates/change-state-1) |
 
 
 Guides (0/8)

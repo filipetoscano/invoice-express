@@ -27,6 +27,11 @@ public class Estimate
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public string? SequenceNumber { get; set; }
 
+    /// <summary />
+    [JsonPropertyName( "inverted_sequence_number" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public string? InvertedSequenceNumber { get; set; }
+
     /// <summary>
     /// Date of issuance of the estimate.
     /// </summary>

@@ -87,17 +87,45 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> EstimateSendByEmailAsync()
+    public async Task<ApiResult> EstimateSendByEmailAsync( EstimateType type, int estimateId, EmailMessage message )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        var entityName = EstimateEntity.ToEntityName( type );
+        var payload = new EmailMessagePayload()
+        {
+            EmailMessage = new EmailMessageEx()
+            {
+                Client = new EmailClient()
+                {
+                    Email = message.To,
+                    SaveEmailAsDefault = message.SaveEmailAsDefault,
+                },
+                Subject = message.Subject,
+                Body = message.Body,
+                BCC =   message.BCC,
+                CC = message.CC,
+                IncludeLogo = message.IncludeLogo,
+            },
+        };
+
+        var req = new RestRequest( $"/{ entityName }/{ estimateId }/email-document.json" )
+            .AddJsonBody( payload );
+
+        await _rest.PutAsync( req );
+
+        return new ApiResult();
     }
 
 
     /// <summary />
-    public async Task<ApiResult> EstimatePdfGenerateAsync()
+    public async Task<ApiResult<PdfDocument>> EstimatePdfGenerateAsync( EstimateType type, int estimateId, bool secondCopy = false )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        var req = new RestRequest( $"/api/pdf/{ estimateId }.json" );
+
+        if ( secondCopy == true )
+            req.AddQueryParameter( "second_copy", "true" );
+
+        var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
+
+        return Result( resp!.PdfDocument );
     }
 }

@@ -6,7 +6,9 @@ namespace InvoiceXpress.Cli;
 [Command( "estimate", Description = "Estimate operations (quotes, proformas, fee notes)" )]
 [Subcommand( typeof( EstimateCreateCommand ) )]
 [Subcommand( typeof( EstimateDetailCommand ) )]
+[Subcommand( typeof( EstimateEmailCommand ) )]
 [Subcommand( typeof( EstimateListCommand ) )]
+[Subcommand( typeof( EstimatePdfCommand ) )]
 [Subcommand( typeof( EstimateStateChangeCommand ) )]
 [Subcommand( typeof( EstimateUpdateCommand ) )]
 public class EstimateCommand
