@@ -13,3 +13,4 @@ obj/
 !.yarn/releases
 
 /tools/InvoiceXpress.Cli/*.json
+/tools/InvoiceXpress.Cli/req/*.json
