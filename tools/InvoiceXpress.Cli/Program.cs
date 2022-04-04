@@ -1,10 +1,13 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using HttpTracer;
+using HttpTracer.Logger;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "invxp", Description = "Manage invoicexpress account" )]
+[Command( "invxp", Description = "Execute operations on a invoicexpress account" )]
 [Subcommand( typeof( ClientCommand ) )]
 [Subcommand( typeof( EstimateCommand ) )]
 [Subcommand( typeof( GuideCommand ) )]
@@ -15,27 +18,47 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( SequenceCommand ) )]
 [Subcommand( typeof( VatCommand ) )]
 [HelpOption]
+[VersionOptionFromMember( MemberName = nameof( GetVersion ) )]
 public class Program
 {
+    /// <summary />
+    [Option( "--debug", CommandOptionType.NoValue, Description = "Trace HTTP traffic to console" )]
+    public bool Debug { get; set; } = false;
+
+
     /// <summary />
     public static int Main( string[] args )
     {
         /*
-         * 
+         * App
          */
-        var apiKey = Environment.GetEnvironmentVariable( "INVEXP_API" );
-        var account = Environment.GetEnvironmentVariable( "INVEXP_ACCOUNT" );
+        var app = new CommandLineApplication<Program>();
 
 
         /*
          * Services
+         * Note: .Configure won't run immediately! It will only run when activating
+         * the sub-command, at which point the command-line arguments (at the root-level)
+         * will have been processed!
          */
         var services = new ServiceCollection();
 
         services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
         {
-            opt.AccountName = account!;
-            opt.ApiKey = apiKey!;
+            var apiKey = Environment.GetEnvironmentVariable( "INVXP_APIKEY" );
+            var account = Environment.GetEnvironmentVariable( "INVXP_ACCOUNT" );
+
+            if ( apiKey == null )
+                throw new ConfigException( "Environment variable 'INVXP_APIKEY' not set" );
+
+            if ( account == null )
+                throw new ConfigException( "Environment variable 'INVXP_ACCOUNT' not set" );
+
+            opt.AccountName = account;
+            opt.ApiKey = apiKey;
+
+            if ( app.Model.Debug == true )
+                opt.ConfigureMessageHandler = handler => new HttpTracerHandler( handler, new ConsoleLogger(), HttpMessageParts.All );
         } );
 
         services.AddSingleton<InvoiceXpressClient>();
@@ -46,8 +69,6 @@ public class Program
         /*
          * 
          */
-        var app = new CommandLineApplication<Program>();
-
         app.Conventions
             .UseDefaultConventions()
             .UseConstructorInjection( sp );
@@ -55,6 +76,11 @@ public class Program
         try
         {
             return app.Execute( args );
+        }
+        catch ( ConfigException ex )
+        {
+            Console.WriteLine( "err: " + ex.Message );
+            return 7000;
         }
         catch ( UnrecognizedCommandParsingException )
         {
@@ -65,6 +91,15 @@ public class Program
             Console.WriteLine( "err: " + ex.ToString() );
             return 9000;
         }
+    }
+
+
+    /// <summary />
+    private string GetVersion()
+    {
+        return typeof( Program ).Assembly!
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
+            .InformationalVersion;
     }
 
 

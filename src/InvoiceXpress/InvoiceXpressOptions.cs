@@ -15,4 +15,7 @@ public class InvoiceXpressOptions
     /// Key for API access.
     /// </summary>
     public string ApiKey { get; set; } = default!;
+
+    /// <summary />
+    public Func<HttpMessageHandler, HttpMessageHandler>? ConfigureMessageHandler;
 }
