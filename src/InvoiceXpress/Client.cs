@@ -80,7 +80,8 @@ public class Client : IClient
     /// (Fiscal) country.
     /// </summary>
     [JsonPropertyName( "country" )]
-    public Country? Country { get; set; }
+    [JsonConverter( typeof( CountryCodeAsNameConverter ) )]
+    public string? Country { get; set; }
 
     /// <summary />
     [JsonPropertyName( "fiscal_id" )]
