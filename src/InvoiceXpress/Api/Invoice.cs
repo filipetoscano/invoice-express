@@ -14,10 +14,10 @@ public partial class InvoiceXpressClient
         if ( invoice.Id.HasValue == true )
             throw new ArgumentException( ".Id property is prohibited when creating an invoice", nameof( invoice ) );
 
-        var entityType = InvoiceEntity.ToEntityName( invoice.Type );
+        var entityName = InvoiceEntity.ToEntityName( invoice.Type );
         var payload = new InvoiceDataPayload() { Invoice = invoice, RequestUuid = requestUuid };
 
-        var req = new RestRequest( $"/{ entityType }.json" )
+        var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
         var resp = await _rest.PostAsync<InvoicePayload>( req );
@@ -29,8 +29,8 @@ public partial class InvoiceXpressClient
     /// <summary />
     public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceType type, int invoiceId )
     {
-        var entityType = InvoiceEntity.ToEntityName( type );
-        var req = new RestRequest( $"/{ entityType }/{ invoiceId }.json" );
+        var entityName = InvoiceEntity.ToEntityName( type );
+        var req = new RestRequest( $"/{ entityName }/{ invoiceId }.json" );
 
         var resp = await _rest.GetAsync<InvoicePayload>( req );
 
@@ -44,10 +44,10 @@ public partial class InvoiceXpressClient
         if ( invoice.Id.HasValue == false )
             throw new ArgumentException( ".Id property is required when updating an invoice", nameof( invoice ) );
 
-        var entityType = InvoiceEntity.ToEntityName( invoice.Type );
+        var entityName = InvoiceEntity.ToEntityName( invoice.Type );
         var payload = new InvoiceDataPayload() { Invoice = invoice };
 
-        var req = new RestRequest( $"/{ entityType }/{ invoice.Id }.json" )
+        var req = new RestRequest( $"/{ entityName }/{ invoice.Id }.json" )
             .AddJsonBody( payload );
 
         await _rest.PutAsync( req );

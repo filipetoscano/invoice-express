@@ -1,27 +1,26 @@
 ﻿using InvoiceXpress.Json;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
 /// <summary />
-public class Invoice
+public class Guide
 {
     /// <summary />
     [JsonPropertyName( "id" )]
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary />
     [JsonPropertyName( "status" )]
-    public InvoiceState? State { get; set; }
+    public GuideState State { get; set; }
 
     /// <summary />
     [JsonPropertyName( "archived" )]
-    public bool? IsArchived { get; set; }
+    public bool IsArchived { get; set; }
 
     /// <summary />
     [JsonPropertyName( "type" )]
-    public InvoiceType Type { get; set; }
+    public GuideType Type { get; set; }
 
     /// <summary />
     [JsonPropertyName( "sequence_number" )]
@@ -33,46 +32,27 @@ public class Invoice
     public string? InvertedSequenceNumber { get; set; }
 
     /// <summary>
-    /// Invoice date.
+    /// Document date.
     /// </summary>
     [JsonPropertyName( "date" )]
     [JsonConverter( typeof( NonIsoDateConverter ) )]
     public DateOnly Date { get; set; }
 
-    /// <summary>
-    /// Invoice due date.
-    /// </summary>
-    [JsonPropertyName( "due_date" )]
-    [JsonConverter( typeof( NonIsoDateConverter ) )]
-    public DateOnly DueDate { get; set; }
-
-    /// <summary>
-    /// Invoice purchase order reference field.
-    /// </summary>
+    /// <summary />
     [JsonPropertyName( "reference" )]
-    public string? Reference { get; set; }
+    public string Reference { get; set; } = default!;
 
-    /// <summary>
-    /// Remarks, which shall be printed on the invoice.
-    /// </summary>
+    /// <summary />
     [JsonPropertyName( "observations" )]
-    public string? Remarks { get; set; }
-
-    /// <summary>
-    /// Withholding tax percentage (%). Must be a number between 0 and 99.99.
-    /// </summary>
-    [Range( 0, 99.99 )]
-    [JsonConverter( typeof( DecimalAsStringConverter ) )]
+    public string Remarks { get; set; } = default!;
+    
+    /// <summary />
     [JsonPropertyName( "retention" )]
-    public decimal? RetentionPercentage { get; set; } = default!;
+    public decimal? RetentionPercentage { get; set; }
 
     /// <summary />
     [JsonPropertyName( "permalink" )]
     public string Permalink { get; set; } = default!;
-
-    /// <summary />
-    [JsonPropertyName( "saft_hash" )]
-    public string? SaftHash { get; set; }
 
     /// <summary />
     [JsonPropertyName( "sum" )]
@@ -80,7 +60,7 @@ public class Invoice
 
     /// <summary />
     [JsonPropertyName( "discount" )]
-    public decimal? DiscountAmount { get; set; }
+    public decimal DiscountAmount { get; set; }
 
     /// <summary />
     [JsonPropertyName( "before_taxes" )]
@@ -90,7 +70,9 @@ public class Invoice
     [JsonPropertyName( "taxes" )]
     public decimal TaxesAmount { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Total amount, including taxes.
+    /// </summary>
     [JsonPropertyName( "total" )]
     public decimal TotalAmount { get; set; }
 
@@ -100,15 +82,31 @@ public class Invoice
     public string CurrencyCode { get; set; } = default!;
 
     /// <summary />
-    [JsonPropertyName( "multicurrency" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public ForeignCurrency? ForeignCurrency { get; set; }
-
-    /// <summary />
     [JsonPropertyName( "client" )]
     public Client Client { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "items" )]
     public List<DocumentItem> Items { get; set; } = default!;
+
+    /// <summary />
+    [JsonPropertyName( "loaded_at" )]
+    [JsonConverter( typeof( NonIsoDateConverter ) )]
+    public DateOnly? LoadedOn { get; set; }
+
+    /// <summary />
+    [JsonPropertyName( "license_plate" )]
+    public string VehicleLicensePlate { get; set; } = default!;
+
+    /// <summary />
+    [JsonPropertyName( "at_doc_code_id" )]
+    public string? at_doc_code_id { get; set; }
+
+    /// <summary />
+    [JsonPropertyName( "address_from" )]
+    public Address AddressFrom { get; set; } = default!;
+
+    /// <summary />
+    [JsonPropertyName( "address_to" )]
+    public Address AddressTo { get; set; } = default!;
 }

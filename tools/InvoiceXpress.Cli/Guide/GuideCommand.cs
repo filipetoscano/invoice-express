@@ -4,6 +4,9 @@ namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "guide", Description = "Guide operations (delivery, shipping and return delivery notes)" )]
+[Subcommand( typeof( GuideCreateCommand ) )]
+[Subcommand( typeof( GuideDetailCommand ) )]
+[Subcommand( typeof( GuideListCommand ) )]
 public class GuideCommand
 {
     /// <summary />

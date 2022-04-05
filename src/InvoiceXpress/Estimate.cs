@@ -24,8 +24,7 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "sequence_number" )]
-    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public string? SequenceNumber { get; set; }
+    public string SequenceNumber { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "inverted_sequence_number" )]
@@ -56,7 +55,7 @@ public class Estimate
 
     /// <summary />
     [JsonPropertyName( "retention" )]
-    public decimal? Retention { get; set; }
+    public decimal? RetentionPercentage { get; set; }
 
     /// <summary />
     [JsonPropertyName( "permalink" )]
