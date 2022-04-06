@@ -11,6 +11,7 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( InvoicePayCommand ) )]
 [Subcommand( typeof( InvoicePayCancelCommand ) )]
 [Subcommand( typeof( InvoicePdfCommand ) )]
+[Subcommand( typeof( InvoiceQrCommand ) )]
 [Subcommand( typeof( InvoiceRelatedCommand ) )]
 [Subcommand( typeof( InvoiceStateChangeCommand ) )]
 [Subcommand( typeof( InvoiceUpdateCommand ) )]

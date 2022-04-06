@@ -221,9 +221,23 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceQrCodeImageAsync()
+    public async Task<ApiResult<string>> InvoiceQrCodeUrlAsync( InvoiceType type, int invoiceId )
     {
-        await Task.Delay( 0 );
-        throw new NotImplementedException();
+        var req = new RestRequest( $"/api/qr_codes/{ invoiceId }.json" );
+
+        var resp = await _rest.GetAsync<QrCodeImagePayload>( req );
+
+        return Result( resp!.QrCode.Url );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> InvoiceQrCodeImageAsync( InvoiceType type, int invoiceId )
+    {
+        var resp = await InvoiceQrCodeUrlAsync( type, invoiceId );
+
+        var image = await _client.GetByteArrayAsync( resp.Result );
+
+        return Result( image );
     }
 }

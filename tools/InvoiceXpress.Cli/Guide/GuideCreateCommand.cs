@@ -12,7 +12,7 @@ public class GuideCreateCommand
     [Argument( 0, Description = "Client record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,8 +21,8 @@ public class GuideCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
-        var guide = JsonSerializer.Deserialize<Guide>( json )!;
+        var json = await File.ReadAllTextAsync( this.FilePath! );
+        var guide = JsonSerializer.Deserialize<GuideData>( json )!;
 
 
         /*

@@ -12,7 +12,7 @@ public class VatCreateCommand
     [Argument( 0, Description = "VAT rate, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,7 +21,7 @@ public class VatCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var vat = JsonSerializer.Deserialize<VatRate>( json )!;
 
 

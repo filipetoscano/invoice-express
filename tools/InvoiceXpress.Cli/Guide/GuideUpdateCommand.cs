@@ -5,18 +5,18 @@ using System.Text.Json;
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "update", Description = "Updates a client record" )]
-public class ClientUpdateCommand
+[Command( "update", Description = "Updates a guide" )]
+public class GuideUpdateCommand
 {
     /// <summary />
-    [Argument( 0, Description = "Client record, in JSON file" )]
+    [Argument( 0, Description = "Guide record, in JSON file" )]
     [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
     /// <summary />
-    [Option( "--id", CommandOptionType.SingleValue, Description = "Set client identifier, overriding value in JSON file" )]
-    public int? ClientId { get; set; }
+    [Option( "--id", CommandOptionType.SingleValue, Description = "Set guide identifier, overriding value in JSON file" )]
+    public int? GuideId { get; set; }
 
 
     /// <summary />
@@ -26,16 +26,16 @@ public class ClientUpdateCommand
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath! );
-        var client = JsonSerializer.Deserialize<Client>( json )!;
+        var guide = JsonSerializer.Deserialize<GuideData>( json )!;
 
-        if ( this.ClientId.HasValue == true )
-            client.Id = this.ClientId.Value;
+        if ( this.GuideId.HasValue == true )
+            guide.Id = this.GuideId.Value;
 
 
         /*
          * 
          */
-        var res = await api.ClientUpdateAsync( client );
+        var res = await api.GuideUpdateAsync( guide );
 
         return 0;
     }

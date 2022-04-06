@@ -12,7 +12,11 @@ public class EstimateUpdateCommand
     [Argument( 0, Description = "Estimate record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
+
+    /// <summary />
+    [Option( "--id", CommandOptionType.SingleValue, Description = "Set estimate identifier, overriding value in JSON file" )]
+    public int? EstimateId { get; set; }
 
 
     /// <summary />
@@ -21,8 +25,11 @@ public class EstimateUpdateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var estimate = JsonSerializer.Deserialize<EstimateData>( json )!;
+
+        if ( this.EstimateId.HasValue == true )
+            estimate.Id = this.EstimateId.Value;
 
 
         /*

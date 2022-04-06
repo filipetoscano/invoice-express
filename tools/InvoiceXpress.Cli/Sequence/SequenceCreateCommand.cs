@@ -12,7 +12,7 @@ public class SequenceCreateCommand
     [Argument( 0, Description = "Sequence record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,7 +21,7 @@ public class SequenceCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var seq = JsonSerializer.Deserialize<SequenceRef>( json )!;
 
 

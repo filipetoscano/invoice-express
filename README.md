@@ -10,14 +10,14 @@ Status / Roadmap
 --------------------------------------------------------------------------
 
 This library is currently under development! It is not currently usable
-for production use.
+for production use. The coverage of the official REST API is
+[documented here](ApiCoverage.md).
 
 The roadmap is currently as follows:
 
-* Invoice methods
-* Estimate methods
-* CI/CD using github actions
 * Error handling / throwing
+* CI/CD using github actions
+* Regression testing suite
 * Logging support
 * Polly support
 

@@ -43,10 +43,13 @@ public class Program
          */
         var services = new ServiceCollection();
 
+        services.AddHttpClient<InvoiceXpressClient>();
+
         services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
         {
             var apiKey = Environment.GetEnvironmentVariable( "INVXP_APIKEY" );
             var account = Environment.GetEnvironmentVariable( "INVXP_ACCOUNT" );
+            var debug = Environment.GetEnvironmentVariable( "INVXP_DEBUG" );
 
             if ( apiKey == null )
                 throw new ConfigException( "Environment variable 'INVXP_APIKEY' not set" );
@@ -57,7 +60,7 @@ public class Program
             opt.AccountName = account;
             opt.ApiKey = apiKey;
 
-            if ( app.Model.Debug == true )
+            if ( app.Model.Debug == true || debug == "1" )
                 opt.ConfigureMessageHandler = handler => new HttpTracerHandler( handler, new ConsoleLogger(), HttpMessageParts.All );
         } );
 

@@ -12,7 +12,7 @@ public class ItemCreateCommand
     [Argument( 0, Description = "Item record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,7 +21,7 @@ public class ItemCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var item = JsonSerializer.Deserialize<Item>( json )!;
 
 

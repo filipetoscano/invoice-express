@@ -7,10 +7,10 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Guide>> GuideCreateAsync( Guide guide )
+    public async Task<ApiResult<Guide>> GuideCreateAsync( GuideData guide )
     {
         var entityName = GuideEntity.ToEntityName( guide.Type );
-        var payload = new GuidePayload() { Guide = guide };
+        var payload = new GuideDataPayload() { Guide = guide };
 
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
@@ -34,10 +34,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> GuideUpdateAsync( Guide guide )
+    public async Task<ApiResult> GuideUpdateAsync( GuideData guide )
     {
         var entityName = GuideEntity.ToEntityName( guide.Type );
-        var payload = new GuidePayload() { Guide = guide };
+        var payload = new GuideDataPayload() { Guide = guide };
 
         var req = new RestRequest( $"/{ entityName }/{ guide.Id }.json" )
             .AddJsonBody( payload );

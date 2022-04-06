@@ -12,7 +12,11 @@ public class VatUpdateCommand
     [Argument( 0, Description = "VAT rate, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
+
+    /// <summary />
+    [Option( "--id", CommandOptionType.SingleValue, Description = "Set VAT rate identifier, overriding value in JSON file" )]
+    public int? RateId { get; set; }
 
 
     /// <summary />
@@ -21,8 +25,11 @@ public class VatUpdateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var vat = JsonSerializer.Deserialize<VatRate>( json )!;
+
+        if ( this.RateId.HasValue == true )
+            vat.Id = this.RateId.Value;
 
 
         /*

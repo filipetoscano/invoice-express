@@ -12,7 +12,7 @@ public class ClientCreateCommand
     [Argument( 0, Description = "Client record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,7 +21,7 @@ public class ClientCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var client = JsonSerializer.Deserialize<Client>( json )!;
 
 

@@ -12,7 +12,11 @@ public class ItemUpdateCommand
     [Argument( 0, Description = "Item record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
+
+    /// <summary />
+    [Option( "--id", CommandOptionType.SingleValue, Description = "Set item identifier, overriding value in JSON file" )]
+    public int? ItemId { get; set; }
 
 
     /// <summary />
@@ -21,8 +25,11 @@ public class ItemUpdateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var item = JsonSerializer.Deserialize<Item>( json )!;
+
+        if ( this.ItemId.HasValue == true )
+            item.Id = this.ItemId.Value;
 
 
         /*

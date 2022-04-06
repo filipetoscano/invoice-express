@@ -7,5 +7,5 @@ namespace InvoiceXpress.Payloads;
 [JsonConverter( typeof( GuideDataPayloadConverter ) )]
 public class GuideDataPayload
 {
-    public Guide Guide { get; set; } = default!;
+    public GuideData Guide { get; set; } = default!;
 }

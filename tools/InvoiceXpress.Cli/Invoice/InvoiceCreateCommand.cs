@@ -12,7 +12,7 @@ public class InvoiceCreateCommand
     [Argument( 0, Description = "Invoice record, in JSON file" )]
     [Required]
     [FileExists]
-    public string FilePath { get; set; } = default!;
+    public string? FilePath { get; set; }
 
 
     /// <summary />
@@ -21,7 +21,7 @@ public class InvoiceCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath );
+        var json = await File.ReadAllTextAsync( this.FilePath! );
         var invoice = JsonSerializer.Deserialize<InvoiceData>( json )!;
 
 

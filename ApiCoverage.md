@@ -3,9 +3,9 @@
 
 | Entity            | %PC  | Progress |
 |-------------------|-----:|---------:|
-| Invoices          |  81% | 9/11     |
+| Invoices          | 100% | 11/11    |
 | Estimates         | 100% | 7/7      |
-| Guides            |   0% | 0/8      |
+| Guides            |  25% | 2/8      |
 | Purchase orders   |   0% | 0/7      |
 | Clients           |  71% | 5/7      |
 | Items             | 100% | 5/5      |
@@ -13,7 +13,7 @@
 | Taxes / VAT rates | 100% | 5/5      |
 | Accounts          |   0% | 0/4      |
 | SAF-T             |   0% | 0/1      |
-| *Overall*         |  54% | 32/59    |
+| *Overall*         |  66% | 39/59    |
 
 
 Legend:
@@ -24,7 +24,7 @@ Legend:
 * ❗, Implemented but not working
 
 
-Invoices (9/11)
+Invoices (11/11)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
@@ -34,12 +34,12 @@ Invoices (9/11)
 | ✔️ | `InvoiceListAsync`             | [List all](https://www.invoicexpress.com/api-v2/invoices/list-all) |
 | ✔️ | `InvoiceGetAsync`              | [Get](https://www.invoicexpress.com/api-v2/invoices/get) |
 | ✔️ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
-| ❌ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) |
+| ✔️ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) |
 | ✔️ | `InvoiceStateChangeAsync`      | [Change state](https://www.invoicexpress.com/api-v2/invoices/change-state) |
 | ✔️ | `InvoiceRelatedDocumentsAsync` | [Related documents](https://www.invoicexpress.com/api-v2/invoices/related-documents) |
 | ✔️ | `InvoicePaymentAsync`          | [Generate payment](https://www.invoicexpress.com/api-v2/invoices/generate-payment) |
 | ✔️ | `InvoicePaymentCancelAsync`    | [Cancel payment](https://www.invoicexpress.com/api-v2/invoices/cancel-payment) |
-| ❌ | `InvoiceQrCodeImageAsync`      | [Get QR code](https://www.invoicexpress.com/api-v2/invoices/get-qrcode) |
+| ✔️ | `InvoiceQrCodeImageAsync`      | [Get QR code](https://www.invoicexpress.com/api-v2/invoices/get-qrcode) |
 
 
 Estimates (7/7)
@@ -56,19 +56,19 @@ Estimates (7/7)
 | ✔️ | `EstimateStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/estimates/change-state-1) |
 
 
-Guides (0/8)
+Guides (2/8)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
 |----|-------------------|---------------------------------------------|-------|
-| ❌ | | [Send by Email](https://www.invoicexpress.com/api-v2/guides/send-by-email-2) |
-| ❌ | | [Generate PDF](https://www.invoicexpress.com/api-v2/guides/generate-pdf-2) |
-| ❌ | | [List all](https://www.invoicexpress.com/api-v2/guides/list-all-2) |
-| ❌ | | [Get](https://www.invoicexpress.com/api-v2/guides/get-2) |
-| ❌ | | [Create](https://www.invoicexpress.com/api-v2/guides/create-2) |
-| ❌ | | [Update](https://www.invoicexpress.com/api-v2/guides/update-2) |
-| ❌ | | [Change state](https://www.invoicexpress.com/api-v2/guides/change-state-2) |
-| ❌ | | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
+| ❌ | `GuideSendByEmailAsync` | [Send by Email](https://www.invoicexpress.com/api-v2/guides/send-by-email-2) |
+| ❌ | `GuidePdfGenerateAsync` | [Generate PDF](https://www.invoicexpress.com/api-v2/guides/generate-pdf-2) |
+| ✔️ | `GuideListAsync`        | [List all](https://www.invoicexpress.com/api-v2/guides/list-all-2) |
+| ✔️ | `GuideGetAsync`         | [Get](https://www.invoicexpress.com/api-v2/guides/get-2) |
+| ❌ | `GuideCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/guides/create-2) |
+| ❌ | `GuideUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/guides/update-2) |
+| ❌ | `GuideStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/guides/change-state-2) |
+| ❌ | `GuideQrCodeImageAsync` | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
 
 
 Purchase orders (0/7)
@@ -88,8 +88,8 @@ Purchase orders (0/7)
 Clients (5/7)
 -------------------------------------------------------------------------------
 
-| I? | Method                | Method                                  | Notes |
-|----|-----------------------|-----------------------------------------|-------|
+| I? | Method            | Method                                      | Notes |
+|----|-------------------|---------------------------------------------|-------|
 | ✔️ | `ClientListAsync`      | [List all](https://www.invoicexpress.com/api-v2/clients/list-all-4) |
 | ✔️ | `ClientGetAsync`       | [Get](https://www.invoicexpress.com/api-v2/clients/get-4) |
 | ✔️ | `ClientCreateAsync`    | [Create](https://www.invoicexpress.com/api-v2/clients/create-4) |
@@ -114,8 +114,8 @@ Items (5/5)
 Sequences (4/4)
 -------------------------------------------------------------------------------
 
-| I? | Method                    | Method                              | Notes |
-|----|---------------------------|-------------------------------------|-------|
+| I? | Method            | Method                                      | Notes |
+|----|-------------------|---------------------------------------------|-------|
 | ✔️ | `SequenceListAsync`       | [List all](https://www.invoicexpress.com/api-v2/sequences/list-all-6) |
 | ✔️ | `SequenceGetAsync`        | [Get](https://www.invoicexpress.com/api-v2/sequences/get-6) | Not all response fields are being mapped (the sequence Id)
 | ✔️ | `SequenceCreateAsync`     | [Create](https://www.invoicexpress.com/api-v2/sequences/create-6) |
@@ -125,8 +125,8 @@ Sequences (4/4)
 VAT rates (5/5)
 -------------------------------------------------------------------------------
 
-| I? | Method               | Method                                   | Notes |
-|----|----------------------|------------------------------------------|-------|
+| I? | Method            | Method                                      | Notes |
+|----|-------------------|---------------------------------------------|-------|
 | ✔️ | `VatRateListAsync`   | [List all](https://www.invoicexpress.com/api-v2/taxes/list-all-7) |
 | ✔️ | `VatRateGetAsync`    | [Get](https://www.invoicexpress.com/api-v2/taxes/get-7) |
 | ✔️ | `VatRateCreateAsync` | [Create](https://www.invoicexpress.com/api-v2/taxes/create-7) | See issue #3

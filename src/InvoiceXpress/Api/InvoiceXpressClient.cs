@@ -7,7 +7,7 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient : IDisposable
 {
     /// <summary />
-    public InvoiceXpressClient( IOptions<InvoiceXpressOptions> options )
+    public InvoiceXpressClient( IOptions<InvoiceXpressOptions> options, HttpClient client )
     {
         _options = options.Value;
 
@@ -23,6 +23,8 @@ public partial class InvoiceXpressClient : IDisposable
             .AddDefaultQueryParameter( "api_key", _options.ApiKey );
 
         _rest.AcceptedContentTypes = new string[] { "application/json" };
+
+        _client = client;
     }
 
 
@@ -41,5 +43,6 @@ public partial class InvoiceXpressClient : IDisposable
     }
 
     private readonly RestClient _rest;
+    private readonly HttpClient _client;
     private readonly InvoiceXpressOptions _options;
 }
