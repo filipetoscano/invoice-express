@@ -6,14 +6,13 @@
 | Invoices          | 100% | 11/11    |
 | Estimates         | 100% | 7/7      |
 | Guides            | 100% | 8/8      |
-| Purchase orders   |   0% | 0/7      |
 | Clients           |  71% | 5/7      |
 | Items             | 100% | 5/5      |
 | Sequences         | 100% | 4/4      |
 | Taxes / VAT rates | 100% | 5/5      |
 | Accounts          |   0% | 0/4      |
 | SAF-T             | 100% | 1/1      | ⚠️ Can't test on trial account
-| *Overall*         |  78% | 46/59    |
+| *Overall*         |  88% | 46/52    |
 
 
 Legend:
@@ -69,20 +68,6 @@ Guides (8/8)
 | ✔️ | `GuideUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/guides/update-2) | (Same as above)
 | ✔️ | `GuideStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/guides/change-state-2) |
 | ✔️ | `GuideQrCodeImageAsync` | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
-
-
-Purchase orders (0/7)
--------------------------------------------------------------------------------
-
-| I? | Method            | Method                                      | Notes |
-|----|-------------------|---------------------------------------------|-------|
-| ❌ | | [Send by Email](https://www.invoicexpress.com/api-v2/purchase-orders/send-by-email-3) |
-| ❌ | | [Generate PDF](https://www.invoicexpress.com/api-v2/purchase-orders/generate-pdf-3) |
-| ❌ | | [List all](https://www.invoicexpress.com/api-v2/purchase-orders/list-all-3) |
-| ❌ | | [Get](https://www.invoicexpress.com/api-v2/purchase-orders/get-3) |
-| ❌ | | [Create](https://www.invoicexpress.com/api-v2/purchase-orders/create-3) |
-| ❌ | | [Update](https://www.invoicexpress.com/api-v2/purchase-orders/update-3) |
-| ❌ | | [Change state](https://www.invoicexpress.com/api-v2/purchase-orders/change-state-3) |
 
 
 Clients (5/7)

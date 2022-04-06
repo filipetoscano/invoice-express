@@ -13,7 +13,6 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( GuideCommand ) )]
 [Subcommand( typeof( InvoiceCommand ) )]
 [Subcommand( typeof( ItemCommand ) )]
-[Subcommand( typeof( PurchaseOrderCommand ) )]
 [Subcommand( typeof( SaftCommand ) )]
 [Subcommand( typeof( SequenceCommand ) )]
 [Subcommand( typeof( VatCommand ) )]
