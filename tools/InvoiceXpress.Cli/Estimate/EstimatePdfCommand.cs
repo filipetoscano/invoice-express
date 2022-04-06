@@ -22,6 +22,7 @@ public class EstimatePdfCommand
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
         var res = await api.EstimatePdfGenerateAsync( this.EstimateType!.Value, this.EstimateId!.Value );
+        Console.WriteLine( res.Result!.Url );
 
         return 0;
     }

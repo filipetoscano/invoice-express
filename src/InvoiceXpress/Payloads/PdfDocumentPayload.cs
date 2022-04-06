@@ -9,12 +9,3 @@ public class PdfDocumentPayload
     [JsonPropertyName( "output" )]
     public PdfDocument PdfDocument { get; set; } = default!;
 }
-
-
-/// <summary />
-public class PdfDocument
-{
-    /// <summary />
-    [JsonPropertyName( "pdfUrl" )]
-    public string Url { get; set; } = default!;
-}

@@ -6,25 +6,17 @@ namespace InvoiceXpress;
 
 /// <summary />
 [JsonConverter( typeof( EnumConverter ) )]
-public enum GuideState
+public enum GuideAction
 {
     /// <summary />
-    [EnumMember( Value = "draft" )]
-    Draft,
+    [EnumMember( Value = "finalized" )]
+    Finalize,
 
     /// <summary />
-    [EnumMember( Value = "final" )]
-    Final,
-
-    /// <summary />
-    [EnumMember( Value = "sent" )]
-    Sent,
+    [EnumMember( Value = "deleted" )]
+    Delete,
 
     /// <summary />
     [EnumMember( Value = "canceled" )]
-    Canceled,
-
-    /// <summary />
-    [EnumMember( Value = "second_copy" )]
-    SecondCopy,
+    Cancel,
 }

@@ -18,10 +18,10 @@ public class EstimateDataPayloadConverter : JsonConverter<EstimateDataPayload>
     /// <summary />
     public override void Write( Utf8JsonWriter writer, EstimateDataPayload value, JsonSerializerOptions options )
     {
-        var elementName = EstimateEntity.ToElementName( value.Estimate.Type );
+        var propName = EstimateEntity.ToPropertyName( value.Estimate.Type );
 
         writer.WriteStartObject();
-        writer.WritePropertyName( elementName );
+        writer.WritePropertyName( propName );
         JsonSerializer.Serialize( writer, value.Estimate, options );
         writer.WriteEndObject();
     }

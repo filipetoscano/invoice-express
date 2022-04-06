@@ -6,19 +6,19 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress.Json;
 
 /// <summary />
-public class EstimateStateChangePayloadConverter : JsonConverter<EstimateStateChangePayload>
+public class GuideStateChangePayloadConverter : JsonConverter<GuideStateChangePayload>
 {
     /// <summary />
-    public override EstimateStateChangePayload? Read( ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options )
+    public override GuideStateChangePayload? Read( ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options )
     {
         throw new NotImplementedException();
     }
 
 
     /// <summary />
-    public override void Write( Utf8JsonWriter writer, EstimateStateChangePayload value, JsonSerializerOptions options )
+    public override void Write( Utf8JsonWriter writer, GuideStateChangePayload value, JsonSerializerOptions options )
     {
-        var propName = EstimateEntity.ToPropertyName( value.EstimateType );
+        var propName = GuideEntity.ToPropertyName( value.GuideType );
 
         writer.WriteStartObject();
         writer.WritePropertyName( propName );

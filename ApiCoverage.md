@@ -1,19 +1,19 @@
 ﻿API Coverage
 ===============================================================================
 
-| Entity            | %PC  | Progress |
-|-------------------|-----:|---------:|
+| Entity            | %PC  | Progress | Notes |
+|-------------------|-----:|---------:|-------|
 | Invoices          | 100% | 11/11    |
 | Estimates         | 100% | 7/7      |
-| Guides            |  25% | 2/8      |
+| Guides            | 100% | 8/8      |
 | Purchase orders   |   0% | 0/7      |
 | Clients           |  71% | 5/7      |
 | Items             | 100% | 5/5      |
 | Sequences         | 100% | 4/4      |
 | Taxes / VAT rates | 100% | 5/5      |
 | Accounts          |   0% | 0/4      |
-| SAF-T             |   0% | 0/1      |
-| *Overall*         |  66% | 39/59    |
+| SAF-T             | 100% | 1/1      | ⚠️ Can't test on trial account
+| *Overall*         |  78% | 46/59    |
 
 
 Legend:
@@ -33,8 +33,8 @@ Invoices (11/11)
 | ✔️ | `InvoicePdfGenerateAsync`      | [Generate PDF](https://www.invoicexpress.com/api-v2/invoices/generate-pdf) |
 | ✔️ | `InvoiceListAsync`             | [List all](https://www.invoicexpress.com/api-v2/invoices/list-all) |
 | ✔️ | `InvoiceGetAsync`              | [Get](https://www.invoicexpress.com/api-v2/invoices/get) |
-| ✔️ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) |
-| ✔️ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) |
+| ✔️ | `InvoiceCreateAsync`           | [Create](https://www.invoicexpress.com/api-v2/invoices/create) | Only with existing client and items
+| ✔️ | `InvoiceUpdateAsync`           | [Update](https://www.invoicexpress.com/api-v2/invoices/update) | (Same as above)
 | ✔️ | `InvoiceStateChangeAsync`      | [Change state](https://www.invoicexpress.com/api-v2/invoices/change-state) |
 | ✔️ | `InvoiceRelatedDocumentsAsync` | [Related documents](https://www.invoicexpress.com/api-v2/invoices/related-documents) |
 | ✔️ | `InvoicePaymentAsync`          | [Generate payment](https://www.invoicexpress.com/api-v2/invoices/generate-payment) |
@@ -52,23 +52,23 @@ Estimates (7/7)
 | ✔️ | `EstimateListAsync`        | [List all](https://www.invoicexpress.com/api-v2/estimates/list-all-1) |
 | ✔️ | `EstimateGetAsync`         | [Get](https://www.invoicexpress.com/api-v2/estimates/get-1) |
 | ✔️ | `EstimateCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/estimates/create-1) | Only with existing client and items
-| ✔️ | `EstimateUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/estimates/update-1) |
+| ✔️ | `EstimateUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/estimates/update-1) | (Same as above)
 | ✔️ | `EstimateStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/estimates/change-state-1) |
 
 
-Guides (2/8)
+Guides (8/8)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
 |----|-------------------|---------------------------------------------|-------|
-| ❌ | `GuideSendByEmailAsync` | [Send by Email](https://www.invoicexpress.com/api-v2/guides/send-by-email-2) |
-| ❌ | `GuidePdfGenerateAsync` | [Generate PDF](https://www.invoicexpress.com/api-v2/guides/generate-pdf-2) |
+| ✔️ | `GuideSendByEmailAsync` | [Send by Email](https://www.invoicexpress.com/api-v2/guides/send-by-email-2) |
+| ✔️ | `GuidePdfGenerateAsync` | [Generate PDF](https://www.invoicexpress.com/api-v2/guides/generate-pdf-2) |
 | ✔️ | `GuideListAsync`        | [List all](https://www.invoicexpress.com/api-v2/guides/list-all-2) |
 | ✔️ | `GuideGetAsync`         | [Get](https://www.invoicexpress.com/api-v2/guides/get-2) |
-| ❌ | `GuideCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/guides/create-2) |
-| ❌ | `GuideUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/guides/update-2) |
-| ❌ | `GuideStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/guides/change-state-2) |
-| ❌ | `GuideQrCodeImageAsync` | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
+| ✔️ | `GuideCreateAsync`      | [Create](https://www.invoicexpress.com/api-v2/guides/create-2) | Only with existing client and items
+| ✔️ | `GuideUpdateAsync`      | [Update](https://www.invoicexpress.com/api-v2/guides/update-2) | (Same as above)
+| ✔️ | `GuideStateChangeAsync` | [Change state](https://www.invoicexpress.com/api-v2/guides/change-state-2) |
+| ✔️ | `GuideQrCodeImageAsync` | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
 
 
 Purchase orders (0/7)

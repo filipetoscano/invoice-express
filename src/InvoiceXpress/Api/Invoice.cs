@@ -69,7 +69,11 @@ public partial class InvoiceXpressClient
         }
 
         var entityType = InvoiceEntity.ToEntityName( type );
-        var payload = new InvoiceStateChangePayload() { Change = change };
+        var payload = new InvoiceStateChangePayload()
+        {
+            InvoiceType = type,
+            Change = change,
+        };
 
         var req = new RestRequest( $"/{ entityType }/{ invoiceId }/change-state.json" )
             .AddJsonBody( payload );
@@ -207,7 +211,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoicePdfGenerateAsync( InvoiceType type, int invoiceId, bool secondCopy = false )
+    public async Task<ApiResult<PdfDocument>> InvoicePdfGenerateAsync( InvoiceType type, int invoiceId, bool secondCopy = false )
     {
         var req = new RestRequest( $"/api/pdf/{ invoiceId }.json" );
 

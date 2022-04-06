@@ -14,7 +14,7 @@ internal static class EstimateEntity
 
 
     /// <summary />
-    internal static string ToElementName( EstimateType type )
+    internal static string ToPropertyName( EstimateType type )
     {
         if ( type == EstimateType.Quote )
             return "quote";
@@ -32,6 +32,6 @@ internal static class EstimateEntity
     /// <summary />
     internal static string ToEntityName( EstimateType type )
     {
-        return ToElementName( type ) + "s";
+        return ToPropertyName( type ) + "s";
     }
 }

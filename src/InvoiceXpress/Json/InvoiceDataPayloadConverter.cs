@@ -18,10 +18,10 @@ public class InvoiceDataPayloadConverter : JsonConverter<InvoiceDataPayload>
     /// <summary />
     public override void Write( Utf8JsonWriter writer, InvoiceDataPayload value, JsonSerializerOptions options )
     {
-        var elementName = InvoiceEntity.ToElementName( value.Invoice.Type );
+        var propName = InvoiceEntity.ToPropertyName( value.Invoice.Type );
 
         writer.WriteStartObject();
-        writer.WritePropertyName( elementName );
+        writer.WritePropertyName( propName );
         JsonSerializer.Serialize( writer, value.Invoice, options );
 
         if ( value.RequestUuid != null )

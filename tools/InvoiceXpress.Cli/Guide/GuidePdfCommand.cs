@@ -4,24 +4,24 @@ using System.ComponentModel.DataAnnotations;
 namespace InvoiceXpress.Cli;
 
 /// <summary />
-[Command( "pdf", Description = "Generates a PDF document for a given invoice" )]
-public class InvoicePdfCommand
+[Command( "pdf", Description = "Generates a PDF document for a given guide" )]
+public class GuidePdfCommand
 {
     /// <summary />
-    [Argument( 0, Description = "Invoice type" )]
+    [Argument( 0, Description = "Guide type" )]
     [Required]
-    public InvoiceType? InvoiceType { get; set; }
+    public GuideType? GuideType { get; set; }
 
     /// <summary />
-    [Argument( 1, Description = "Invoice identifier" )]
+    [Argument( 1, Description = "Guide identifier" )]
     [Required]
-    public int? InvoiceId { get; set; }
+    public int? GuideId { get; set; }
 
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.InvoicePdfGenerateAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
+        var res = await api.GuidePdfGenerateAsync( this.GuideType!.Value, this.GuideId!.Value );
         Console.WriteLine( res.Result!.Url );
 
         return 0;

@@ -18,10 +18,10 @@ public class InvoiceStateChangePayloadConverter : JsonConverter<InvoiceStateChan
     /// <summary />
     public override void Write( Utf8JsonWriter writer, InvoiceStateChangePayload value, JsonSerializerOptions options )
     {
-        var elementName = InvoiceEntity.ToElementName( value.InvoiceType );
+        var propName = InvoiceEntity.ToPropertyName( value.InvoiceType );
 
         writer.WriteStartObject();
-        writer.WritePropertyName( elementName );
+        writer.WritePropertyName( propName );
         JsonSerializer.Serialize( writer, value.Change, options );
         writer.WriteEndObject();
     }

@@ -18,10 +18,10 @@ public class GuideDataPayloadConverter : JsonConverter<GuideDataPayload>
     /// <summary />
     public override void Write( Utf8JsonWriter writer, GuideDataPayload value, JsonSerializerOptions options )
     {
-        var elementName = GuideEntity.ToElementName( value.Guide.Type );
+        var propName = GuideEntity.ToPropertyName( value.Guide.Type );
 
         writer.WriteStartObject();
-        writer.WritePropertyName( elementName );
+        writer.WritePropertyName( propName );
         JsonSerializer.Serialize( writer, value.Guide, options );
         writer.WriteEndObject();
     }

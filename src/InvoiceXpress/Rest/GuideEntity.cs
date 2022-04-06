@@ -14,7 +14,7 @@ internal static class GuideEntity
 
 
     /// <summary />
-    internal static string ToElementName( GuideType type )
+    internal static string ToPropertyName( GuideType type )
     {
         if ( type == GuideType.DeliveryNote )
             return "transport";
@@ -32,6 +32,6 @@ internal static class GuideEntity
     /// <summary />
     internal static string ToEntityName( GuideType type )
     {
-        return ToElementName( type ) + "s";
+        return ToPropertyName( type ) + "s";
     }
 }

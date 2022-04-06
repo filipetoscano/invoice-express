@@ -24,7 +24,7 @@ internal static class InvoiceEntity
 
 
     /// <summary />
-    internal static string ToElementName( InvoiceType type )
+    internal static string ToPropertyName( InvoiceType type )
     {
         switch ( type )
         {
@@ -64,6 +64,6 @@ internal static class InvoiceEntity
     /// <summary />
     internal static string ToEntityName( InvoiceType type )
     {
-        return ToElementName( type ) + "s";
+        return ToPropertyName( type ) + "s";
     }
 }
