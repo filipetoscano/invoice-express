@@ -30,7 +30,7 @@ public class InvoiceListCommand
         if ( this.SearchQueryFilePath != null )
         {
             var json = await File.ReadAllTextAsync( this.SearchQueryFilePath );
-            search = JsonSerializer.Deserialize<InvoiceSearch>( json );
+            search = JsonSerializer.Deserialize<InvoiceSearch>( json )!;
         }
 
 

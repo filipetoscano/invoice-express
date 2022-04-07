@@ -1,5 +1,6 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
+using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -15,11 +16,28 @@ public class GuideListCommand
     [Option( "-s|--page-size", CommandOptionType.SingleValue, Description = "Page size" )]
     public int PageSize { get; set; } = 20;
 
+    /// <summary />
+    [Argument( 0, "Search query file, in JSON format" )]
+    [FileExists]
+    public string? SearchQueryFilePath { get; set; }
+
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.GuideListAsync( this.Page, this.PageSize );
+        var search = new GuideSearch();
+
+        if ( this.SearchQueryFilePath != null )
+        {
+            var json = await File.ReadAllTextAsync( this.SearchQueryFilePath );
+            search = JsonSerializer.Deserialize<GuideSearch>( json )!;
+        }
+
+
+        /*
+         * 
+         */
+        var res = await api.GuideListAsync( search, this.Page, this.PageSize );
 
 
         /*

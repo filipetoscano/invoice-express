@@ -80,12 +80,84 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Estimate>>> EstimateListAsync( int page, int pageSize = 20 )
+    public async Task<ApiResult<List<Estimate>>> EstimateListAsync( EstimateSearch search, int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/estimates.json" )
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
+        if ( search.Text != null )
+            req.AddQueryParameter( "text", search.Text );
+
+        /*
+         * type[] is a required parameter. If not explicitly specified,
+         * return all types of invoices.
+         */
+        if ( search.Type != null && search.Type.Count > 0 )
+        {
+            foreach ( var i in search.Type.Distinct() )
+                req.AddQueryParameter( "type[]", VE( i ) );
+        }
+        else
+        {
+            foreach ( var i in Enum.GetValues<EstimateType>() )
+                req.AddQueryParameter( "type[]", VE( i ) );
+        }
+
+
+        /*
+         * status[] is a required parameter. If not explicitly specified,
+         * return all states.
+         */
+        if ( search.State != null && search.State.Count > 0 )
+        {
+            foreach ( var i in search.State.Distinct() )
+                req.AddQueryParameter( "status[]", VE( i ) );
+        }
+        else
+        {
+            foreach ( var i in Enum.GetValues<EstimateState>() )
+                req.AddQueryParameter( "status[]", VE( i ) );
+        }
+
+        if ( search.DateFrom.HasValue == true )
+            req.AddQueryParameter( "date[from]", VD( search.DateFrom.Value ) );
+
+        if ( search.DateTo.HasValue == true )
+            req.AddQueryParameter( "date[to]", VD( search.DateTo.Value ) );
+
+        if ( search.DueDateFrom.HasValue == true )
+            req.AddQueryParameter( "due_date[from]", VD( search.DueDateFrom.Value ) );
+
+        if ( search.DueDateTo.HasValue == true )
+            req.AddQueryParameter( "due_date[to]", VD( search.DueDateTo.Value ) );
+
+        if ( search.TotalBeforeTaxesFrom.HasValue == true )
+            req.AddQueryParameter( "total_before_taxes[from]", search.TotalBeforeTaxesFrom.Value );
+
+        if ( search.TotalBeforeTaxesTo.HasValue == true )
+            req.AddQueryParameter( "total_before_taxes[to]", search.TotalBeforeTaxesTo.Value );
+
+        if ( search.Reference != null )
+            req.AddQueryParameter( "reference", search.Reference );
+
+        /*
+         * non_archived is a required parameter
+         */
+        if ( search.Archive.HasValue == true )
+        {
+            req.AddQueryParameter( "non_archived", search.Archive.Value.HasFlag( ArchiveFilter.Active ) == true ? "true" : "false" );
+            req.AddQueryParameter( "archived", search.Archive.Value.HasFlag( ArchiveFilter.Archived ) == true ? "true" : "false" );
+        }
+        else
+        {
+            req.AddQueryParameter( "non_archived", "true" );
+        }
+
+
+        /*
+         * 
+         */
         var resp = await _rest.GetAsync<EstimateListPayload>( req );
 
         return Result( resp!.Estimates );

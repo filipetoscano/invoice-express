@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using RestSharp;
+using System.Globalization;
+using System.Text.Json;
 
 namespace InvoiceXpress;
 
@@ -41,6 +43,21 @@ public partial class InvoiceXpressClient : IDisposable
     {
         return new ApiResult<T>( result );
     }
+
+
+    /// <summary />
+    private static string VD( DateOnly value )
+    {
+        return value.ToString( "dd/MM/yyyy", CultureInfo.InvariantCulture );
+    }
+
+    /// <summary />
+    private static string VE<T>( T value )
+    {
+        var v = JsonSerializer.Serialize( value )!;
+        return v.Substring( 1, v.Length - 2 );
+    }
+
 
     private readonly RestClient _rest;
     private readonly HttpClient _client;

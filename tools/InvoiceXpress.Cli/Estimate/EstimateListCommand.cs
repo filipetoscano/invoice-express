@@ -1,5 +1,6 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
+using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -15,11 +16,28 @@ public class EstimateListCommand
     [Option( "-s|--page-size", CommandOptionType.SingleValue, Description = "Page size" )]
     public int PageSize { get; set; } = 20;
 
+    /// <summary />
+    [Argument( 0, "Search query file, in JSON format" )]
+    [FileExists]
+    public string? SearchQueryFilePath { get; set; }
+
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
     {
-        var res = await api.EstimateListAsync( this.Page, this.PageSize );
+        var search = new EstimateSearch();
+
+        if ( this.SearchQueryFilePath != null )
+        {
+            var json = await File.ReadAllTextAsync( this.SearchQueryFilePath );
+            search = JsonSerializer.Deserialize<EstimateSearch>( json )!;
+        }
+
+
+        /*
+         * 
+         */
+        var res = await api.EstimateListAsync( search, this.Page, this.PageSize );
 
 
         /*
