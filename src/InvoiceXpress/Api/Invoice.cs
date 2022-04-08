@@ -1,8 +1,6 @@
 ﻿using InvoiceXpress.Payloads;
 using InvoiceXpress.Rest;
 using RestSharp;
-using System.Globalization;
-using System.Text.Json;
 
 namespace InvoiceXpress;
 
@@ -134,7 +132,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Invoice>>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Invoice>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/invoices.json" )
             .AddQueryParameter( "page", page )
@@ -214,7 +212,7 @@ public partial class InvoiceXpressClient
          */
         var resp = await _rest.GetAsync<InvoiceListPayload>( req );
 
-        return Result( resp!.Invoices );
+        return Result( resp!.Invoices, resp.Pagination );
     }
 
 

@@ -17,6 +17,10 @@ public class EstimateListCommand
     public int PageSize { get; set; } = 20;
 
     /// <summary />
+    [Option( "-a|--all", CommandOptionType.NoValue, Description = "Fetch all records" )]
+    public bool FetchAll { get; set; }
+
+    /// <summary />
     [Argument( 0, "Search query file, in JSON format" )]
     [FileExists]
     public string? SearchQueryFilePath { get; set; }
@@ -37,7 +41,29 @@ public class EstimateListCommand
         /*
          * 
          */
-        var res = await api.EstimateListAsync( search, this.Page, this.PageSize );
+        List<Estimate> estimates;
+
+        if ( this.FetchAll == false )
+        {
+            var res = await api.EstimateListAsync( search, this.Page, this.PageSize );
+            estimates = res.Result!;
+        }
+        else
+        {
+            var pageIx = 1;
+            estimates = new List<Estimate>();
+
+            while ( true )
+            {
+                var page = await api.EstimateListAsync( search, pageIx, this.PageSize );
+                estimates.AddRange( page.Result! );
+
+                if ( page.Pagination.PageCount == pageIx )
+                    break;
+
+                pageIx++;
+            }
+        }
 
 
         /*
@@ -45,7 +71,7 @@ public class EstimateListCommand
          */
         var table = new ConsoleTable( "Id", "Type", "Doc #", "State", "Client", "Total", "Currency", "Foreign" );
 
-        foreach ( var r in res.Result! )
+        foreach ( var r in estimates.OrderBy( x => x.Id ) )
             table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode, r.ForeignCurrency != null ? r.ForeignCurrency.CurrencyCode : "" );
 
         table.Write( Format.Minimal );

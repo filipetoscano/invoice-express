@@ -17,6 +17,10 @@ public class GuideListCommand
     public int PageSize { get; set; } = 20;
 
     /// <summary />
+    [Option( "-a|--all", CommandOptionType.NoValue, Description = "Fetch all records" )]
+    public bool FetchAll { get; set; }
+
+    /// <summary />
     [Argument( 0, "Search query file, in JSON format" )]
     [FileExists]
     public string? SearchQueryFilePath { get; set; }
@@ -37,7 +41,29 @@ public class GuideListCommand
         /*
          * 
          */
-        var res = await api.GuideListAsync( search, this.Page, this.PageSize );
+        List<Guide> guides;
+
+        if ( this.FetchAll == false )
+        {
+            var res = await api.GuideListAsync( search, this.Page, this.PageSize );
+            guides = res.Result!;
+        }
+        else
+        {
+            var pageIx = 1;
+            guides = new List<Guide>();
+
+            while ( true )
+            {
+                var page = await api.GuideListAsync( search, pageIx, this.PageSize );
+                guides.AddRange( page.Result! );
+
+                if ( page.Pagination.PageCount == pageIx )
+                    break;
+
+                pageIx++;
+            }
+        }
 
 
         /*
@@ -45,7 +71,7 @@ public class GuideListCommand
          */
         var table = new ConsoleTable( "Id", "Type", "Doc #", "State", "Client", "Total", "Currency" );
 
-        foreach ( var r in res.Result! )
+        foreach ( var r in guides.OrderBy( x => x.Id ) )
             table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode );
 
         table.Write( Format.Minimal );

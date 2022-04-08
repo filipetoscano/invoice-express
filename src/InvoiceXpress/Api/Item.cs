@@ -52,7 +52,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Item>>> ItemListAsync( int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Item>> ItemListAsync( int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/items.json" )
             .AddQueryParameter( "page", page )
@@ -60,6 +60,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<ItemListPayload>( req );
 
-        return Result( resp!.Items );
+        return Result( resp!.Items, resp.Pagination );
     }
 }

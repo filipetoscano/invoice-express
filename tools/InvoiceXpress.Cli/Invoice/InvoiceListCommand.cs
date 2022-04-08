@@ -17,6 +17,10 @@ public class InvoiceListCommand
     public int PageSize { get; set; } = 20;
 
     /// <summary />
+    [Option( "-a|--all", CommandOptionType.NoValue, Description = "Fetch all records" )]
+    public bool FetchAll { get; set; }
+
+    /// <summary />
     [Argument( 0, "Search query file, in JSON format" )]
     [FileExists]
     public string? SearchQueryFilePath { get; set; }
@@ -37,7 +41,29 @@ public class InvoiceListCommand
         /*
          * 
          */
-        var res = await api.InvoiceListAsync( search, this.Page, this.PageSize );
+        List<Invoice> invoices;
+
+        if ( this.FetchAll == false )
+        {
+            var res = await api.InvoiceListAsync( search, this.Page, this.PageSize );
+            invoices = res.Result!;
+        }
+        else
+        {
+            var pageIx = 1;
+            invoices = new List<Invoice>();
+
+            while ( true )
+            {
+                var page = await api.InvoiceListAsync( search, pageIx, this.PageSize );
+                invoices.AddRange( page.Result! );
+
+                if ( page.Pagination.PageCount == pageIx )
+                    break;
+
+                pageIx++;
+            }
+        }
 
 
         /*
@@ -45,7 +71,7 @@ public class InvoiceListCommand
          */
         var table = new ConsoleTable( "Id", "Type", "Doc #", "State", "Client", "Total", "Currency", "Foreign" );
 
-        foreach ( var r in res.Result! )
+        foreach ( var r in invoices.OrderBy( x => x.Id ) )
             table.AddRow( r.Id, r.Type, r.DocumentNumber(), r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode, r.ForeignCurrency?.CurrencyCode );
 
         table.Write( Format.Minimal );

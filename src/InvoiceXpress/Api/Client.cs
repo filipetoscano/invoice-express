@@ -69,7 +69,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Invoice>>> ClientInvoiceListAsync( int clientId, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Invoice>> ClientInvoiceListAsync( int clientId, int page, int pageSize = 20 )
     {
         var payload = new
         {
@@ -88,6 +88,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<InvoiceListPayload>( req );
 
-        return Result( resp!.Invoices );
+        return Result( resp!.Invoices, resp.Pagination );
     }
 }

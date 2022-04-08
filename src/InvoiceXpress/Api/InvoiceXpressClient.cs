@@ -46,6 +46,19 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
+    private static ApiPaginatedResult<T> Result<T>( List<T> result, Payloads.Pagination pagination )
+    {
+        return new ApiPaginatedResult<T>( result, new Pagination()
+        {
+            EntryCount = pagination.EntryCount,
+            Page = pagination.Page,
+            PageCount = pagination.PageCount,
+            PageSize = pagination.PageSize,
+        } );
+    }
+
+
+    /// <summary />
     private static string VD( DateOnly value )
     {
         return value.ToString( "dd/MM/yyyy", CultureInfo.InvariantCulture );

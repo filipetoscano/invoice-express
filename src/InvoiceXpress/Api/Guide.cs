@@ -68,7 +68,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Guide>>> GuideListAsync( GuideSearch search, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Guide>> GuideListAsync( GuideSearch search, int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/guides.json" )
             .AddQueryParameter( "page", page )
@@ -148,7 +148,7 @@ public partial class InvoiceXpressClient
          */
         var resp = await _rest.GetAsync<GuideListPayload>( req );
 
-        return Result( resp!.Guides );
+        return Result( resp!.Guides, resp.Pagination );
     }
 
 

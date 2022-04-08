@@ -1,6 +1,4 @@
-﻿using InvoiceXpress.Payloads;
-
-namespace InvoiceXpress;
+﻿namespace InvoiceXpress;
 
 /// <summary />
 public class ApiResult
