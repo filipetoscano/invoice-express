@@ -21,6 +21,10 @@ public class GuideListCommand
     public bool FetchAll { get; set; }
 
     /// <summary />
+    [Option( "--json", CommandOptionType.NoValue, Description = "Emit results as JSON" )]
+    public bool EmitJson { get; set; }
+
+    /// <summary />
     [Argument( 0, "Search query file, in JSON format" )]
     [FileExists]
     public string? SearchQueryFilePath { get; set; }
@@ -69,12 +73,31 @@ public class GuideListCommand
         /*
          * 
          */
-        var table = new ConsoleTable( "Id", "Type", "Doc #", "State", "Client", "Total", "Currency" );
+        if ( this.EmitJson == false )
+        {
+            var table = new ConsoleTable( "Id", "Type", "Doc #", "State", "Client", "Total", "Currency" );
 
-        foreach ( var r in guides.OrderBy( x => x.Id ) )
-            table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode );
+            foreach ( var r in guides.OrderBy( x => x.Id ) )
+                table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode );
 
-        table.Write( Format.Minimal );
+            table.Write( Format.Minimal );
+        }
+        else
+        {
+            var data = guides.OrderBy( x => x.Id ).Select( x => new
+            {
+                Id = x.Id,
+                Type = x.Type,
+                DocumentNumber = x.InvertedSequenceNumber,
+                State = x.State,
+                Client = x.Client.Name,
+                TotalAmount = x.TotalAmount,
+                CurrencyCode = x.CurrencyCode,
+            } );
+
+            var json = JsonSerializer.Serialize( data );
+            Console.Write( json );
+        }
 
         return 0;
     }
