@@ -9,17 +9,21 @@ namespace InvoiceXpress.Json.Tests;
 public class EstimatePayloadConverterTests
 {
     /// <summary />
-    [Fact]
-    public void ToJson()
+    [Theory]
+    [InlineData( EstimateType.Quote, "quote" )]
+    [InlineData( EstimateType.Proforma, "proforma" )]
+    [InlineData( EstimateType.FeeNote, "fees_note" )]
+    public void ToJson( EstimateType type, string elemName )
     {
-        var x = new EstimatePayload();
-        x.Estimate = new Estimate();
-        x.Estimate.Type = EstimateType.Quote;
-        x.Estimate.Date = new DateOnly( 2020, 12, 5 );
+        var src = new EstimatePayload();
+        src.Estimate = new Estimate();
+        src.Estimate.Type = type;
+        src.Estimate.Date = new DateOnly( 2020, 12, 5 );
 
-        var json = JsonSerializer.Serialize( x );
+        var json = JsonSerializer.Serialize( src );
 
         Assert.NotNull( json );
+        Assert.StartsWith( "{\"" + elemName + "\":", json );
     }
 
 
@@ -32,8 +36,6 @@ public class EstimatePayloadConverterTests
             quote = new
             {
                 type = "Quote",
-                date = "05/10/2022",
-                due_date = "10/10/2022",
             },
         };
 
@@ -43,5 +45,24 @@ public class EstimatePayloadConverterTests
         Assert.NotNull( ep );
         Assert.NotNull( ep!.Estimate );
         Assert.Equal( EstimateType.Quote, ep.Estimate.Type );
+    }
+
+
+    /// <summary />
+    [Theory]
+    [InlineData( EstimateType.Quote )]
+    [InlineData( EstimateType.Proforma )]
+    [InlineData( EstimateType.FeeNote )]
+    public void Roundtrip( EstimateType type )
+    {
+        var src = new EstimatePayload();
+        src.Estimate = new Estimate();
+        src.Estimate.Type = type;
+
+        var json = JsonSerializer.Serialize( src );
+        var tgt = JsonSerializer.Deserialize<EstimatePayload>( json );
+
+        Assert.NotNull( tgt );
+        Assert.Equal( src.Estimate.Type, tgt!.Estimate.Type );
     }
 }

@@ -5,7 +5,7 @@ using Xunit;
 namespace InvoiceXpress.Json.Tests;
 
 /// <summary />
-public class BooleanAsNumberConverterTests
+public class BooleanAsStringConverterTests
 {
     /// <summary />
     [Fact]
@@ -15,7 +15,7 @@ public class BooleanAsNumberConverterTests
 
         var json = JsonSerializer.Serialize( v );
 
-        Assert.Equal( "{\"Value\":0}", json );
+        Assert.Equal( "{\"Value\":\"0\"}", json );
     }
 
     /// <summary />
@@ -26,7 +26,7 @@ public class BooleanAsNumberConverterTests
 
         var json = JsonSerializer.Serialize( v );
 
-        Assert.Equal( "{\"Value\":1}", json );
+        Assert.Equal( "{\"Value\":\"1\"}", json );
     }
 
     /// <summary />
@@ -48,7 +48,7 @@ public class BooleanAsNumberConverterTests
 
         var json = JsonSerializer.Serialize( v );
 
-        Assert.Equal( "{\"Value\":0}", json );
+        Assert.Equal( "{\"Value\":\"0\"}", json );
     }
 
     /// <summary />
@@ -59,14 +59,14 @@ public class BooleanAsNumberConverterTests
 
         var json = JsonSerializer.Serialize( v );
 
-        Assert.Equal( "{\"Value\":1}", json );
+        Assert.Equal( "{\"Value\":\"1\"}", json );
     }
 
 
     /// <summary />
     [Theory]
-    [InlineData( "{\"Value\":0}", false )]
-    [InlineData( "{\"Value\":1}", true )]
+    [InlineData( "{\"Value\":\"0\"}", false )]
+    [InlineData( "{\"Value\":\"1\"}", true )]
     public void Parse( string json, bool v )
     {
         var obj = JsonSerializer.Deserialize<Class1>( json );
@@ -80,8 +80,8 @@ public class BooleanAsNumberConverterTests
     [Theory]
     [InlineData( "{}", null )]
     [InlineData( "{\"Value\":null}", null )]
-    [InlineData( "{\"Value\":0}", false )]
-    [InlineData( "{\"Value\":1}", true )]
+    [InlineData( "{\"Value\":\"0\"}", false )]
+    [InlineData( "{\"Value\":\"1\"}", true )]
     public void NullableParse( string json, bool? v )
     {
         var obj = JsonSerializer.Deserialize<Class2>( json );
@@ -95,7 +95,7 @@ public class BooleanAsNumberConverterTests
     public class Class1
     {
         /// <summary />
-        [JsonConverter( typeof( BooleanAsNumberConverter ) )]
+        [JsonConverter( typeof( BooleanAsStringConverter ) )]
         public bool Value { get; set; }
     }
 
@@ -104,7 +104,7 @@ public class BooleanAsNumberConverterTests
     public class Class2
     {
         /// <summary />
-        [JsonConverter( typeof( BooleanAsNumberConverter ) )]
+        [JsonConverter( typeof( BooleanAsStringConverter ) )]
         public bool? Value { get; set; }
     }
 }

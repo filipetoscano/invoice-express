@@ -14,13 +14,13 @@ public class BooleanAsNumberConverter : JsonConverter<bool>
 
         var v = reader.GetInt32();
 
-        if ( v < 0 )
-            throw new InvalidOperationException( $"Negative value '{ v }' was not expected when converting to bool" );
-
         if ( v == 0 )
             return false;
 
-        return true;
+        if ( v == 1 )
+            return true;
+
+        throw new JsonException( $"Unexpected value '{ v }' when converting to bool" );
     }
 
 
