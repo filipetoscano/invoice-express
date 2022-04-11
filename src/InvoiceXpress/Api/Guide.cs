@@ -17,7 +17,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<GuidePayload>( req );
 
-        return Result( resp!.Guide );
+        return Ok( resp!.Guide );
     }
 
 
@@ -29,7 +29,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<GuidePayload>( req );
 
-        return Result( resp!.Guide );
+        return Ok( resp!.Guide );
     }
 
 
@@ -148,7 +148,7 @@ public partial class InvoiceXpressClient
          */
         var resp = await _rest.GetAsync<GuideListPayload>( req );
 
-        return Result( resp!.Guides, resp.Pagination );
+        return Ok( resp!.Guides, resp.Pagination );
     }
 
 
@@ -177,7 +177,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
 
-        return Result( resp!.PdfDocument );
+        return Ok( resp!.PdfDocument );
     }
 
 
@@ -188,7 +188,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<QrCodeImagePayload>( req );
 
-        return Result( resp!.QrCode.Url );
+        return Ok( resp!.QrCode.Url );
     }
 
 
@@ -199,6 +199,6 @@ public partial class InvoiceXpressClient
 
         var image = await _client.GetByteArrayAsync( resp.Result );
 
-        return Result( image );
+        return Ok( image );
     }
 }

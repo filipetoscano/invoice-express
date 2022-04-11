@@ -18,7 +18,7 @@ public class InvoiceTests
 
     /// <summary />
     [Fact]
-    public async Task InvoiceListTest()
+    public async Task List()
     {
         var res = await _client.InvoiceListAsync( new InvoiceSearch(), 1 );
 

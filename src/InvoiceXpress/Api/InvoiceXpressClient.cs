@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using InvoiceXpress.Payloads;
+using Microsoft.Extensions.Options;
 using RestSharp;
 using System.Globalization;
+using System.Net;
 using System.Text.Json;
 
 namespace InvoiceXpress;
@@ -39,14 +41,104 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
-    private static ApiResult<T> Result<T>( T result )
+    private static ApiPaginatedResult<Tresp> Error2<Tresp>( RestResponse resp )
+    {
+        // 422
+        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
+        {
+            var body = resp.Response<ErrorPayload>();
+            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+        }
+
+        // 401
+        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
+            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 404
+        if ( resp.StatusCode == HttpStatusCode.NotFound )
+            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 409
+        if ( resp.StatusCode == HttpStatusCode.Conflict )
+            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 500
+        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
+            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        throw new InvalidOperationException();
+    }
+
+
+    /// <summary />
+    private static ApiResult<Tresp> Error<Tresp>( RestResponse resp )
+    {
+        // 422
+        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
+        {
+            var body = resp.Response<ErrorPayload>();
+            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+        }
+
+        // 401
+        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
+            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 404
+        if ( resp.StatusCode == HttpStatusCode.NotFound )
+            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 409
+        if ( resp.StatusCode == HttpStatusCode.Conflict )
+            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 500
+        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
+            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        throw new InvalidOperationException();
+    }
+
+
+    /// <summary />
+    private static ApiResult Error( RestResponse resp )
+    {
+        // 422
+        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
+        {
+            var body = resp.Response<ErrorPayload>();
+            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+        }
+
+        // 401
+        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
+            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 404
+        if ( resp.StatusCode == HttpStatusCode.NotFound )
+            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 409
+        if ( resp.StatusCode == HttpStatusCode.Conflict )
+            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        // 500
+        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
+            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+
+        throw new InvalidOperationException();
+    }
+
+
+    /// <summary />
+    private static ApiResult<T> Ok<T>( T result )
     {
         return new ApiResult<T>( result );
     }
 
 
     /// <summary />
-    private static ApiPaginatedResult<T> Result<T>( List<T> result, Payloads.Pagination pagination )
+    private static ApiPaginatedResult<T> Ok<T>( List<T> result, Payloads.Pagination pagination )
     {
         return new ApiPaginatedResult<T>( result, new Pagination()
         {

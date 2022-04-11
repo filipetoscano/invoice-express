@@ -14,6 +14,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<SaftExportPayload>( req );
 
-        return Result( resp!.Url! );
+        return Ok( resp!.Url! );
     }
 }

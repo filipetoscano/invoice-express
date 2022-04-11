@@ -23,7 +23,7 @@ public partial class InvoiceXpressClient
         if ( resp == null )
             throw new InvalidOperationException();
 
-        return Result( resp.Estimate );
+        return Ok( resp.Estimate );
     }
 
 
@@ -38,7 +38,7 @@ public partial class InvoiceXpressClient
         if ( resp == null )
             throw new InvalidOperationException();
 
-        return Result( resp.Estimate );
+        return Ok( resp.Estimate );
     }
 
 
@@ -160,7 +160,7 @@ public partial class InvoiceXpressClient
          */
         var resp = await _rest.GetAsync<EstimateListPayload>( req );
 
-        return Result( resp!.Estimates, resp.Pagination );
+        return Ok( resp!.Estimates, resp.Pagination );
     }
 
 
@@ -189,6 +189,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
 
-        return Result( resp!.PdfDocument );
+        return Ok( resp!.PdfDocument );
     }
 }

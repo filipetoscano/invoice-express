@@ -13,7 +13,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<ItemPayload>( req );
 
-        return Result( resp!.Item );
+        return Ok( resp!.Item );
     }
 
 
@@ -24,7 +24,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<ItemPayload>( req );
 
-        return Result( resp!.Item );
+        return Ok( resp!.Item );
     }
 
 
@@ -60,6 +60,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<ItemListPayload>( req );
 
-        return Result( resp!.Items, resp.Pagination );
+        return Ok( resp!.Items, resp.Pagination );
     }
 }

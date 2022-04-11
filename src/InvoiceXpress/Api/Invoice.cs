@@ -20,7 +20,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<InvoicePayload>( req );
 
-        return Result( resp!.Invoice );
+        return Ok( resp!.Invoice );
     }
 
 
@@ -32,7 +32,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<InvoicePayload>( req );
 
-        return Result( resp!.Invoice );
+        return Ok( resp!.Invoice );
     }
 
 
@@ -89,7 +89,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<InvoiceDocumentsPayload>( req );
 
-        return Result( resp!.Documents );
+        return Ok( resp!.Documents );
     }
 
 
@@ -101,7 +101,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<ReceiptPayload>( req );
 
-        return Result( resp!.Receipt );
+        return Ok( resp!.Receipt );
     }
 
 
@@ -212,7 +212,7 @@ public partial class InvoiceXpressClient
          */
         var resp = await _rest.GetAsync<InvoiceListPayload>( req );
 
-        return Result( resp!.Invoices, resp.Pagination );
+        return Ok( resp!.Invoices, resp.Pagination );
     }
 
 
@@ -241,7 +241,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
 
-        return Result( resp!.PdfDocument );
+        return Ok( resp!.PdfDocument );
     }
 
 
@@ -252,7 +252,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<QrCodeImagePayload>( req );
 
-        return Result( resp!.QrCode.Url );
+        return Ok( resp!.QrCode.Url );
     }
 
 
@@ -263,6 +263,6 @@ public partial class InvoiceXpressClient
 
         var image = await _client.GetByteArrayAsync( resp.Result );
 
-        return Result( image );
+        return Ok( image );
     }
 }

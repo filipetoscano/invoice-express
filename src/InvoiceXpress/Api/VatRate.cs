@@ -24,7 +24,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<VatRatePayload>( req );
 
-        return Result( resp!.VatRate );
+        return Ok( resp!.VatRate );
     }
 
 
@@ -35,7 +35,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<VatRatePayload>( req );
 
-        return Result( resp!.VatRate );
+        return Ok( resp!.VatRate );
     }
 
 
@@ -69,6 +69,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<VatRateListPayload>( req );
 
-        return Result( resp!.VatRates );
+        return Ok( resp!.VatRates );
     }
 }

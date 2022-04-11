@@ -1,6 +1,5 @@
 ﻿using InvoiceXpress.Payloads;
 using RestSharp;
-using System.Text.Json;
 
 namespace InvoiceXpress;
 
@@ -13,9 +12,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync<ClientPayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Result( resp!.Client );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ClientPayload>()!;
+            return Ok( body.Client );
+        }
+
+        return Error<Client>( resp );
     }
 
 
@@ -24,9 +29,15 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/clients/{ clientId }.json" );
 
-        var resp = await _rest.GetAsync<ClientPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Result( resp!.Client );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ClientPayload>()!;
+            return Ok( body.Client );
+        }
+
+        return Error<Client>( resp );
     }
 
 
@@ -36,9 +47,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients/find-by-code.json" )
             .AddQueryParameter( "client_code", clientCode );
 
-        var resp = await _rest.GetAsync<ClientPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Result( resp!.Client );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ClientPayload>()!;
+            return Ok( body.Client );
+        }
+
+        return Error<Client>( resp );
     }
 
 
@@ -49,22 +66,31 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients/{ client.Id }.json" )
             .AddJsonBody( payload );
 
-        await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return new ApiResult() { IsSuccessful = resp.IsSuccessful, StatusCode = resp.StatusCode };
+
+        return Error( resp );
     }
 
 
     /// <summary />
-    public async Task<ApiResult<List<Client>>> ClientListAsync( int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Client>> ClientListAsync( int page, int pageSize = 20 )
     {
         var req = new RestRequest( "/clients.json" )
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync<ClientListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Result( resp!.Clients );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ClientListPayload>()!;
+            return Ok( body.Clients, body.Pagination );
+        }
+
+        return Error2<Client>( resp );
     }
 
 
@@ -86,8 +112,14 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.PostAsync<InvoiceListPayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Result( resp!.Invoices, resp.Pagination );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<InvoiceListPayload>()!;
+            return Ok( body.Invoices, body.Pagination );
+        }
+
+        return Error2<Invoice>( resp );
     }
 }

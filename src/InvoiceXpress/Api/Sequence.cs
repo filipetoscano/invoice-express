@@ -13,7 +13,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PostAsync<SequencePayload<Sequence>>( req );
 
-        return Result( resp!.Sequence );
+        return Ok( resp!.Sequence );
     }
 
 
@@ -24,7 +24,7 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<SequencePayload<Sequence>>( req );
 
-        return Result( resp!.Sequence );
+        return Ok( resp!.Sequence );
     }
 
 
@@ -46,6 +46,6 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.GetAsync<SequenceListPayload>( req );
 
-        return Result( resp!.Sequences );
+        return Ok( resp!.Sequences );
     }
 }
