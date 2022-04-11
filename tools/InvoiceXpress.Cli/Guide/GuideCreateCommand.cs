@@ -16,7 +16,7 @@ public class GuideCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -29,6 +29,10 @@ public class GuideCreateCommand
          * 
          */
         var res = await api.GuideCreateAsync( guide );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
         Console.WriteLine( res.Result!.Id );
 
         return 0;

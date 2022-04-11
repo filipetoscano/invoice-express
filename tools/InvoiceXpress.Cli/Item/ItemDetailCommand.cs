@@ -15,9 +15,12 @@ public class ItemDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.ItemGetAsync( this.ItemId );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*

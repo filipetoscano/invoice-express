@@ -16,7 +16,7 @@ public class EstimateCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -29,7 +29,11 @@ public class EstimateCreateCommand
          * 
          */
         var res = await api.EstimateCreateAsync( estimate );
-        Console.WriteLine( res.Result!.Id );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
+        Console.WriteLine( "Estimate Id: {0}", res.Result!.Id );
 
         return 0;
     }

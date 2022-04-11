@@ -14,9 +14,12 @@ public class ItemDeleteCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.ItemDeleteAsync( this.ItemId );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

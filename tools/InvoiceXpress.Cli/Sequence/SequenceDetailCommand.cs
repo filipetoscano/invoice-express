@@ -15,9 +15,12 @@ public class SequenceDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.SequenceGetAsync( this.SequenceId );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*

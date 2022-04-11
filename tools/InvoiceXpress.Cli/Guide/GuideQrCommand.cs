@@ -28,16 +28,24 @@ public class GuideQrCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         if ( this.UrlOnly == true )
         {
             var res = await api.GuideQrCodeUrlAsync( this.GuideType!.Value, this.GuideId!.Value );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             Console.WriteLine( res.Result );
         }
         else
         {
             var res = await api.GuideQrCodeImageAsync( this.GuideType!.Value, this.GuideId!.Value );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             var filename = this.OutputFile ?? $"{ this.GuideType!.Value}-{ this.GuideId!.Value }.png";
 
             Console.WriteLine( $"Writing to { filename }..." );

@@ -24,13 +24,16 @@ public class GuideEmailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * Fetch the details of the invoice, so that we can generate a more
          * interesting subject / body.
          */
         var get = await api.GuideGetAsync( this.GuideType!.Value, this.GuideId!.Value );
+
+        if ( get.IsSuccessful == false )
+            return console.WriteError( get );
 
 
         /*
@@ -53,6 +56,9 @@ public class GuideEmailCommand
             this.GuideType!.Value, 
             this.GuideId!.Value,
             message );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

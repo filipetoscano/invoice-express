@@ -24,13 +24,16 @@ public class InvoiceEmailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * Fetch the details of the invoice, so that we can generate a more
          * interesting subject / body.
          */
         var get = await api.InvoiceGetAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
+
+        if ( get.IsSuccessful == false )
+            return console.WriteError( get );
 
 
         /*
@@ -53,6 +56,9 @@ public class InvoiceEmailCommand
             this.InvoiceType!.Value, 
             this.InvoiceId!.Value,
             message );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

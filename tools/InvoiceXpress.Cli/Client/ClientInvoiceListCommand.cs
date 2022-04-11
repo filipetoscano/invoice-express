@@ -27,19 +27,26 @@ public class ClientInvoiceListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         Client client;
 
         if ( this.IsCode == true )
         {
             var res = await api.ClientGetByCodeAsync( this.Identifier );
+            
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             client = res!.Result!;
         }
         else
         {
             var id = int.Parse( this.Identifier );
             var res = await api.ClientGetAsync( id );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
 
             client = res!.Result!;
         }
@@ -49,6 +56,9 @@ public class ClientInvoiceListCommand
          * 
          */
         var inv = await api.ClientInvoiceListAsync( client.Id!.Value, this.Page, this.PageSize );
+
+        if ( inv.IsSuccessful == false )
+            return console.WriteError( inv );
 
 
         /*

@@ -31,7 +31,7 @@ public class InvoiceListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var search = new InvoiceSearch();
 
@@ -50,6 +50,10 @@ public class InvoiceListCommand
         if ( this.FetchAll == false )
         {
             var res = await api.InvoiceListAsync( search, this.Page, this.PageSize );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             invoices = res.Result!;
         }
         else
@@ -59,10 +63,14 @@ public class InvoiceListCommand
 
             while ( true )
             {
-                var page = await api.InvoiceListAsync( search, pageIx, this.PageSize );
-                invoices.AddRange( page.Result! );
+                var res = await api.InvoiceListAsync( search, pageIx, this.PageSize );
 
-                if ( page.Pagination.PageCount == pageIx )
+                if ( res.IsSuccessful == false )
+                    return console.WriteError( res );
+
+                invoices.AddRange( res.Result! );
+
+                if ( res.Pagination!.PageCount == pageIx )
                     break;
 
                 pageIx++;

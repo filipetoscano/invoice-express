@@ -17,9 +17,12 @@ public class ClientListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.ClientListAsync( this.Page, this.PageSize );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*
@@ -31,6 +34,13 @@ public class ClientListCommand
             table.AddRow( r.Id, r.Code, r.Name, r.Country, r.TaxNumber );
 
         table.Write( Format.Minimal );
+
+
+        if ( res.Pagination!.PageCount > 1 )
+        {
+            var p = res.Pagination!;
+            Console.WriteLine( "Page {0}/{1} - Total {2}", p.Page, p.PageCount, p.EntryCount );
+        }
 
         return 0;
     }

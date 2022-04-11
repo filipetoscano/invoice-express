@@ -16,7 +16,7 @@ public class ItemCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -29,6 +29,10 @@ public class ItemCreateCommand
          * 
          */
         var res = await api.ItemCreateAsync( item );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
         Console.Write( res.Result!.Id );
 
         return 0;

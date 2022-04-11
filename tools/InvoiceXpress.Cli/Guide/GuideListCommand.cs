@@ -31,7 +31,7 @@ public class GuideListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var search = new GuideSearch();
 
@@ -50,6 +50,10 @@ public class GuideListCommand
         if ( this.FetchAll == false )
         {
             var res = await api.GuideListAsync( search, this.Page, this.PageSize );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             guides = res.Result!;
         }
         else
@@ -59,10 +63,14 @@ public class GuideListCommand
 
             while ( true )
             {
-                var page = await api.GuideListAsync( search, pageIx, this.PageSize );
-                guides.AddRange( page.Result! );
+                var res = await api.GuideListAsync( search, pageIx, this.PageSize );
 
-                if ( page.Pagination.PageCount == pageIx )
+                if ( res.IsSuccessful == false )
+                    return console.WriteError( res );
+
+                guides.AddRange( res.Result! );
+
+                if ( res.Pagination!.PageCount == pageIx )
                     break;
 
                 pageIx++;

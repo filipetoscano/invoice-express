@@ -21,13 +21,17 @@ public class ItemListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         List<Item> items;
 
         if ( this.FetchAll == false )
         {
             var res = await api.ItemListAsync( this.Page, this.PageSize );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             items = res.Result!;
         }
         else
@@ -37,10 +41,14 @@ public class ItemListCommand
 
             while ( true )
             {
-                var page = await api.ItemListAsync( pageIx, this.PageSize );
-                items.AddRange( page.Result! );
+                var res = await api.ItemListAsync( pageIx, this.PageSize );
 
-                if ( page.Pagination.PageCount == pageIx )
+                if ( res.IsSuccessful == false )
+                    return console.WriteError( res );
+
+                items.AddRange( res.Result! );
+
+                if ( res.Pagination!.PageCount == pageIx )
                     break;
 
                 pageIx++;

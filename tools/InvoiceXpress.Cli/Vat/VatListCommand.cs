@@ -8,9 +8,12 @@ namespace InvoiceXpress.Cli;
 public class VatListCommand
 {
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.VatRateListAsync();
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*

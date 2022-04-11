@@ -31,7 +31,7 @@ public class EstimateListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var search = new EstimateSearch();
 
@@ -50,6 +50,10 @@ public class EstimateListCommand
         if ( this.FetchAll == false )
         {
             var res = await api.EstimateListAsync( search, this.Page, this.PageSize );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
             estimates = res.Result!;
         }
         else
@@ -59,10 +63,14 @@ public class EstimateListCommand
 
             while ( true )
             {
-                var page = await api.EstimateListAsync( search, pageIx, this.PageSize );
-                estimates.AddRange( page.Result! );
+                var res = await api.EstimateListAsync( search, pageIx, this.PageSize );
 
-                if ( page.Pagination.PageCount == pageIx )
+                if ( res.IsSuccessful == false )
+                    return console.WriteError( res );
+
+                estimates.AddRange( res.Result! );
+
+                if ( res.Pagination!.PageCount == pageIx )
                     break;
 
                 pageIx++;

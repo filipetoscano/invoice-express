@@ -1,5 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace InvoiceXpress.Cli;
 
@@ -19,18 +20,32 @@ public class SaftExportCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
+        string url;
+
         while ( true )
         {
             var res = await api.SaftExportAsync( this.Year, this.Month );
 
-            if ( res.Result != null )
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
+            if ( res.StatusCode == HttpStatusCode.OK )
+            {
+                url = res.Result!;
                 break;
+            }
 
             Console.WriteLine( "Sleeping 2s..." );
             await Task.Delay( 2000 );
         }
+
+
+        /*
+         * 
+         */
+        Console.WriteLine( url );
 
         return 0;
     }

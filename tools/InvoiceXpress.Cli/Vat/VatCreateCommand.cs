@@ -16,7 +16,7 @@ public class VatCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -29,6 +29,10 @@ public class VatCreateCommand
          * 
          */
         var res = await api.VatRateCreateAsync( vat );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
         Console.Write( res.Result!.Id );
 
         return 0;

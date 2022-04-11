@@ -28,7 +28,7 @@ public class GuideStateChangeCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         Console.WriteLine( "Change state on {0}/{1}", this.GuideType!.Value, this.GuideId!.Value );
 
@@ -37,6 +37,9 @@ public class GuideStateChangeCommand
             Action = this.Action!.Value,
             Message = this.Message,
         } );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

@@ -20,9 +20,12 @@ public class InvoiceDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.InvoiceGetAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*

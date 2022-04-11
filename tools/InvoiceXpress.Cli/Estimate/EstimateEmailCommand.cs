@@ -24,13 +24,16 @@ public class EstimateEmailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * Fetch the details of the estimate, so that we can generate a more
          * interesting subject / body.
          */
         var get = await api.EstimateGetAsync( this.EstimateType!.Value, this.EstimateId!.Value );
+
+        if ( get.IsSuccessful == false )
+            return console.WriteError( get );
 
 
         /*
@@ -53,6 +56,9 @@ public class EstimateEmailCommand
             this.EstimateType!.Value, 
             this.EstimateId!.Value,
             message );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

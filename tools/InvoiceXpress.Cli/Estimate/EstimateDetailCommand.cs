@@ -20,9 +20,12 @@ public class EstimateDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.EstimateGetAsync( this.EstimateType!.Value, this.EstimateId!.Value );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
 
         /*

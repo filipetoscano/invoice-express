@@ -16,7 +16,7 @@ public class SequenceCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -29,6 +29,10 @@ public class SequenceCreateCommand
          * 
          */
         var res = await api.SequenceCreateAsync( seq );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
         Console.Write( res.Result!.Id );
 
         return 0;

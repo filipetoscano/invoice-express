@@ -20,7 +20,7 @@ public class VatUpdateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -35,7 +35,10 @@ public class VatUpdateCommand
         /*
          * 
          */
-        await api.VatRateUpdateAsync( vat );
+        var res = await api.VatRateUpdateAsync( vat );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

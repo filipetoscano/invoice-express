@@ -20,7 +20,7 @@ public class ItemUpdateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         /*
          * 
@@ -36,6 +36,9 @@ public class ItemUpdateCommand
          * 
          */
         var res = await api.ItemUpdateAsync( item );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }

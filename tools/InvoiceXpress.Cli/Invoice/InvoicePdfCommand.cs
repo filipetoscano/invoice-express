@@ -19,9 +19,13 @@ public class InvoicePdfCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.InvoicePdfGenerateAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
+
         Console.WriteLine( res.Result!.Url );
 
         return 0;

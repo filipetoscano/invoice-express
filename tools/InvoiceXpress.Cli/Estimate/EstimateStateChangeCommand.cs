@@ -28,13 +28,16 @@ public class EstimateStateChangeCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, CommandLineApplication app )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
         var res = await api.EstimateStateChangeAsync( this.EstimateType!.Value, this.EstimateId!.Value, new EstimateStateChange()
         {
             Action = this.Action!.Value,
             Message = this.Message,
         } );
+
+        if ( res.IsSuccessful == false )
+            return console.WriteError( res );
 
         return 0;
     }
