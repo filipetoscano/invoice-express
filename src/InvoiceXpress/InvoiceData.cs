@@ -69,4 +69,16 @@ public class InvoiceData
     /// </summary>
     [JsonPropertyName( "owner_invoice_id" )]
     public int? ParentDocumentId { get; set; }
+
+
+    /// <summary />
+    [JsonPropertyName( "currency_code" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public string? ForeignCurrencyCode { get; set; }
+
+    /// <summary />
+    [JsonPropertyName( "rate" )]
+    [JsonConverter( typeof( DecimalAsStringConverter ) )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public decimal? ForeignExchangeRate { get; set; }
 }
