@@ -131,22 +131,46 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
-    private static ApiResult<T> Ok<T>( T result )
+    private static ApiResult Ok( HttpStatusCode statusCode )
     {
-        return new ApiResult<T>( result );
+        return new ApiResult()
+        {
+            IsSuccessful = true,
+            StatusCode = statusCode,
+        };
     }
 
 
     /// <summary />
-    private static ApiPaginatedResult<T> Ok<T>( List<T> result, Payloads.Pagination pagination )
+    private static ApiResult<T> Ok<T>( HttpStatusCode statusCode, T result )
     {
-        return new ApiPaginatedResult<T>( result, new Pagination()
+        return new ApiResult<T>()
+        {
+            IsSuccessful = true,
+            StatusCode = statusCode,
+            Result = result,
+        };
+    }
+
+
+    /// <summary />
+    private static ApiPaginatedResult<T> Ok<T>( HttpStatusCode statusCode, List<T> result, Payloads.Pagination pagination )
+    {
+        var p = new Pagination()
         {
             EntryCount = pagination.EntryCount,
             Page = pagination.Page,
             PageCount = pagination.PageCount,
             PageSize = pagination.PageSize,
-        } );
+        };
+
+        return new ApiPaginatedResult<T>()
+        {
+            IsSuccessful = true,
+            StatusCode = statusCode,
+            Result = result,
+            Pagination = p,
+        };
     }
 
 
@@ -155,6 +179,7 @@ public partial class InvoiceXpressClient : IDisposable
     {
         return value.ToString( "dd/MM/yyyy", CultureInfo.InvariantCulture );
     }
+
 
     /// <summary />
     private static string VE<T>( T value )

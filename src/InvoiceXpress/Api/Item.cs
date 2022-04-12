@@ -11,9 +11,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( "/items.json" )
             .AddJsonBody( new ItemPayload() { Item = item } );
 
-        var resp = await _rest.PostAsync<ItemPayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Ok( resp!.Item );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ItemPayload>()!;
+            return Ok( resp.StatusCode, body.Item );
+        }
+
+        return Error<Item>( resp );
     }
 
 
@@ -22,9 +28,15 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/items/{ itemId }.json" );
 
-        var resp = await _rest.GetAsync<ItemPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Item );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ItemPayload>()!;
+            return Ok( resp.StatusCode, body.Item );
+        }
+
+        return Error<Item>( resp );
     }
 
 
@@ -36,7 +48,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -47,7 +62,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.DeleteAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -58,8 +76,14 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync<ItemListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Items, resp.Pagination );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<ItemListPayload>()!;
+            return Ok( resp.StatusCode, body.Items, body.Pagination );
+        }
+
+        return Error2<Item>( resp );
     }
 }

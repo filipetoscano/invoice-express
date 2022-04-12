@@ -17,7 +17,7 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<ClientPayload>()!;
-            return Ok( body.Client );
+            return Ok( resp.StatusCode, body.Client );
         }
 
         return Error<Client>( resp );
@@ -34,7 +34,7 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<ClientPayload>()!;
-            return Ok( body.Client );
+            return Ok( resp.StatusCode, body.Client );
         }
 
         return Error<Client>( resp );
@@ -52,7 +52,7 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<ClientPayload>()!;
-            return Ok( body.Client );
+            return Ok( resp.StatusCode, body.Client );
         }
 
         return Error<Client>( resp );
@@ -69,7 +69,7 @@ public partial class InvoiceXpressClient
         var resp = await _rest.PutAsync( req );
 
         if ( resp.IsSuccessful == true )
-            return new ApiResult() { IsSuccessful = resp.IsSuccessful, StatusCode = resp.StatusCode };
+            return Ok( resp.StatusCode );
 
         return Error( resp );
     }
@@ -87,7 +87,7 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<ClientListPayload>()!;
-            return Ok( body.Clients, body.Pagination );
+            return Ok( resp.StatusCode, body.Clients, body.Pagination );
         }
 
         return Error2<Client>( resp );
@@ -117,7 +117,7 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<InvoiceListPayload>()!;
-            return Ok( body.Invoices, body.Pagination );
+            return Ok( resp.StatusCode, body.Invoices, body.Pagination );
         }
 
         return Error2<Invoice>( resp );

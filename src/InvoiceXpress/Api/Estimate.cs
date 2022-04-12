@@ -18,12 +18,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync<EstimatePayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        if ( resp == null )
-            throw new InvalidOperationException();
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<EstimatePayload>()!;
+            return Ok( resp.StatusCode, body.Estimate );
+        }
 
-        return Ok( resp.Estimate );
+        return Error<Estimate>( resp );
     }
 
 
@@ -33,12 +36,15 @@ public partial class InvoiceXpressClient
         var entityName = EstimateEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ estimateId }.json" );
 
-        var resp = await _rest.GetAsync<EstimatePayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        if ( resp == null )
-            throw new InvalidOperationException();
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<EstimatePayload>()!;
+            return Ok( resp.StatusCode, body.Estimate );
+        }
 
-        return Ok( resp.Estimate );
+        return Error<Estimate>( resp );
     }
 
 
@@ -54,9 +60,12 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ estimate.Id }.json" )
             .AddJsonBody( payload );
 
-        await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -75,7 +84,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -158,9 +170,15 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync<EstimateListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Estimates, resp.Pagination );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<EstimateListPayload>()!;
+            return Ok( resp.StatusCode, body.Estimates, body.Pagination );
+        }
+
+        return Error2<Estimate>( resp );
     }
 
 
@@ -173,9 +191,12 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ estimateId }/email-document.json" )
             .AddJsonBody( payload );
 
-        await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -187,8 +208,14 @@ public partial class InvoiceXpressClient
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.PdfDocument );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<PdfDocumentPayload>()!;
+            return Ok( resp.StatusCode, body.PdfDocument );
+        }
+
+        return Error<PdfDocument>( resp );
     }
 }

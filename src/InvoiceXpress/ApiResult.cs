@@ -31,21 +31,6 @@ public class ApiError
 public class ApiResult<T> : ApiResult
 {
     /// <summary />
-    public ApiResult()
-    {
-    }
-
-
-    /// <summary />
-    public ApiResult( T result )
-    {
-        IsSuccessful = true;
-        StatusCode = HttpStatusCode.OK;
-        Result = result;
-    }
-
-
-    /// <summary />
     public T? Result { get; set; }
 }
 
@@ -53,22 +38,6 @@ public class ApiResult<T> : ApiResult
 /// <summary />
 public class ApiPaginatedResult<T> : ApiResult
 {
-    /// <summary />
-    public ApiPaginatedResult()
-    {
-    }
-
-
-    /// <summary />
-    public ApiPaginatedResult( List<T> result, Pagination pagination )
-    {
-        IsSuccessful = true;
-        StatusCode = HttpStatusCode.OK;
-        Result = result;
-        Pagination = pagination;
-    }
-
-
     /// <summary />
     public List<T>? Result { get; set; }
 

@@ -11,9 +11,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( "/sequences.json" )
             .AddJsonBody( new SequencePayload<SequenceRef>() { Sequence = item } );
 
-        var resp = await _rest.PostAsync<SequencePayload<Sequence>>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Ok( resp!.Sequence );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<SequencePayload<Sequence>>()!;
+            return Ok( resp.StatusCode, body.Sequence );
+        }
+
+        return Error<Sequence>( resp );
     }
 
 
@@ -22,9 +28,15 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/sequences/{ sequenceId }.json" );
 
-        var resp = await _rest.GetAsync<SequencePayload<Sequence>>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Sequence );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<SequencePayload<Sequence>>()!;
+            return Ok( resp.StatusCode, body.Sequence );
+        }
+
+        return Error<Sequence>( resp );
     }
 
 
@@ -35,7 +47,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -44,8 +59,14 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( "/sequences.json" );
 
-        var resp = await _rest.GetAsync<SequenceListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Sequences );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<SequenceListPayload>()!;
+            return Ok( resp.StatusCode, body.Sequences );
+        }
+
+        return Error< List<Sequence>>( resp );
     }
 }

@@ -15,9 +15,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync<GuidePayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Ok( resp!.Guide );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<GuidePayload>()!;
+            return Ok( resp.StatusCode, body.Guide );
+        }
+
+        return Error<Guide>( resp );
     }
 
 
@@ -27,9 +33,15 @@ public partial class InvoiceXpressClient
         var entityName = GuideEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync<GuidePayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Guide );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<GuidePayload>()!;
+            return Ok( resp.StatusCode, body.Guide );
+        }
+
+        return Error<Guide>( resp );
     }
 
 
@@ -42,9 +54,12 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guide.Id }.json" )
             .AddJsonBody( payload );
 
-        await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -63,7 +78,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -146,9 +164,15 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync<GuideListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.Guides, resp.Pagination );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<GuideListPayload>()!;
+            return Ok( resp.StatusCode, body.Guides, body.Pagination );
+        }
+
+        return Error2<Guide>( resp );
     }
 
 
@@ -161,9 +185,12 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guideId }/email-document.json" )
             .AddJsonBody( payload );
 
-        await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -175,9 +202,15 @@ public partial class InvoiceXpressClient
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync<PdfDocumentPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.PdfDocument );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<PdfDocumentPayload>()!;
+            return Ok( resp.StatusCode, body.PdfDocument );
+        }
+
+        return Error<PdfDocument>( resp );
     }
 
 
@@ -186,9 +219,15 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/api/qr_codes/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync<QrCodeImagePayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.QrCode.Url );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<QrCodeImagePayload>()!;
+            return Ok( resp.StatusCode, body.QrCode.Url );
+        }
+
+        return Error<string>( resp );
     }
 
 
@@ -197,8 +236,24 @@ public partial class InvoiceXpressClient
     {
         var resp = await GuideQrCodeUrlAsync( type, guideId );
 
+        if ( resp.IsSuccessful == false )
+        { 
+            return new ApiResult<byte[]>()
+            {
+                IsSuccessful = resp.IsSuccessful,
+                StatusCode = resp.StatusCode,
+                Errors = resp.Errors,
+            };
+        }
+
+
+        /*
+         * 
+         */
         var image = await _client.GetByteArrayAsync( resp.Result );
 
-        return Ok( image );
+        // TODO: error handling
+
+        return Ok( resp.StatusCode, image );
     }
 }

@@ -22,9 +22,15 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( "/taxes.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync<VatRatePayload>( req );
+        var resp = await _rest.PostAsync( req );
 
-        return Ok( resp!.VatRate );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<VatRatePayload>()!;
+            return Ok( resp.StatusCode, body.VatRate );
+        }
+
+        return Error<VatRate>( resp );
     }
 
 
@@ -33,9 +39,15 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/taxes/{ taxId }.json" );
 
-        var resp = await _rest.GetAsync<VatRatePayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.VatRate );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<VatRatePayload>()!;
+            return Ok( resp.StatusCode, body.VatRate );
+        }
+
+        return Error<VatRate>( resp );
     }
 
 
@@ -47,7 +59,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.PutAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -58,7 +73,10 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.DeleteAsync( req );
 
-        return new ApiResult();
+        if ( resp.IsSuccessful == true )
+            return Ok( resp.StatusCode );
+
+        return Error( resp );
     }
 
 
@@ -67,8 +85,14 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( "/taxes.json" );
 
-        var resp = await _rest.GetAsync<VatRateListPayload>( req );
+        var resp = await _rest.GetAsync( req );
 
-        return Ok( resp!.VatRates );
+        if ( resp.IsSuccessful == true )
+        {
+            var body = resp.Response<VatRateListPayload>()!;
+            return Ok( resp.StatusCode, body.VatRates );
+        }
+
+        return Error<List<VatRate>>( resp );
     }
 }
