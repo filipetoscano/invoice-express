@@ -26,7 +26,7 @@ public class SaftExportCommand
 
         while ( true )
         {
-            var res = await api.SaftExportAsync( this.Year, this.Month );
+            var res = await api.SaftExportGenerateAsync( this.Year, this.Month );
 
             if ( res.IsSuccessful == false )
                 return console.WriteError( res );
