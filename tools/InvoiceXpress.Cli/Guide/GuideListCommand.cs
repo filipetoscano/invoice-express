@@ -96,7 +96,7 @@ public class GuideListCommand
             {
                 Id = x.Id,
                 Type = x.Type,
-                DocumentNumber = x.InvertedSequenceNumber,
+                DocumentNumber = x.InvertedSequenceNumber ?? null,
                 State = x.State,
                 Client = x.Client.Name,
                 TotalAmount = x.TotalAmount,
