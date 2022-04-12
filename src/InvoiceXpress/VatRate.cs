@@ -11,7 +11,7 @@ public class VatRate
     /// <summary />
     [JsonPropertyName( "id" )]
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
-    public long? Id { get; set; }
+    public int? Id { get; set; }
 
     /// <summary>
     /// Unique code of VAT rate.
