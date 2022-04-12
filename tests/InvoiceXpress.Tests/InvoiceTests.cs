@@ -23,5 +23,7 @@ public class InvoiceTests
         var res = await _client.InvoiceListAsync( new InvoiceSearch(), 1 );
 
         Assert.NotNull( res );
+        Assert.True( res.IsSuccessful );
+        Assert.NotNull( res.Result );
     }
 }

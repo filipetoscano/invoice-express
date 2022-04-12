@@ -4,13 +4,13 @@ using Xunit;
 namespace InvoiceXpress.Tests;
 
 /// <summary />
-public class ClientTests
+public class SequenceTests
 {
     private readonly InvoiceXpressClient _client;
 
 
     /// <summary />
-    public ClientTests( InvoiceXpressClient client )
+    public SequenceTests( InvoiceXpressClient client )
     {
         _client = client;
     }
@@ -20,7 +20,7 @@ public class ClientTests
     [Fact]
     public async Task List()
     {
-        var res = await _client.ClientListAsync( 1 );
+        var res = await _client.SequenceListAsync();
 
         Assert.NotNull( res );
         Assert.True( res.IsSuccessful );

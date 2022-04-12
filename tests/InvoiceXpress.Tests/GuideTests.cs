@@ -23,5 +23,7 @@ public class GuideTests
         var res = await _client.GuideListAsync( new GuideSearch(), 1 );
 
         Assert.NotNull( res );
+        Assert.True( res.IsSuccessful );
+        Assert.NotNull( res.Result );
     }
 }

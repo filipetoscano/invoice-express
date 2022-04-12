@@ -18,6 +18,18 @@ public class VatRateTests
 
     /// <summary />
     [Fact]
+    public async Task List()
+    {
+        var res = await _client.VatRateListAsync();
+
+        Assert.NotNull( res );
+        Assert.True( res.IsSuccessful );
+        Assert.NotNull( res.Result );
+    }
+
+
+    /// <summary />
+    [Fact]
     public async Task Suite()
     {
         /*

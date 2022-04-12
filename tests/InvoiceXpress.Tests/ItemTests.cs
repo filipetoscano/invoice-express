@@ -18,6 +18,18 @@ public class ItemTests
 
     /// <summary />
     [Fact]
+    public async Task List()
+    {
+        var res = await _client.ItemListAsync( 1, 50 );
+
+        Assert.NotNull( res );
+        Assert.True( res.IsSuccessful );
+        Assert.NotNull( res.Result );
+    }
+
+
+    /// <summary />
+    [Fact]
     public async Task Suite()
     {
         /*

@@ -23,5 +23,7 @@ public class EstimateTests
         var res = await _client.EstimateListAsync( new EstimateSearch(), 1 );
 
         Assert.NotNull( res );
+        Assert.True( res.IsSuccessful );
+        Assert.NotNull( res.Result );
     }
 }
