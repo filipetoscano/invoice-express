@@ -6,16 +6,19 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<VatRate>> VatRateCreateAsync( VatRate tax )
+    public async Task<ApiResult<VatRate>> VatRateCreateAsync( VatRate rate )
     {
+        if ( rate.Id.HasValue == true )
+            throw new ArgumentException( ".Id property is prohibited when creating a VAT rate", nameof( rate ) );
+
         var payload = new
         {
             tax = new VatRateEx()
             {
-                Code = tax.Code,
-                Value = tax.Value,
-                Region = tax.Region,
-                IsDefaultRate = tax.IsDefaultRate,
+                Code = rate.Code,
+                Value = rate.Value,
+                Region = rate.Region,
+                IsDefaultRate = rate.IsDefaultRate,
             },
         };
 
@@ -35,9 +38,9 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<VatRate>> VatRateGetAsync( int taxId )
+    public async Task<ApiResult<VatRate>> VatRateGetAsync( int rateId )
     {
-        var req = new RestRequest( $"/taxes/{ taxId }.json" );
+        var req = new RestRequest( $"/taxes/{ rateId }.json" );
 
         var resp = await _rest.GetAsync( req );
 
@@ -52,10 +55,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> VatRateUpdateAsync( VatRate tax )
+    public async Task<ApiResult> VatRateUpdateAsync( VatRate rate )
     {
-        var req = new RestRequest( $"/taxes/{ tax.Id }.json" )
-            .AddJsonBody( new VatRatePayload() { VatRate = tax } );
+        if ( rate.Id.HasValue == false )
+            throw new ArgumentException( ".Id property is required when updating a VAT rate", nameof( rate ) );
+
+        var req = new RestRequest( $"/taxes/{ rate.Id.Value }.json" )
+            .AddJsonBody( new VatRatePayload() { VatRate = rate } );
 
         var resp = await _rest.PutAsync( req );
 
@@ -67,9 +73,9 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> VatRateDeleteAsync( int taxId )
+    public async Task<ApiResult> VatRateDeleteAsync( int rateId )
     {
-        var req = new RestRequest( $"/taxes/{ taxId }.json" );
+        var req = new RestRequest( $"/taxes/{ rateId }.json" );
 
         var resp = await _rest.DeleteAsync( req );
 
