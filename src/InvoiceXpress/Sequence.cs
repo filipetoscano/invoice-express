@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-public class SequenceRef
+public class SequenceData
 {
     /// <summary />
     [JsonPropertyName( "id" )]
@@ -28,7 +28,7 @@ public class SequenceRef
 
 
 /// <summary />
-public class Sequence : SequenceRef
+public class Sequence : SequenceData
 {
     /// <summary />
     [JsonPropertyName( "current_invoice_number" )]

@@ -7,7 +7,8 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Invoice>> InvoiceCreateAsync( InvoiceData invoice, string? requestUuid = null )
+    public async Task<ApiResult<Invoice>> InvoiceCreateAsync( InvoiceData invoice, string? requestUuid = null,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( invoice.Id.HasValue == true )
             throw new ArgumentException( ".Id property is prohibited when creating an invoice", nameof( invoice ) );
@@ -18,7 +19,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req );
+        var resp = await _rest.PostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -31,12 +32,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceType type, int invoiceId )
+    public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceType type, int invoiceId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = InvoiceEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ invoiceId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -49,7 +51,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceUpdateAsync( InvoiceData invoice )
+    public async Task<ApiResult> InvoiceUpdateAsync( InvoiceData invoice,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( invoice.Id.HasValue == false )
             throw new ArgumentException( ".Id property is required when updating an invoice", nameof( invoice ) );
@@ -60,7 +63,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ invoice.Id }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -70,7 +73,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change )
+    public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceType type, int invoiceId, InvoiceStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( type != InvoiceType.Invoice
             && type != InvoiceType.SimplifiedInvoice
@@ -91,7 +95,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityType }/{ invoiceId }/change-state.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -101,11 +105,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<List<Invoice>>> InvoiceRelatedDocumentsAsync( InvoiceType type, int invoiceId )
+    public async Task<ApiResult<List<Invoice>>> InvoiceRelatedDocumentsAsync( InvoiceType type, int invoiceId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/document/{ invoiceId }/related_documents.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -118,12 +123,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceType type, int invoiceId, InvoicePayment payment )
+    public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceType type, int invoiceId, InvoicePayment payment,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/documents/{ invoiceId }/partial_payments.json" )
             .AddJsonBody( new InvoicePaymentPayload() { Payment = payment } );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -136,7 +142,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoicePaymentCancelAsync( InvoiceType type, int invoiceId, string message )
+    public async Task<ApiResult> InvoicePaymentCancelAsync( InvoiceType type, int invoiceId, string message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( type != InvoiceType.Receipt )
             throw new InvalidOperationException( $"Cannot cancel payment for document type '{ type }'" );
@@ -155,7 +162,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityType }/{ invoiceId }/change-state.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -165,7 +172,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiPaginatedResult<Invoice>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Invoice>> InvoiceListAsync( InvoiceSearch search, int page, int pageSize = 20,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/invoices.json" )
             .AddQueryParameter( "page", page )
@@ -243,7 +251,7 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -256,7 +264,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> InvoiceSendByEmailAsync( InvoiceType type, int invoiceId, EmailMessage message )
+    public async Task<ApiResult> InvoiceSendByEmailAsync( InvoiceType type, int invoiceId, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = InvoiceEntity.ToEntityName( type );
         var payload = EmailMessagePayload.From( message );
@@ -264,7 +273,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ invoiceId }/email-document.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -274,14 +283,15 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<PdfDocument>> InvoicePdfGenerateAsync( InvoiceType type, int invoiceId, bool secondCopy = false )
+    public async Task<ApiResult<PdfDocument>> InvoicePdfGenerateAsync( InvoiceType type, int invoiceId, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/api/pdf/{ invoiceId }.json" );
 
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -294,11 +304,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<string>> InvoiceQrCodeUrlAsync( InvoiceType type, int invoiceId )
+    public async Task<ApiResult<string>> InvoiceQrCodeUrlAsync( InvoiceType type, int invoiceId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/api/qr_codes/{ invoiceId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -311,9 +322,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> InvoiceQrCodeImageAsync( InvoiceType type, int invoiceId )
+    public async Task<ApiResult<byte[]>> InvoiceQrCodeImageAsync( InvoiceType type, int invoiceId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var resp = await InvoiceQrCodeUrlAsync( type, invoiceId );
+        var resp = await InvoiceQrCodeUrlAsync( type, invoiceId, cancellationToken );
 
         if ( resp.IsSuccessful == false )
         {

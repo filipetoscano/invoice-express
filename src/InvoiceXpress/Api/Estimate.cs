@@ -7,7 +7,8 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Estimate>> EstimateCreateAsync( EstimateData estimate )
+    public async Task<ApiResult<Estimate>> EstimateCreateAsync( EstimateData estimate,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( estimate.Id.HasValue == true )
             throw new ArgumentException( ".Id property is prohibited when creating an estimate", nameof( estimate ) );
@@ -18,7 +19,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req );
+        var resp = await _rest.PostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -31,12 +32,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Estimate>> EstimateGetAsync( EstimateType type, int estimateId )
+    public async Task<ApiResult<Estimate>> EstimateGetAsync( EstimateType type, int estimateId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = EstimateEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ estimateId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -49,7 +51,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> EstimateUpdateAsync( EstimateData estimate )
+    public async Task<ApiResult> EstimateUpdateAsync( EstimateData estimate,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         if ( estimate.Id.HasValue == false )
             throw new ArgumentException( ".Id property is required when updating an estimate", nameof( estimate ) );
@@ -60,7 +63,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ estimate.Id }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -70,7 +73,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> EstimateStateChangeAsync( EstimateType type, int estimateId, EstimateStateChange change )
+    public async Task<ApiResult> EstimateStateChangeAsync( EstimateType type, int estimateId, EstimateStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = EstimateEntity.ToEntityName( type );
         var payload = new EstimateStateChangePayload()
@@ -82,7 +86,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ estimateId }/change-state.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -92,7 +96,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiPaginatedResult<Estimate>> EstimateListAsync( EstimateSearch search, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Estimate>> EstimateListAsync( EstimateSearch search, int page, int pageSize = 20,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/estimates.json" )
             .AddQueryParameter( "page", page )
@@ -170,7 +175,7 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -183,7 +188,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> EstimateSendByEmailAsync( EstimateType type, int estimateId, EmailMessage message )
+    public async Task<ApiResult> EstimateSendByEmailAsync( EstimateType type, int estimateId, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = EstimateEntity.ToEntityName( type );
         var payload = EmailMessagePayload.From( message );
@@ -191,7 +197,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ estimateId }/email-document.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -201,14 +207,15 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<PdfDocument>> EstimatePdfGenerateAsync( EstimateType type, int estimateId, bool secondCopy = false )
+    public async Task<ApiResult<PdfDocument>> EstimatePdfGenerateAsync( EstimateType type, int estimateId, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/api/pdf/{ estimateId }.json" );
 
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

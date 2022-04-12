@@ -6,12 +6,13 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Item>> ItemCreateAsync( Item item )
+    public async Task<ApiResult<Item>> ItemCreateAsync( Item item,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/items.json" )
             .AddJsonBody( new ItemPayload() { Item = item } );
 
-        var resp = await _rest.PostAsync( req );
+        var resp = await _rest.PostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -24,11 +25,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Item>> ItemGetAsync( int itemId )
+    public async Task<ApiResult<Item>> ItemGetAsync( int itemId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/items/{ itemId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -41,12 +43,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> ItemUpdateAsync( Item item )
+    public async Task<ApiResult> ItemUpdateAsync( Item item,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/items/{ item.Id }.json" )
             .AddJsonBody( new ItemPayload() { Item = item } );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -56,11 +59,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> ItemDeleteAsync( int itemId )
+    public async Task<ApiResult> ItemDeleteAsync( int itemId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/items/{ itemId }.json" );
 
-        var resp = await _rest.DeleteAsync( req );
+        var resp = await _rest.DeleteAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -70,13 +74,14 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiPaginatedResult<Item>> ItemListAsync( int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Item>> ItemListAsync( int page, int pageSize = 20,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/items.json" )
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

@@ -22,7 +22,7 @@ public class SequenceCreateCommand
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath! );
-        var seq = JsonSerializer.Deserialize<SequenceRef>( json )!;
+        var seq = JsonSerializer.Deserialize<SequenceData>( json )!;
 
 
         /*

@@ -7,7 +7,8 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<Guide>> GuideCreateAsync( GuideData guide )
+    public async Task<ApiResult<Guide>> GuideCreateAsync( GuideData guide,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = GuideEntity.ToEntityName( guide.Type );
         var payload = new GuideDataPayload() { Guide = guide };
@@ -15,7 +16,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req );
+        var resp = await _rest.PostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -28,12 +29,13 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<Guide>> GuideGetAsync( GuideType type, int guideId )
+    public async Task<ApiResult<Guide>> GuideGetAsync( GuideType type, int guideId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = GuideEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -46,7 +48,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> GuideUpdateAsync( GuideData guide )
+    public async Task<ApiResult> GuideUpdateAsync( GuideData guide,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = GuideEntity.ToEntityName( guide.Type );
         var payload = new GuideDataPayload() { Guide = guide };
@@ -54,7 +57,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guide.Id }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -64,7 +67,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> GuideStateChangeAsync( GuideType type, int guideId, GuideStateChange change )
+    public async Task<ApiResult> GuideStateChangeAsync( GuideType type, int guideId, GuideStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityType = GuideEntity.ToEntityName( type );
         var payload = new GuideStateChangePayload()
@@ -76,7 +80,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityType }/{ guideId }/change-state.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -86,7 +90,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiPaginatedResult<Guide>> GuideListAsync( GuideSearch search, int page, int pageSize = 20 )
+    public async Task<ApiPaginatedResult<Guide>> GuideListAsync( GuideSearch search, int page, int pageSize = 20,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/guides.json" )
             .AddQueryParameter( "page", page )
@@ -164,7 +169,7 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -177,7 +182,8 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult> GuideSendByEmailAsync( GuideType type, int guideId, EmailMessage message )
+    public async Task<ApiResult> GuideSendByEmailAsync( GuideType type, int guideId, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var entityName = GuideEntity.ToEntityName( type );
         var payload = EmailMessagePayload.From( message );
@@ -185,7 +191,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guideId }/email-document.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req );
+        var resp = await _rest.PutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -195,14 +201,15 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<PdfDocument>> GuidePdfGenerateAsync( GuideType type, int guideId, bool secondCopy = false )
+    public async Task<ApiResult<PdfDocument>> GuidePdfGenerateAsync( GuideType type, int guideId, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/api/pdf/{ guideId }.json" );
 
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -215,11 +222,12 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<string>> GuideQrCodeUrlAsync( GuideType type, int guideId )
+    public async Task<ApiResult<string>> GuideQrCodeUrlAsync( GuideType type, int guideId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( $"/api/qr_codes/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync( req );
+        var resp = await _rest.GetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -232,9 +240,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> GuideQrCodeImageAsync( GuideType type, int guideId )
+    public async Task<ApiResult<byte[]>> GuideQrCodeImageAsync( GuideType type, int guideId,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var resp = await GuideQrCodeUrlAsync( type, guideId );
+        var resp = await GuideQrCodeUrlAsync( type, guideId, cancellationToken );
 
         if ( resp.IsSuccessful == false )
         { 

@@ -7,13 +7,14 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<string?>> SaftExportGenerateAsync( int year, int month )
+    public async Task<ApiResult<string?>> SaftExportGenerateAsync( int year, int month,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/api/export_saft.json" )
             .AddQueryParameter( "year", year )
             .AddQueryParameter( "month", month );
 
-        var resp = await _rest.PostAsync( req );
+        var resp = await _rest.PostAsync( req, cancellationToken );
 
 
         /*
@@ -38,8 +39,11 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> SaftExportAsync( int year, int month )
+    public async Task<ApiResult<byte[]>> SaftExportAsync( int year, int month,
+        CancellationToken cancellationToken = default( CancellationToken ) )
     {
+        var inner = SaftExportGenerateAsync( year, month, cancellationToken );
+
         await Task.Delay( 0 );
 
         throw new NotImplementedException();
