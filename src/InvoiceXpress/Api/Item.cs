@@ -86,7 +86,11 @@ public partial class InvoiceXpressClient
         if ( resp.IsSuccessful == true )
         {
             var body = resp.Response<ItemListPayload>()!;
-            return Ok( resp.StatusCode, body.Items, body.Pagination );
+
+            // #19: Item/List all doesn't return pagination
+            var p = new Payloads.Pagination();
+
+            return Ok( resp.StatusCode, body.Items, p );
         }
 
         return Error2<Item>( resp );
