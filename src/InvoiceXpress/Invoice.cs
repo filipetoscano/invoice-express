@@ -9,7 +9,7 @@ public class Invoice
 {
     /// <summary />
     [JsonPropertyName( "id" )]
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary />
     [JsonPropertyName( "status" )]

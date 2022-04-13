@@ -9,12 +9,14 @@ namespace InvoiceXpress.Tests;
 public class InvoiceTests
 {
     private readonly InvoiceXpressClient _client;
+    private readonly ScenarioConfig _config;
 
 
     /// <summary />
-    public InvoiceTests( InvoiceXpressClient client )
+    public InvoiceTests( InvoiceXpressClient client, ScenarioConfig config )
     {
         _client = client;
+        _config = config;
     }
 
 
@@ -72,7 +74,6 @@ public class InvoiceTests
         } );
 
 
-
         /*
          * #1. Create
          */
@@ -81,10 +82,9 @@ public class InvoiceTests
         Assert.NotNull( create );
         Assert.True( create.IsSuccessful );
         Assert.NotNull( create.Result );
-        Assert.NotNull( create.Result!.Id );
         Assert.Equal( data.Type, create.Result!.Type );
 
-        var inv = new InvoiceKey( data.Type, create.Result!.Id!.Value );
+        var inv = new InvoiceKey( data.Type, create.Result!.Id );
 
 
         /*
@@ -125,7 +125,7 @@ public class InvoiceTests
          */
         var email = await _client.InvoiceSendByEmailAsync( inv, new EmailMessage()
         {
-            To = "filipe.toscano@halyards.app",
+            To = _config.EmailTo,
             Subject = "UT",
             Body = nameof( InvoiceTests ) + " / " + nameof( Scenario ),
         } );

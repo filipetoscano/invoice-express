@@ -26,5 +26,10 @@ public class Startup
             opt.AccountName = account;
             opt.ApiKey = apiKey;
         } );
+
+        services.AddSingleton<ScenarioConfig>( new ScenarioConfig()
+        {
+            EmailTo = "filipe.toscano@halyards.app",
+        } );
     }
 }

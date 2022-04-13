@@ -8,7 +8,7 @@ public class Address
 {
     /// <summary />
     [JsonPropertyName( "detail" )]
-    public string Lines { get; set; } = default!;
+    public string AddressLines { get; set; } = default!;
 
     /// <summary />
     [JsonPropertyName( "postal_code" )]
