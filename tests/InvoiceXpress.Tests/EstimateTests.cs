@@ -127,7 +127,7 @@ public class EstimateTests
         {
             To = _config.EmailTo,
             Subject = "UT",
-            Body = nameof( InvoiceTests ) + " / " + nameof( Scenario ),
+            Body = nameof( EstimateTests ) + " / " + nameof( Scenario ),
         } );
 
         Assert.NotNull( email );
@@ -142,5 +142,18 @@ public class EstimateTests
         Assert.NotNull( pdf );
         Assert.True( pdf.IsSuccessful );
         Assert.NotNull( pdf.Result );
+
+
+        /*
+         * #7. Accept
+         */
+        var accept = await _client.EstimateStateChangeAsync( est, new EstimateStateChange()
+        {
+            Action = EstimateAction.Accept,
+            Message = "Accept",
+        } );
+
+        Assert.NotNull( accept );
+        Assert.True( accept.IsSuccessful );
     }
 }
