@@ -16,5 +16,5 @@ internal class ErrorItem
 {
     /// <summary />
     [JsonPropertyName( "error" )]
-    public string Error { get; set; } = default!;
+    public string Message { get; set; } = default!;
 }

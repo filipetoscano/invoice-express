@@ -2,28 +2,50 @@
 
 namespace InvoiceXpress;
 
+
 /// <summary />
-public class ApiResult
+public enum ResponseStatus
 {
     /// <summary />
-    public HttpStatusCode StatusCode { get; set; }
+    None,
+
+    /// <summary>
+    /// Response completed successfully.
+    /// </summary>
+    Completed,
 
     /// <summary />
-    public bool IsSuccessful { get; set; }
+    Error,
 
-    /// <summary />
-    public List<ApiError>? Errors { get; set; }
+    /// <summary>
+    /// Response timed out.
+    /// </summary>
+    TimedOut,
+
+    /// <summary>
+    /// Request was aborted.
+    /// </summary>
+    Aborted,
 }
 
 
 /// <summary />
-public class ApiError
+public class ApiResult
 {
     /// <summary />
-    public string Key { get; set; } = default!;
+    public bool IsSuccessful { get; set; }
 
     /// <summary />
-    public string Message { get; set; } = default!;
+    public ResponseStatus ResponseStatus { get; set; }
+
+    /// <summary />
+    public HttpStatusCode StatusCode { get; set; }
+
+    /// <summary />
+    public Exception? ErrorException { get; set; }
+
+    /// <summary />
+    public List<ApiError>? Errors { get; set; }
 }
 
 
@@ -43,4 +65,12 @@ public class ApiPaginatedResult<T> : ApiResult
 
     /// <summary />
     public Pagination? Pagination { get; set; }
+}
+
+
+/// <summary />
+public class ApiError
+{
+    /// <summary />
+    public string Message { get; set; } = default!;
 }

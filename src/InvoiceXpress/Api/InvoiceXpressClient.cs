@@ -41,107 +41,70 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
-    private static ApiPaginatedResult<Tresp> Error2<Tresp>( RestResponse resp )
+    private static ApiResult Error( RestResponse resp )
     {
-        // 422
-        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
+        return new ApiResult()
         {
-            var body = resp.Response<ErrorPayload>();
-            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-        }
-
-        // 401
-        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
-            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 404
-        if ( resp.StatusCode == HttpStatusCode.NotFound )
-            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 409
-        if ( resp.StatusCode == HttpStatusCode.Conflict )
-            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 500
-        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
-            return new ApiPaginatedResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        throw new InvalidOperationException();
+            IsSuccessful = false,
+            ResponseStatus = ToResponseStatus( resp.ResponseStatus ),
+            StatusCode = resp.StatusCode,
+            ErrorException = resp.ErrorException,
+            Errors = ToErrors( resp ),
+        };
     }
 
 
     /// <summary />
     private static ApiResult<Tresp> Error<Tresp>( RestResponse resp )
     {
-        if ( resp.ResponseStatus != ResponseStatus.Completed )
+        return new ApiResult<Tresp>()
         {
-
-            return new ApiResult<Tresp>()
-            {
-                IsSuccessful = false,
-                StatusCode = (HttpStatusCode) 900,
-                Errors = new List<ApiError>()
-                {
-                    new ApiError() { Key = "Status", Message = $"{ resp.ResponseStatus }" },
-                }
-            };
-        }
-
-        // 422
-        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
-        {
-            var body = resp.Response<ErrorPayload>();
-            // TODO: use errors
-            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-        }
-
-        // 401
-        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
-            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 404
-        if ( resp.StatusCode == HttpStatusCode.NotFound )
-            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 409
-        if ( resp.StatusCode == HttpStatusCode.Conflict )
-            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 500
-        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
-            return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        throw new InvalidOperationException();
+            IsSuccessful = false,
+            ResponseStatus = ToResponseStatus( resp.ResponseStatus ),
+            StatusCode = resp.StatusCode,
+            ErrorException = resp.ErrorException,
+            Errors = ToErrors( resp ),
+        };
     }
 
 
     /// <summary />
-    private static ApiResult Error( RestResponse resp )
+    private static ApiPaginatedResult<Tresp> Error2<Tresp>( RestResponse resp )
     {
-        // 422
-        if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
+        return new ApiPaginatedResult<Tresp>()
         {
-            var body = resp.Response<ErrorPayload>();
-            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
+            IsSuccessful = false,
+            ResponseStatus = ToResponseStatus( resp.ResponseStatus ),
+            StatusCode = resp.StatusCode,
+            ErrorException = resp.ErrorException,
+            Errors = ToErrors( resp ),
+        };
+    }
+
+
+    /// <summary />
+    private static List<ApiError>? ToErrors( RestResponse resp )
+    {
+        if ( resp.StatusCode != HttpStatusCode.UnprocessableEntity )
+            return null;
+
+        if ( resp.Content == null )
+            return null;
+
+
+        // Only for 422 with content
+        var errors = new List<ApiError>();
+        var body = resp.Response<ErrorPayload>();
+
+        foreach ( var er in body.Errors )
+        {
+            errors.Add( new ApiError()
+            {
+                Message = er.Message,
+            } );
         }
 
-        // 401
-        if ( resp.StatusCode == HttpStatusCode.Unauthorized )
-            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 404
-        if ( resp.StatusCode == HttpStatusCode.NotFound )
-            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 409
-        if ( resp.StatusCode == HttpStatusCode.Conflict )
-            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        // 500
-        if ( resp.StatusCode == HttpStatusCode.InternalServerError )
-            return new ApiResult() { IsSuccessful = false, StatusCode = resp.StatusCode };
-
-        throw new InvalidOperationException();
+        return errors;
     }
 
 
@@ -151,6 +114,7 @@ public partial class InvoiceXpressClient : IDisposable
         return new ApiResult()
         {
             IsSuccessful = true,
+            ResponseStatus = ResponseStatus.Completed,
             StatusCode = statusCode,
         };
     }
@@ -162,6 +126,7 @@ public partial class InvoiceXpressClient : IDisposable
         return new ApiResult<T>()
         {
             IsSuccessful = true,
+            ResponseStatus = ResponseStatus.Completed,
             StatusCode = statusCode,
             Result = result,
         };
@@ -182,10 +147,18 @@ public partial class InvoiceXpressClient : IDisposable
         return new ApiPaginatedResult<T>()
         {
             IsSuccessful = true,
+            ResponseStatus = ResponseStatus.Completed,
             StatusCode = statusCode,
             Result = result,
             Pagination = p,
         };
+    }
+
+
+    /// <summary />
+    private static ResponseStatus ToResponseStatus( RestSharp.ResponseStatus status )
+    {
+        return Enum.Parse<ResponseStatus>( status.ToString() );
     }
 
 
