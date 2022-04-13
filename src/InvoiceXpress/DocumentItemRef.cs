@@ -6,29 +6,41 @@ namespace InvoiceXpress;
 /// <summary />
 public class DocumentItemRef
 {
-    /// <summary />
+    /// <summary>
+    /// Unique item code.
+    /// </summary>
     [JsonPropertyName( "name" )]
     public string Code { get; set; } = default!;
 
-    /// <summary />
+    /// <summary>
+    /// Item description.
+    /// </summary>
     [JsonPropertyName( "description" )]
     public string Description { get; set; } = default!;
 
-    /// <summary />
+    /// <summary>
+    /// Unit price, without taxes.
+    /// </summary>
     [JsonPropertyName( "unit_price" )]
     [JsonConverter( typeof( DecimalAsStringConverter ) )]
     public decimal UnitPrice { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Quantity
+    /// </summary>
     [JsonPropertyName( "quantity" )]
     [JsonConverter( typeof( DecimalAsStringConverter ) )]
     public decimal Quantity { get; set; }
 
-    /// <summary />
+    /// <summary>
+    /// Reference to VAT rate.
+    /// </summary>
     [JsonPropertyName( "tax" )]
     public VatRateRef VatRate { get; set; } = default!;
 
-    /// <summary />
+    /// <summary>
+    /// Discount, as percentage, before taxes.
+    /// </summary>
     [JsonPropertyName( "discount" )]
     public decimal DiscountPercentage { get; set; }
 }
