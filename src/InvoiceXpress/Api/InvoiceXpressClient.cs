@@ -21,7 +21,7 @@ public partial class InvoiceXpressClient : IDisposable
             ConfigureMessageHandler = _options.ConfigureMessageHandler,
         };
 
-        _rest = new RestClient( rco )
+        _rest = new RestClient( client, rco )
             .UseJson()
             .AddDefaultHeader( "User-Agent", "invoicexpress-dotnet/1.0" )
             .AddDefaultQueryParameter( "api_key", _options.ApiKey );
