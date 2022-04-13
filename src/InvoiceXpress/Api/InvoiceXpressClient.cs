@@ -134,6 +134,19 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
+    private static ApiResult<T> PartialOk<T>( HttpStatusCode statusCode, T? result )
+    {
+        return new ApiResult<T>()
+        {
+            IsSuccessful = true,
+            ResponseStatus = ResponseStatus.Completed,
+            StatusCode = statusCode,
+            Result = result,
+        };
+    }
+
+
+    /// <summary />
     private static ApiPaginatedResult<T> Ok<T>( HttpStatusCode statusCode, List<T> result, Payloads.Pagination pagination )
     {
         var p = new Pagination()

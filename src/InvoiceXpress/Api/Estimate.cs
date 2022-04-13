@@ -1,6 +1,7 @@
 ﻿using InvoiceXpress.Payloads;
 using InvoiceXpress.Rest;
 using RestSharp;
+using System.Net;
 
 namespace InvoiceXpress;
 
@@ -228,11 +229,34 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
+    public async Task<ApiResult<byte[]>> EstimatePdfDocumentAsync( EstimateType type, int estimateId, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        var resp = await EstimatePdfGenerateAsync( type, estimateId, secondCopy );
+
+        if ( resp.IsSuccessful == false )
+            return resp.As<byte[]>();
+
+        if ( resp.StatusCode != HttpStatusCode.OK )
+            return resp.As<byte[]>();
+
+
+        /*
+         * TODO: Error handling
+         */
+        var document = await _client.GetByteArrayAsync( resp.Result!.Url );
+
+        return Ok( HttpStatusCode.OK, document );
+    }
+
+
+    /// <summary />
     public async Task<ApiResult<Estimate>> EstimateGetAsync( EstimateKey estimate,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await EstimateGetAsync( estimate.Type, estimate.Id, cancellationToken );
     }
+
 
     /// <summary />
     public async Task<ApiResult> EstimateStateChangeAsync( EstimateKey estimate, EstimateStateChange change,
@@ -255,5 +279,13 @@ public partial class InvoiceXpressClient
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await EstimatePdfGenerateAsync( estimate.Type, estimate.Id, secondCopy, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> EstimatePdfDocumentAsync( EstimateKey estimate, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await EstimatePdfDocumentAsync( estimate.Type, estimate.Id, secondCopy, cancellationToken );
     }
 }

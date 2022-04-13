@@ -7,7 +7,7 @@ namespace InvoiceXpress;
 public partial class InvoiceXpressClient
 {
     /// <summary />
-    public async Task<ApiResult<string?>> SaftExportGenerateAsync( int year, int month,
+    public async Task<ApiResult<string>> SaftExportGenerateAsync( int year, int month,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/api/export_saft.json" )
@@ -16,25 +16,25 @@ public partial class InvoiceXpressClient
 
         var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
-
-        /*
-         * Export is finished and available for download.
-         */
-        if ( resp.StatusCode == HttpStatusCode.OK )
+        if ( resp.IsSuccessful == true )
         {
-            var body = resp.Response<SaftExportPayload>()!;
-            return Ok( resp.StatusCode, body.Url );
+            /*
+             * 200/Ok means that the document has been generated and a download
+             * URL is returned in the response.
+             * 
+             * 202/Accepted means that the document is being generated and the
+             * caller must retry until they receive 200/Ok.
+             */
+            if ( resp.StatusCode == HttpStatusCode.OK )
+            {
+                var body = resp.Response<SaftExportPayload>()!;
+                return Ok<string>( resp.StatusCode, body.Url! );
+            }
+
+            return PartialOk<string>( resp.StatusCode, null );
         }
 
-
-        /*
-         * Command has been accepted: export will begin. Caller
-         * should continue to invoke method until `OK` is returned.
-         */
-        if ( resp.StatusCode == HttpStatusCode.Accepted )
-            return Ok<string?>( resp.StatusCode, null );
-
-        return Error<string?>( resp );
+        return Error<string>( resp );
     }
 
 
@@ -42,10 +42,20 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult<byte[]>> SaftExportAsync( int year, int month,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var inner = SaftExportGenerateAsync( year, month, cancellationToken );
+        var resp = await SaftExportGenerateAsync( year, month, cancellationToken );
+        
+        if ( resp.IsSuccessful == false )
+            return resp.As<byte[]>();
 
-        await Task.Delay( 0 );
+        if ( resp.StatusCode != HttpStatusCode.OK )
+            return resp.As<byte[]>();
 
-        throw new NotImplementedException();
+
+        /*
+         * TODO: Error handling
+         */
+        var document = await _client.GetByteArrayAsync( resp.Result! );
+
+        return Ok( HttpStatusCode.OK, document );
     }
 }

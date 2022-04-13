@@ -1,6 +1,7 @@
 ﻿using InvoiceXpress.Payloads;
 using InvoiceXpress.Rest;
 using RestSharp;
+using System.Net;
 
 namespace InvoiceXpress;
 
@@ -295,11 +296,45 @@ public partial class InvoiceXpressClient
 
         if ( resp.IsSuccessful == true )
         {
-            var body = resp.Response<PdfDocumentPayload>()!;
-            return Ok( resp.StatusCode, body.PdfDocument );
+            /*
+             * 200/Ok means that the document has been generated and a download
+             * URL is returned in the response.
+             * 
+             * 202/Accepted means that the document is being generated and the
+             * caller must retry until they receive 200/Ok.
+             */
+            if ( resp.StatusCode == HttpStatusCode.OK )
+            {
+                var body = resp.Response<PdfDocumentPayload>()!;
+                return Ok( resp.StatusCode, body.PdfDocument );
+            }
+
+            return PartialOk( resp.StatusCode, default( PdfDocument ) );
         }
 
         return Error<PdfDocument>( resp );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> InvoicePdfDocumentAsync( InvoiceType type, int invoiceId, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        var resp = await InvoicePdfGenerateAsync( type, invoiceId, secondCopy );
+
+        if ( resp.IsSuccessful == false )
+            return resp.As<byte[]>();
+
+        if ( resp.StatusCode != HttpStatusCode.OK )
+            return resp.As<byte[]>();
+
+
+        /*
+         * TODO: Error handling
+         */
+        var document = await _client.GetByteArrayAsync( resp.Result!.Url );
+
+        return Ok( HttpStatusCode.OK, document );
     }
 
 
@@ -328,26 +363,16 @@ public partial class InvoiceXpressClient
         var resp = await InvoiceQrCodeUrlAsync( type, invoiceId, cancellationToken );
 
         if ( resp.IsSuccessful == false )
-        {
-            return new ApiResult<byte[]>()
-            {
-                IsSuccessful = resp.IsSuccessful,
-                StatusCode = resp.StatusCode,
-                Errors = resp.Errors,
-            };
-        }
+            return resp.As<byte[]>();
 
 
         /*
-         * 
+         * TODO: error handling
          */
         var image = await _client.GetByteArrayAsync( resp.Result );
 
-        // TODO: error handling
-
         return Ok( resp.StatusCode, image );
     }
-
 
 
     /// <summary />
@@ -357,12 +382,14 @@ public partial class InvoiceXpressClient
         return await InvoiceGetAsync( invoice.Type, invoice.Id, cancellationToken );
     }
 
+
     /// <summary />
     public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceKey invoice, InvoiceStateChange change,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await InvoiceStateChangeAsync( invoice.Type, invoice.Id, change, cancellationToken );
     }
+
 
     /// <summary />
     public async Task<ApiResult<List<Invoice>>> InvoiceRelatedDocumentsAsync( InvoiceKey invoice,
@@ -371,12 +398,14 @@ public partial class InvoiceXpressClient
         return await InvoiceRelatedDocumentsAsync( invoice.Type, invoice.Id, cancellationToken );
     }
 
+
     /// <summary />
     public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceKey invoice, InvoicePayment payment,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await InvoicePaymentAsync( invoice.Type, invoice.Id, payment, cancellationToken );
     }
+
 
     /// <summary />
     public async Task<ApiResult> InvoicePaymentCancelAsync( InvoiceKey invoice, string message,
@@ -385,12 +414,14 @@ public partial class InvoiceXpressClient
         return await InvoicePaymentCancelAsync( invoice.Type, invoice.Id, message, cancellationToken );
     }
 
+
     /// <summary />
     public async Task<ApiResult> InvoiceSendByEmailAsync( InvoiceKey invoice, EmailMessage message,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await InvoiceSendByEmailAsync( invoice.Type, invoice.Id, message, cancellationToken );
     }
+
 
     /// <summary />
     public async Task<ApiResult<PdfDocument>> InvoicePdfGenerateAsync( InvoiceKey invoice, bool secondCopy = false,
@@ -399,12 +430,22 @@ public partial class InvoiceXpressClient
         return await InvoicePdfGenerateAsync( invoice.Type, invoice.Id, secondCopy, cancellationToken );
     }
 
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> InvoicePdfDocumentAsync( InvoiceKey invoice, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoicePdfDocumentAsync( invoice.Type, invoice.Id, secondCopy, cancellationToken );
+    }
+
+
     /// <summary />
     public async Task<ApiResult<string>> InvoiceQrCodeUrlAsync( InvoiceKey invoice,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         return await InvoiceQrCodeUrlAsync( invoice.Type, invoice.Id, cancellationToken );
     }
+
 
     /// <summary />
     public async Task<ApiResult<byte[]>> InvoiceQrCodeImageAsync( InvoiceKey invoice,

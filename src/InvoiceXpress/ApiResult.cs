@@ -2,7 +2,6 @@
 
 namespace InvoiceXpress;
 
-
 /// <summary />
 public enum ResponseStatus
 {
@@ -54,6 +53,20 @@ public class ApiResult<T> : ApiResult
 {
     /// <summary />
     public T? Result { get; set; }
+
+
+    /// <summary />
+    internal ApiResult<Tout> As<Tout>()
+    {
+        return new ApiResult<Tout>()
+        {
+            IsSuccessful = this.IsSuccessful,
+            ResponseStatus = this.ResponseStatus,
+            StatusCode = this.StatusCode,
+            ErrorException = this.ErrorException,
+            Errors = this.Errors,
+        };
+    }
 }
 
 
