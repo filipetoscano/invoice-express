@@ -38,6 +38,12 @@ public class GuideTests
     {
         var today = DateOnly.FromDateTime( DateTime.UtcNow );
 
+        
+        /*
+         * Note: Business rules in GuideCreateAsync require that LoadedOn
+         * must be strictly greater than LocalDateTime.Now. In order to
+         * avoid any time issues, add a day!
+         */
         var data = new GuideData()
         {
             Type = GuideType.DeliveryNote,
@@ -50,7 +56,7 @@ public class GuideTests
                 Name = "Client #1",
             },
             Items = new List<DocumentItemRef>(),
-            LoadedOn = today,
+            LoadedOn = today.AddDays( 1 ),
             VehicleLicensePlate = "AA-00-BB",
             AddressFrom = new Address()
             {
