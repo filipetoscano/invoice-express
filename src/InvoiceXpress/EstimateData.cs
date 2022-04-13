@@ -43,4 +43,16 @@ public class EstimateData
     /// <summary />
     [JsonPropertyName( "items" )]
     public List<DocumentItemRef> Items { get; set; } = default!;
+
+
+    /// <summary />
+    [JsonPropertyName( "currency_code" )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public string? ForeignCurrencyCode { get; set; }
+
+    /// <summary />
+    [JsonPropertyName( "rate" )]
+    [JsonConverter( typeof( DecimalAsStringConverter ) )]
+    [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public decimal? ForeignExchangeRate { get; set; }
 }
