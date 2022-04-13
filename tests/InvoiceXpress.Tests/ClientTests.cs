@@ -30,7 +30,7 @@ public class ClientTests
 
     /// <summary />
     [Fact]
-    public async Task Suite()
+    public async Task Scenario()
     {
         /*
          * #1. How many are there now?

@@ -30,7 +30,7 @@ public class ItemTests
 
     /// <summary />
     [Fact]
-    public async Task Suite()
+    public async Task Scenario()
     {
         /*
          * #1. How many rates are there now?
