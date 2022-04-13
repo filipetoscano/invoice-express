@@ -12,7 +12,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( "/sequences.json" )
             .AddJsonBody( new SequencePayload<SequenceData>() { Sequence = item } );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -30,7 +30,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/sequences/{ sequenceId }.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -48,7 +48,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/sequences/{ sequenceId }/set_current.json" );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -62,7 +62,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( "/sequences.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

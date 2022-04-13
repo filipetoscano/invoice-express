@@ -13,7 +13,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -31,7 +31,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/clients/{ clientId }.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -50,7 +50,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients/find-by-code.json" )
             .AddQueryParameter( "client_code", clientCode );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -70,7 +70,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/clients/{ client.Id }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -87,7 +87,7 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -118,7 +118,7 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "page", page )
             .AddQueryParameter( "per_page", pageSize );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

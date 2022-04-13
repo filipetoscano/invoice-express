@@ -26,7 +26,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( "/taxes.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -44,7 +44,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/taxes/{ rateId }.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -66,7 +66,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/taxes/{ rate.Id.Value }.json" )
             .AddJsonBody( new VatRatePayload() { VatRate = rate } );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -79,9 +79,9 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult> VatRateDeleteAsync( int rateId,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var req = new RestRequest( $"/taxes/{ rateId }.json" );
+        var req = new RestRequest( $"/taxes/{ rateId }.json", Method.Delete );
 
-        var resp = await _rest.DeleteAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -95,7 +95,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( "/taxes.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

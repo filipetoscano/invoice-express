@@ -14,7 +14,7 @@ public partial class InvoiceXpressClient
             .AddQueryParameter( "year", year )
             .AddQueryParameter( "month", month );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
 
         /*

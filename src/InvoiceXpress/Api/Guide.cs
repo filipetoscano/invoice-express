@@ -16,7 +16,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PostAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePostAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -35,7 +35,7 @@ public partial class InvoiceXpressClient
         var entityName = GuideEntity.ToEntityName( type );
         var req = new RestRequest( $"/{ entityName }/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -57,7 +57,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guide.Id }.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -80,7 +80,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityType }/{ guideId }/change-state.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -169,7 +169,7 @@ public partial class InvoiceXpressClient
         /*
          * 
          */
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -191,7 +191,7 @@ public partial class InvoiceXpressClient
         var req = new RestRequest( $"/{ entityName }/{ guideId }/email-document.json" )
             .AddJsonBody( payload );
 
-        var resp = await _rest.PutAsync( req, cancellationToken );
+        var resp = await _rest.ExecutePutAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
             return Ok( resp.StatusCode );
@@ -209,7 +209,7 @@ public partial class InvoiceXpressClient
         if ( secondCopy == true )
             req.AddQueryParameter( "second_copy", "true" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {
@@ -227,7 +227,7 @@ public partial class InvoiceXpressClient
     {
         var req = new RestRequest( $"/api/qr_codes/{ guideId }.json" );
 
-        var resp = await _rest.GetAsync( req, cancellationToken );
+        var resp = await _rest.ExecuteGetAsync( req, cancellationToken );
 
         if ( resp.IsSuccessful == true )
         {

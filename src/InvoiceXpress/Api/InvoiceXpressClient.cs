@@ -73,10 +73,25 @@ public partial class InvoiceXpressClient : IDisposable
     /// <summary />
     private static ApiResult<Tresp> Error<Tresp>( RestResponse resp )
     {
+        if ( resp.ResponseStatus != ResponseStatus.Completed )
+        {
+
+            return new ApiResult<Tresp>()
+            {
+                IsSuccessful = false,
+                StatusCode = (HttpStatusCode) 900,
+                Errors = new List<ApiError>()
+                {
+                    new ApiError() { Key = "Status", Message = $"{ resp.ResponseStatus }" },
+                }
+            };
+        }
+
         // 422
         if ( resp.StatusCode == HttpStatusCode.UnprocessableEntity )
         {
             var body = resp.Response<ErrorPayload>();
+            // TODO: use errors
             return new ApiResult<Tresp>() { IsSuccessful = false, StatusCode = resp.StatusCode };
         }
 
