@@ -347,4 +347,69 @@ public partial class InvoiceXpressClient
 
         return Ok( resp.StatusCode, image );
     }
+
+
+
+    /// <summary />
+    public async Task<ApiResult<Invoice>> InvoiceGetAsync( InvoiceKey invoice,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceGetAsync( invoice.Type, invoice.Id, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult> InvoiceStateChangeAsync( InvoiceKey invoice, InvoiceStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceStateChangeAsync( invoice.Type, invoice.Id, change, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult<List<Invoice>>> InvoiceRelatedDocumentsAsync( InvoiceKey invoice,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceRelatedDocumentsAsync( invoice.Type, invoice.Id, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult<Invoice>> InvoicePaymentAsync( InvoiceKey invoice, InvoicePayment payment,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoicePaymentAsync( invoice.Type, invoice.Id, payment, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult> InvoicePaymentCancelAsync( InvoiceKey invoice, string message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoicePaymentCancelAsync( invoice.Type, invoice.Id, message, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult> InvoiceSendByEmailAsync( InvoiceKey invoice, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceSendByEmailAsync( invoice.Type, invoice.Id, message, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult<PdfDocument>> InvoicePdfGenerateAsync( InvoiceKey invoice, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoicePdfGenerateAsync( invoice.Type, invoice.Id, secondCopy, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult<string>> InvoiceQrCodeUrlAsync( InvoiceKey invoice,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceQrCodeUrlAsync( invoice.Type, invoice.Id, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> InvoiceQrCodeImageAsync( InvoiceKey invoice,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await InvoiceQrCodeImageAsync( invoice.Type, invoice.Id, cancellationToken );
+    }
 }

@@ -225,4 +225,35 @@ public partial class InvoiceXpressClient
 
         return Error<PdfDocument>( resp );
     }
+
+
+    /// <summary />
+    public async Task<ApiResult<Estimate>> EstimateGetAsync( EstimateKey estimate,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await EstimateGetAsync( estimate.Type, estimate.Id, cancellationToken );
+    }
+
+    /// <summary />
+    public async Task<ApiResult> EstimateStateChangeAsync( EstimateKey estimate, EstimateStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await EstimateStateChangeAsync( estimate.Type, estimate.Id, change, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> EstimateSendByEmailAsync( EstimateKey estimate, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await EstimateSendByEmailAsync( estimate.Type, estimate.Id, message, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<PdfDocument>> EstimatePdfGenerateAsync( EstimateKey estimate, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await EstimatePdfGenerateAsync( estimate.Type, estimate.Id, secondCopy, cancellationToken );
+    }
 }

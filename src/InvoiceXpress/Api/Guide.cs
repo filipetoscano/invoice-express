@@ -265,4 +265,52 @@ public partial class InvoiceXpressClient
 
         return Ok( resp.StatusCode, image );
     }
+
+
+    /// <summary />
+    public async Task<ApiResult<Guide>> GuideGetAsync( GuideKey guide,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuideGetAsync( guide.Type, guide.Id, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> GuideStateChangeAsync( GuideKey guide, GuideStateChange change,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuideStateChangeAsync( guide.Type, guide.Id, change, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult> GuideSendByEmailAsync( GuideKey guide, EmailMessage message,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuideSendByEmailAsync( guide.Type, guide.Id, message, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<PdfDocument>> GuidePdfGenerateAsync( GuideKey guide, bool secondCopy = false,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuidePdfGenerateAsync( guide.Type, guide.Id, secondCopy, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<string>> GuideQrCodeUrlAsync( GuideKey guide,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuideQrCodeUrlAsync( guide.Type, guide.Id, cancellationToken );
+    }
+
+
+    /// <summary />
+    public async Task<ApiResult<byte[]>> GuideQrCodeImageAsync( GuideKey guide,
+        CancellationToken cancellationToken = default( CancellationToken ) )
+    {
+        return await GuideQrCodeImageAsync( guide.Type, guide.Id, cancellationToken );
+    }
 }
