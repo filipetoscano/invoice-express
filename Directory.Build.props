@@ -17,8 +17,10 @@
 
     <!-- Packaging properties -->
     <IsPackable>false</IsPackable>
+    <PackageDescription>.NET client for Invoice Xpress, an online invoicing software for entities based in Portugal -- certified by the Portuguese Tax and Customs Authority.</PackageDescription>
     <PackageIconUrl>https://media.githubusercontent.com/media/filipetoscano/invoicexpress/master/docs/img/icon.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>invoices;portugal;invoicexpress</PackageTags>
 
     <!-- Debuging properties -->
     <IncludeSymbols>true</IncludeSymbols>
