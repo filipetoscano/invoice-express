@@ -2,6 +2,7 @@
 /.vs/
 /build/
 /node_modules/
+/nupkg/
 
 bin/
 obj/
