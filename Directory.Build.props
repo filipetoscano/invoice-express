@@ -1,6 +1,10 @@
 <Project>
 
   <PropertyGroup>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>Filipe Toscano</Authors>
     <Product>InvoiceXpress</Product>
     <Copyright>Copyright © Filipe Toscano</Copyright>
@@ -9,16 +13,18 @@
     <PackageProjectUrl>https://github.com/filipetoscano/invoicexpress</PackageProjectUrl>
     <RepositoryUrl>https://github.com/filipetoscano/invoicexpress.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <DebugType>portable</DebugType>
-    <IncludeSymbols>true</IncludeSymbols>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
+    <!-- Packaging properties -->
     <IsPackable>false</IsPackable>
     <PackageIconUrl>https://media.githubusercontent.com/media/filipetoscano/invoicexpress/master/docs/img/icon.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
-  </PropertyGroup>
 
+    <!-- Debuging properties -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
 
   <ItemGroup Condition=" '$(IsPackable)' == 'true' ">
     <None Include="$(MSBuildThisFileDirectory)docs\img\icon.png">

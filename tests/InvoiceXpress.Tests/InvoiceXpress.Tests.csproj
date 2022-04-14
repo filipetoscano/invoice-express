@@ -4,8 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RunSettingsFilePath>$(MSBuildProjectDirectory)\cfg.runsettings</RunSettingsFilePath>
-
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
