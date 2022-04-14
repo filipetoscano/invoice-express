@@ -8,8 +8,19 @@ public static class ConsoleExtensions
     /// <summary />
     public static int WriteError( this IConsole console, ApiResult res )
     {
-        Console.WriteLine( "err: {0}, HTTP {1} {2}", res.ResponseStatus, (int) res.StatusCode, res.StatusCode );
+        if ( res.StatusCode != 0 )
+            Console.WriteLine( "err: {0}, HTTP {1} {2}", res.ResponseStatus, (int) res.StatusCode, res.StatusCode );
+        else
+            Console.WriteLine( "err: {0}", res.ResponseStatus );
 
+        // Other types of errors!
+        if ( res.ErrorException != null )
+        {
+            Console.WriteLine( res.ErrorException.GetType().FullName );
+            Console.WriteLine( res.ErrorException.Message );
+        }
+
+        // API errors, as returned by invoicexpress
         if ( res.Errors != null )
         {
             foreach ( var err in res.Errors )
