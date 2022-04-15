@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'dev'
+      - 'master'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET SDK 6.0
+        uses: actions/setup-dotnet@v2.0.0
+        with:
+          dotnet-version: 6.0
+
+      - name: Cache
+        uses: actions/cache@v3.0.0
+        with:
+          path: 
+            .nuget
+          key: nuget
+
+      - name: Run (test)
+        run: ./cicd/test.sh
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INVXP_APIKEY: ${{ secrets.CI_INVXP_APIKEY }}
+          INVXP_ACCOUNT: ${{ secrets.CI_INVXP_ACCOUNT }}
+          NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
+          VERSION: "0.0.0"
+          
