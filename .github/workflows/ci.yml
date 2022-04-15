@@ -26,7 +26,7 @@ jobs:
 
       - name: Run (test)
         run: ./cicd/test.sh
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INVXP_APIKEY: ${{ secrets.CI_INVXP_APIKEY }}
           INVXP_ACCOUNT: ${{ secrets.CI_INVXP_ACCOUNT }}
