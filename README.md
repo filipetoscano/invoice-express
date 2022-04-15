@@ -1,25 +1,44 @@
 InvoiceXpress
 ==========================================================================
 
+[![CI](https://github.com/filipetoscano/invoicexpress/workflows/CI/badge.svg)](https://github.com/AutoMapper/AutoMapper/actions?query=workflow%3ACI)
+[![NuGet](http://img.shields.io/nuget/vpre/InvoiceXpress.svg?label=NuGet)](https://www.nuget.org/packages/InvoiceXpress/)
+
 .NET client for [Invoice Xpress](https://www.invoicexpress.com/), an online
 invoicing software for entities based in Portugal -- certified by the 
 [Portuguese Tax and Customs Authority](https://info.portaldasfinancas.gov.pt/pt/docs/Conteudos_1pagina/Pages/portuguese-tax-system.aspx).
 
 
-Status / Roadmap
+Getting started
 --------------------------------------------------------------------------
 
-This library is currently under development! It is not currently usable
-for production use. The coverage of the official REST API is
-[documented here](ApiCoverage.md).
+In the startup of your application, configure the DI container as follows:
 
-The roadmap is currently as follows:
+```
+services.AddHttpClient<InvoiceXpressClient>();
 
-* Error handling / throwing
-* CI/CD using github actions
-* Regression testing suite
-* Logging support
-* Polly support
+services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
+{
+    opt.AccountName = "your account name";
+    opt.ApiKey = "your api key";
+} );
+
+services.AddSingleton<InvoiceXpressClient>();
+```
+
+Then, inject `InvoiceXpressClient` into the caller code:
+
+```
+public class SomeController : ControllerBase
+{
+    private readonly InvoiceXpressClient _invexp;
+
+    public SomeController( InvoiceXpressClient invexp )
+    {
+        _invexp = invexp;
+    }
+}
+```
 
 
 Installing via NuGet

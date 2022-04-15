@@ -1,8 +1,10 @@
 /.nuget/
 /.vs/
+/artifacts/
 /build/
 /node_modules/
 /nupkg/
+/tmp/
 
 bin/
 obj/

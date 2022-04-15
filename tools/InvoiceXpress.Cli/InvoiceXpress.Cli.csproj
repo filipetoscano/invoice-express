@@ -8,11 +8,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(Configuration) == 'Release'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <!-- Single file publishing -->
     <ApplicationIcon>App.ico</ApplicationIcon>
     <PublishSingleFile>true</PublishSingleFile>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
