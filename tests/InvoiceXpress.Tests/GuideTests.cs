@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -38,7 +39,7 @@ public class GuideTests
     {
         var today = DateOnly.FromDateTime( DateTime.UtcNow );
 
-        
+
         /*
          * Note: Business rules in GuideCreateAsync require that LoadedOn
          * must be strictly greater than LocalDateTime.Now. In order to
@@ -162,7 +163,11 @@ public class GuideTests
 
         Assert.NotNull( pdf );
         Assert.True( pdf.IsSuccessful );
-        Assert.NotNull( pdf.Result );
+
+        if ( pdf.StatusCode == HttpStatusCode.OK )
+            Assert.NotNull( pdf.Result );
+        else
+            Assert.Null( pdf.Result );
 
 
         /*

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -141,7 +142,11 @@ public class InvoiceTests
 
         Assert.NotNull( pdf );
         Assert.True( pdf.IsSuccessful );
-        Assert.NotNull( pdf.Result );
+
+        if ( pdf.StatusCode == HttpStatusCode.OK )
+            Assert.NotNull( pdf.Result );
+        else
+            Assert.Null( pdf.Result );
 
 
         /*
