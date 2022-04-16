@@ -46,6 +46,7 @@ public class InvoiceListCommand
          * 
          */
         List<Invoice> invoices;
+        Pagination? pagination = null;
 
         if ( this.FetchAll == false )
         {
@@ -55,6 +56,7 @@ public class InvoiceListCommand
                 return console.WriteError( res );
 
             invoices = res.Result!;
+            pagination = res.Pagination;
         }
         else
         {
@@ -89,6 +91,9 @@ public class InvoiceListCommand
                 table.AddRow( r.Id, r.Type, r.DocumentNumber(), r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode, r.ForeignCurrency?.CurrencyCode );
 
             table.Write( Format.Minimal );
+
+            if ( pagination?.PageCount > 1 )
+                Console.WriteLine( "page {0}/{1} - {2} invoices", pagination.Page, pagination.PageCount, pagination.EntryCount );
         }
         else
         {

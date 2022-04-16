@@ -46,6 +46,7 @@ public class EstimateListCommand
          * 
          */
         List<Estimate> estimates;
+        Pagination? pagination = null;
 
         if ( this.FetchAll == false )
         {
@@ -55,6 +56,7 @@ public class EstimateListCommand
                 return console.WriteError( res );
 
             estimates = res.Result!;
+            pagination = res.Pagination;
         }
         else
         {
@@ -89,6 +91,9 @@ public class EstimateListCommand
                 table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode, r.ForeignCurrency?.CurrencyCode );
 
             table.Write( Format.Minimal );
+
+            if ( pagination?.PageCount > 1 )
+                Console.WriteLine( "page {0}/{1} - {2} estimates", pagination.Page, pagination.PageCount, pagination.EntryCount );
         }
         else
         {

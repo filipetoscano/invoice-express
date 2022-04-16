@@ -46,6 +46,7 @@ public class GuideListCommand
          * 
          */
         List<Guide> guides;
+        Pagination? pagination = null;
 
         if ( this.FetchAll == false )
         {
@@ -55,6 +56,7 @@ public class GuideListCommand
                 return console.WriteError( res );
 
             guides = res.Result!;
+            pagination = res.Pagination;
         }
         else
         {
@@ -89,6 +91,9 @@ public class GuideListCommand
                 table.AddRow( r.Id, r.Type, r.SequenceNumber, r.State, r.Client.Name, r.TotalAmount, r.CurrencyCode );
 
             table.Write( Format.Minimal );
+
+            if ( pagination?.PageCount > 1 )
+                Console.WriteLine( "page {0}/{1} - {2} guides", pagination.Page, pagination.PageCount, pagination.EntryCount );
         }
         else
         {
