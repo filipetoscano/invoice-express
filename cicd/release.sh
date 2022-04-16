@@ -79,4 +79,14 @@ zip -r artifacts/invexp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
 zip -r artifacts/invexp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
 zip -r artifacts/invexp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
 
+
+#
+# Release
+# ------------------------------------------------------------------------
+
+hub release create v${VERSION} --message="Release v${VERSION}" \
+   -a artifacts/invexp-win-x64-${VERSION}.zip \
+   -a artifacts/invexp-linux-x64-${VERSION}.zip \
+   -a artifacts/invexp-osx-x64-${VERSION}.zip
+
 # eof
