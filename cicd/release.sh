@@ -53,14 +53,14 @@ dotnet test    -c Release --no-restore --no-build --verbosity=normal
 
 
 #
-# Publish
+# Publish to nuget.org
 # ------------------------------------------------------------------------
 
 mkdir -p nupkg
 rm -f nupkg/*.*
 
 dotnet pack    -c Release --no-restore --no-build src/InvoiceXpress -o nupkg -p:Version=${VERSION}
-dotnet nuget push "nupkg/*.nupkg" --api-key ${NUGET_APIKEY}
+dotnet nuget push "nupkg/*.nupkg" --api-key ${NUGET_APIKEY} --source=https://api.nuget.org/v3/index.json
 
 
 #
