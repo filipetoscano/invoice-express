@@ -68,16 +68,16 @@ dotnet nuget push "nupkg/*.nupkg" --api-key ${NUGET_APIKEY} --source=https://api
 # RID catalog: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
 # ------------------------------------------------------------------------
 
-dotnet publish -c Release --no-restore --runtime=win-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/win-x64
-dotnet publish -c Release --no-restore --runtime=linux-x64 --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/linux-x64
-dotnet publish -c Release --no-restore --runtime=osx-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/osx-x64
+dotnet publish -c Release --no-restore --no-build --runtime=win-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/win-x64
+dotnet publish -c Release --no-restore --no-build --runtime=linux-x64 --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/linux-x64
+dotnet publish -c Release --no-restore --no-build --runtime=osx-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/osx-x64
 
 mkdir -p artifacts
 rm -f artifacts/*.zip
 
-zip -r artifacts/invexp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
-zip -r artifacts/invexp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
-zip -r artifacts/invexp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
+zip -j -r artifacts/invexp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
+zip -j -r artifacts/invexp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
+zip -j -r artifacts/invexp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
 
 
 #
