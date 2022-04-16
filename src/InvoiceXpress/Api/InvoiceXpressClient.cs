@@ -1,9 +1,9 @@
-﻿using InvoiceXpress.Payloads;
+﻿using InvoiceXpress.Json;
+using InvoiceXpress.Payloads;
 using Microsoft.Extensions.Options;
 using RestSharp;
 using System.Globalization;
 using System.Net;
-using System.Text.Json;
 
 namespace InvoiceXpress;
 
@@ -184,9 +184,9 @@ public partial class InvoiceXpressClient : IDisposable
 
     /// <summary />
     private static string VE<T>( T value )
+        where T : Enum
     {
-        var v = JsonSerializer.Serialize( value )!;
-        return v.Substring( 1, v.Length - 2 );
+        return JsonEnum<T>.ToValue( value );
     }
 
 
