@@ -232,7 +232,7 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult<byte[]>> EstimatePdfDocumentAsync( EstimateType type, int estimateId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var resp = await EstimatePdfGenerateAsync( type, estimateId, secondCopy );
+        var resp = await EstimatePdfGenerateAsync( type, estimateId, secondCopy, cancellationToken );
 
         if ( resp.IsSuccessful == false )
             return resp.As<byte[]>();

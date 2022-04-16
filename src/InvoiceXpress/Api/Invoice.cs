@@ -320,7 +320,7 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult<byte[]>> InvoicePdfDocumentAsync( InvoiceType type, int invoiceId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var resp = await InvoicePdfGenerateAsync( type, invoiceId, secondCopy );
+        var resp = await InvoicePdfGenerateAsync( type, invoiceId, secondCopy, cancellationToken );
 
         if ( resp.IsSuccessful == false )
             return resp.As<byte[]>();

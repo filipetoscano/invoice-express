@@ -238,7 +238,7 @@ public partial class InvoiceXpressClient
     public async Task<ApiResult<byte[]>> GuidePdfDocumentAsync( GuideType type, int guideId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var resp = await GuidePdfGenerateAsync( type, guideId, secondCopy );
+        var resp = await GuidePdfGenerateAsync( type, guideId, secondCopy, cancellationToken );
 
         if ( resp.IsSuccessful == false )
             return resp.As<byte[]>();
