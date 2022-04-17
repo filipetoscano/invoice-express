@@ -10,7 +10,6 @@ public class ItemCreateCommand
 {
     /// <summary />
     [Argument( 0, Description = "Item record, in JSON file" )]
-    [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
@@ -21,7 +20,19 @@ public class ItemCreateCommand
         /*
          * 
          */
-        var json = await File.ReadAllTextAsync( this.FilePath! );
+        string json;
+
+        if ( console.IsInputRedirected == true )
+            json = await console.In.ReadToEndAsync();
+        else if ( this.FilePath != null )
+            json = await File.ReadAllTextAsync( this.FilePath! );
+        else
+            return console.WriteError( "The FilePath field is required, or pipe JSON to stdin" );
+
+
+        /*
+         * 
+         */
         var item = JsonSerializer.Deserialize<Item>( json )!;
 
 

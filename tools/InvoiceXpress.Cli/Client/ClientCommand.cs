@@ -8,6 +8,7 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( ClientDetailCommand ) )]
 [Subcommand( typeof( ClientInvoiceListCommand ) )]
 [Subcommand( typeof( ClientListCommand ) )]
+[Subcommand( typeof( ClientRandomCommand ) )]
 [Subcommand( typeof( ClientUpdateCommand ) )]
 public class ClientCommand
 {

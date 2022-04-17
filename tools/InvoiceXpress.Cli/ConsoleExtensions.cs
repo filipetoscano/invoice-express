@@ -29,4 +29,18 @@ public static class ConsoleExtensions
 
         return (int) res.StatusCode;
     }
+
+
+    /// <summary />
+    public static int WriteError( this IConsole console, string message )
+    {
+        var fg = console.ForegroundColor;
+        console.ForegroundColor = ConsoleColor.Red;
+
+        console.WriteLine( message );
+
+        console.ForegroundColor = fg;
+
+        return 599;
+    }
 }

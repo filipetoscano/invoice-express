@@ -54,7 +54,7 @@ public class ItemTests
             Description = "Unit Test",
             Unit = ItemUnitType.Unit,
             UnitPrice = 12.3m,
-            Tax = new VatRate() { Code = "IVA23" },
+            VatRate = new VatRate() { Code = "IVA23" },
         };
 
         var create = await _client.ItemCreateAsync( item );
@@ -80,7 +80,7 @@ public class ItemTests
         Assert.Equal( item.Code, get.Result!.Code );
         Assert.Equal( item.Description, get.Result!.Description );
         Assert.Equal( item.UnitPrice, get.Result!.UnitPrice );
-        Assert.Equal( item.Tax.Code, get.Result!.Tax!.Code );
+        Assert.Equal( item.VatRate.Code, get.Result!.VatRate!.Code );
 
 
         /*
@@ -92,7 +92,7 @@ public class ItemTests
             Code = item.Code,
             Unit = ItemUnitType.Unit,
             UnitPrice = 12.3m,
-            Tax = new VatRate() { Code = "VAT23" },
+            VatRate = new VatRate() { Code = "VAT23" },
         } );
 
         Assert.NotNull( update );

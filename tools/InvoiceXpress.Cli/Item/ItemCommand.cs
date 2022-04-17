@@ -8,6 +8,7 @@ namespace InvoiceXpress.Cli;
 [Subcommand( typeof( ItemDeleteCommand ) )]
 [Subcommand( typeof( ItemDetailCommand ) )]
 [Subcommand( typeof( ItemListCommand ) )]
+[Subcommand( typeof( ItemRandomCommand ) )]
 [Subcommand( typeof( ItemUpdateCommand ) )]
 public class ItemCommand
 {

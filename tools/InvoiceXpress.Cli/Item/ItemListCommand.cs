@@ -62,7 +62,7 @@ public class ItemListCommand
         var table = new ConsoleTable( "Id", "Code", "Description", "Unit price", "Unit", "VAT" );
 
         foreach ( var r in items.OrderBy( x => x.Code ) )
-            table.AddRow( r.Id, r.Code, r.Description, r.UnitPrice, r.Unit, r.Tax?.Value );
+            table.AddRow( r.Id, r.Code, r.Description, r.UnitPrice, r.Unit, r.VatRate?.Value );
 
         table.Write( Format.Minimal );
 

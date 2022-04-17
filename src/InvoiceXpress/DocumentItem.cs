@@ -44,7 +44,7 @@ public class DocumentItem
     /// If not present the default tax is applied to the item.
     /// </remarks>
     [JsonPropertyName( "tax" )]
-    public VatRate? Tax { get; set; }
+    public VatRate? VatRate { get; set; }
 
 
     /// <summary>
