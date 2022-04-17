@@ -14,6 +14,7 @@
     <!-- Single file publishing -->
     <ApplicationIcon>App.ico</ApplicationIcon>
     <PublishSingleFile>true</PublishSingleFile>
+    <!--<PublishTrimmed>true</PublishTrimmed>-->
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
