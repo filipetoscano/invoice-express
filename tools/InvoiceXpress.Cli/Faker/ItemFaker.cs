@@ -20,7 +20,7 @@ public class ItemFaker : BaseFaker, IFaker<Item>
         obj.UnitPrice = RandomDecimal( 10m, 50m, 2 );
         obj.Unit = RandomEnum<ItemUnitType>();
         obj.VatRate = new VatRate();
-        obj.VatRate.Code = "IVA22";
+        obj.VatRate.Code = "IVA23";
 
         return obj;
     }

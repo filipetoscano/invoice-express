@@ -40,15 +40,8 @@ public class VatRate
 /// <summary>
 /// Reference to an existing VAT rate.
 /// </summary>
-public struct VatRateRef
+public class VatRateRef
 {
-    /// <summary />
-    public VatRateRef( string code )
-    {
-        this.Code = code;
-    }
-
-
     /// <summary>
     /// Unique code of VAT rate.
     /// </summary>
