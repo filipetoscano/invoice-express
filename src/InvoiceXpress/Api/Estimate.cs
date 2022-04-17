@@ -229,7 +229,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> EstimatePdfDocumentAsync( EstimateType type, int estimateId, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> EstimatePdfTryDownloadAsync( EstimateType type, int estimateId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var resp = await EstimatePdfGenerateAsync( type, estimateId, secondCopy, cancellationToken );
@@ -283,9 +283,9 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> EstimatePdfDocumentAsync( EstimateKey estimate, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> EstimatePdfTryDownloadAsync( EstimateKey estimate, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        return await EstimatePdfDocumentAsync( estimate.Type, estimate.Id, secondCopy, cancellationToken );
+        return await EstimatePdfTryDownloadAsync( estimate.Type, estimate.Id, secondCopy, cancellationToken );
     }
 }

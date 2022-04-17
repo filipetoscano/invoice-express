@@ -317,7 +317,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> InvoicePdfDocumentAsync( InvoiceType type, int invoiceId, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> InvoicePdfTryDownloadAsync( InvoiceType type, int invoiceId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var resp = await InvoicePdfGenerateAsync( type, invoiceId, secondCopy, cancellationToken );
@@ -432,10 +432,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> InvoicePdfDocumentAsync( InvoiceKey invoice, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> InvoicePdfTryDownloadAsync( InvoiceKey invoice, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        return await InvoicePdfDocumentAsync( invoice.Type, invoice.Id, secondCopy, cancellationToken );
+        return await InvoicePdfTryDownloadAsync( invoice.Type, invoice.Id, secondCopy, cancellationToken );
     }
 
 

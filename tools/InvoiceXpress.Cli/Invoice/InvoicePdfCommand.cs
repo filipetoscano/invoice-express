@@ -70,7 +70,7 @@ public class InvoicePdfCommand
 
         while ( true )
         {
-            var res = await api.InvoicePdfDocumentAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
+            var res = await api.InvoicePdfTryDownloadAsync( this.InvoiceType!.Value, this.InvoiceId!.Value );
 
             if ( res.IsSuccessful == false )
                 return console.WriteError( res );

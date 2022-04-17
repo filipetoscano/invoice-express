@@ -70,7 +70,7 @@ public class EstimatePdfCommand
 
         while ( true )
         {
-            var res = await api.EstimatePdfDocumentAsync( this.EstimateType!.Value, this.EstimateId!.Value );
+            var res = await api.EstimatePdfTryDownloadAsync( this.EstimateType!.Value, this.EstimateId!.Value );
 
             if ( res.IsSuccessful == false )
                 return console.WriteError( res );

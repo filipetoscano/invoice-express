@@ -70,7 +70,7 @@ public class GuidePdfCommand
 
         while ( true )
         {
-            var res = await api.GuidePdfDocumentAsync( this.GuideType!.Value, this.GuideId!.Value );
+            var res = await api.GuidePdfTryDownloadAsync( this.GuideType!.Value, this.GuideId!.Value );
 
             if ( res.IsSuccessful == false )
                 return console.WriteError( res );

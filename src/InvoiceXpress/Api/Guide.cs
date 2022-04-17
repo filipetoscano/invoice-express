@@ -235,7 +235,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> GuidePdfDocumentAsync( GuideType type, int guideId, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> GuidePdfTryDownloadAsync( GuideType type, int guideId, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var resp = await GuidePdfGenerateAsync( type, guideId, secondCopy, cancellationToken );
@@ -333,10 +333,10 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> GuidePdfDocumentAsync( GuideKey guide, bool secondCopy = false,
+    public async Task<ApiResult<byte[]>> GuidePdfTryDownloadAsync( GuideKey guide, bool secondCopy = false,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        return await GuidePdfDocumentAsync( guide.Type, guide.Id, secondCopy, cancellationToken );
+        return await GuidePdfTryDownloadAsync( guide.Type, guide.Id, secondCopy, cancellationToken );
     }
 
 
