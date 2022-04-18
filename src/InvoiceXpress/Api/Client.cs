@@ -100,19 +100,27 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiPaginatedResult<Invoice>> ClientInvoiceListAsync( int clientId, int page, int pageSize = 20,
+    public async Task<ApiPaginatedResult<Invoice>> ClientInvoiceListAsync( int clientId, ClientInvoiceSearch search, int page, int pageSize = 20,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
-        var payload = new
-        {
-            filter = new
-            {
-                status = new string[] { "final" },
-                by_type = new InvoiceType[] { InvoiceType.Invoice, InvoiceType.SimplifiedInvoice, InvoiceType.Receipt },
-                archived = new string[] { "non_archived" },
-            },
-        };
+        var archive = new List<string>();
 
+        if ( search.Archive.HasFlag( ArchiveFilter.Active ) == true )
+            archive.Add( "non_archived" );
+
+        if ( search.Archive.HasFlag( ArchiveFilter.Archived ) == true )
+            archive.Add( "archived" );
+
+        var payload = new ClientInvoiceListPayload();
+        payload.Filter = new ClientInvoiceListFilter();
+        payload.Filter.States = search.States ?? new List<InvoiceState>() { InvoiceState.Final };
+        payload.Filter.Types = search.Types ?? new List<InvoiceType>() { InvoiceType.Invoice, InvoiceType.SimplifiedInvoice };
+        payload.Filter.Archive = archive;
+
+
+        /*
+         * 
+         */
         var req = new RestRequest( $"/clients/{ clientId }/invoices.json" )
             .AddJsonBody( payload )
             .AddQueryParameter( "page", page )

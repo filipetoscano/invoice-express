@@ -1,6 +1,7 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -18,6 +19,11 @@ public class ClientInvoiceListCommand
     public bool IsCode { get; set; } = false;
 
     /// <summary />
+    [Option( "-q|--query", CommandOptionType.SingleValue, Description = "Query, in JSON file" )]
+    [FileExists]
+    public string? QueryFile { get; set; } = default!;
+
+    /// <summary />
     [Option( "-p|--page", CommandOptionType.SingleValue, Description = "Page of 'size' records to retrieve" )]
     public int Page { get; set; } = 1;
 
@@ -29,6 +35,9 @@ public class ClientInvoiceListCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
     {
+        /*
+         * 
+         */
         Client client;
 
         if ( this.IsCode == true )
@@ -55,7 +64,24 @@ public class ClientInvoiceListCommand
         /*
          * 
          */
-        var inv = await api.ClientInvoiceListAsync( client.Id!.Value, this.Page, this.PageSize );
+        ClientInvoiceSearch search;
+        
+        if ( this.QueryFile != null )
+        {
+            var json = await File.ReadAllTextAsync( this.QueryFile );
+            search = JsonSerializer.Deserialize<ClientInvoiceSearch>( json )!;
+        }
+        else
+        {
+            // Use defaults!
+            search = new ClientInvoiceSearch();
+        }
+
+
+        /*
+         * 
+         */
+        var inv = await api.ClientInvoiceListAsync( client.Id!.Value, search, this.Page, this.PageSize );
 
         if ( inv.IsSuccessful == false )
             return console.WriteError( inv );

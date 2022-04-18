@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress.Payloads;
 
@@ -15,6 +16,7 @@ public class Pagination
     /// Index of current page.
     /// </summary>
     [JsonPropertyName( "current_page" )]
+    [JsonConverter( typeof( NumberAsVaryConverter ) )]
     public int Page { get; set; }
 
     /// <summary>
@@ -27,5 +29,6 @@ public class Pagination
     /// Numbers of records per page.
     /// </summary>
     [JsonPropertyName( "per_page" )]
+    [JsonConverter( typeof( NumberAsVaryConverter ) )]
     public int PageSize { get; set; }
 }
