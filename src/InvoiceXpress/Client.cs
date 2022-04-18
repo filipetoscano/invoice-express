@@ -4,13 +4,7 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-public interface IClient
-{
-}
-
-
-/// <summary />
-public class ClientRef : IClient
+public class ClientRef
 {
     /// <inheritdoc />
     [JsonPropertyName( "code" )]
@@ -23,7 +17,7 @@ public class ClientRef : IClient
 
 
 /// <summary />
-public class Client : IClient
+public class Client
 {
     /// <summary>
     /// Client identifier.
