@@ -18,9 +18,27 @@ public class SaftExportCommand
     [Required]
     public int Month { get; set; }
 
+    /// <summary />
+    [Option( "-u|--url", CommandOptionType.NoValue, Description = "Emit URL to console, don't download PDF document" )]
+    public bool UrlOnly { get; set; } = false;
+
+    /// <summary />
+    [Option( "-o|--output-file", CommandOptionType.SingleValue, Description = "Name of file to write to" )]
+    public string? OutputFile { get; set; }
+
 
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    {
+        if ( this.UrlOnly == true )
+            return await SaftGenerateAsync( api, console );
+        else
+            return await SaftDownloadAsync( api, console );
+    }
+
+
+    /// <summary />
+    private async Task<int> SaftGenerateAsync( InvoiceXpressClient api, IConsole console )
     {
         string url;
 
@@ -37,7 +55,6 @@ public class SaftExportCommand
                 break;
             }
 
-            Console.WriteLine( "Sleeping 2s..." );
             await Task.Delay( 2000 );
         }
 
@@ -46,6 +63,40 @@ public class SaftExportCommand
          * 
          */
         Console.WriteLine( url );
+
+        return 0;
+    }
+
+
+    /// <summary />
+    private async Task<int> SaftDownloadAsync( InvoiceXpressClient api, IConsole console )
+    {
+        byte[] bytes;
+
+        while ( true )
+        {
+            var res = await api.SaftExportTryDocumentAsync( this.Year, this.Month );
+
+            if ( res.IsSuccessful == false )
+                return console.WriteError( res );
+
+            if ( res.StatusCode == HttpStatusCode.OK )
+            {
+                bytes = res.Result!;
+                break;
+            }
+
+            await Task.Delay( 2000 );
+        }
+
+
+        /*
+         * 
+         */
+        var filename = this.OutputFile ?? $"SAFT-{ this.Year }-{ this.Month }.txt";
+
+        Console.WriteLine( $"Writing to { filename }..." );
+        await File.WriteAllBytesAsync( filename, bytes );
 
         return 0;
     }
