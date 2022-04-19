@@ -39,7 +39,7 @@ public partial class InvoiceXpressClient
 
 
     /// <summary />
-    public async Task<ApiResult<byte[]>> SaftExportAsync( int year, int month,
+    public async Task<ApiResult<byte[]>> SaftExportTryDocumentAsync( int year, int month,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var resp = await SaftExportGenerateAsync( year, month, cancellationToken );
