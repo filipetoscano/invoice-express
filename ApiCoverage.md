@@ -6,13 +6,13 @@
 | Invoices          | 100% | 11/11    |
 | Estimates         | 100% | 7/7      |
 | Guides            | 100% | 8/8      |
-| Clients           |  71% | 5/7      |
+| Clients           |  85% | 6/7      |
 | Items             | 100% | 5/5      |
 | Sequences         | 100% | 4/4      |
 | Taxes / VAT rates | 100% | 5/5      |
 | Accounts          |   0% | 0/4      |
 | SAF-T             | 100% | 1/1      | ⚠️ Can't test on trial account
-| *Overall*         |  88% | 46/52    |
+| *Overall*         |  90% | 47/52    |
 
 
 Legend:
@@ -70,7 +70,7 @@ Guides (8/8)
 | ✔️ | `GuideQrCodeImageAsync` | [Get QR code](https://www.invoicexpress.com/api-v2/guides/get-qrcode-2) |
 
 
-Clients (5/7)
+Clients (6/7)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
@@ -81,7 +81,7 @@ Clients (5/7)
 | ✔️ | `ClientUpdateAsync`    | [Update](https://www.invoicexpress.com/api-v2/clients/update-4) |
 | ❌ |                       | [Find by name](https://www.invoicexpress.com/api-v2/clients/find-by-name) |
 | ✔️ | `ClientGetByCodeAsync` | [Find by code](https://www.invoicexpress.com/api-v2/clients/find-by-code) |
-| 🔸 | `ClientInvoiceListAsync` | [List invoices](https://www.invoicexpress.com/api-v2/clients/list-invoices) |
+| ✔️ | `ClientInvoiceListAsync` | [List invoices](https://www.invoicexpress.com/api-v2/clients/list-invoices) |
 
 
 Items (5/5)
