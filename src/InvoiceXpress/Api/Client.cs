@@ -114,7 +114,7 @@ public partial class InvoiceXpressClient
         var payload = new ClientInvoiceListPayload();
         payload.Filter = new ClientInvoiceListFilter();
         payload.Filter.States = search.States ?? new List<InvoiceState>() { InvoiceState.Final };
-        payload.Filter.Types = search.Types ?? new List<InvoiceType>() { InvoiceType.Invoice, InvoiceType.SimplifiedInvoice };
+        payload.Filter.Types = search.Types ?? new List<InvoiceType>() { InvoiceType.Invoice, InvoiceType.SimplifiedInvoice, InvoiceType.Receipt };
         payload.Filter.Archive = archive;
 
 
