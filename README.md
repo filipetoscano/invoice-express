@@ -22,8 +22,6 @@ services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
     opt.AccountName = "your account name";
     opt.ApiKey = "your api key";
 } );
-
-services.AddSingleton<InvoiceXpressClient>();
 ```
 
 Then, inject `InvoiceXpressClient` into the caller code:
