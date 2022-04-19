@@ -1,6 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -33,14 +32,14 @@ public class InvoicePayCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         InvoicePayment payment;
 
         if ( this.PaymentFilePath != null )
         {
             var json = await File.ReadAllTextAsync( this.PaymentFilePath );
-            payment = JsonSerializer.Deserialize<InvoicePayment>( json )!;
+            payment = jss.Deserialize<InvoicePayment>( json );
         }
         else
         {

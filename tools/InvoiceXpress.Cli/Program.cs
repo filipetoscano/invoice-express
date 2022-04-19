@@ -40,6 +40,7 @@ public class Program
          */
         var services = new ServiceCollection();
 
+        services.AddSingleton<Jsonizer>();
         services.AddTransient<DebugDelegatingHandler>();
 
         services.AddHttpClient<InvoiceXpressClient>()

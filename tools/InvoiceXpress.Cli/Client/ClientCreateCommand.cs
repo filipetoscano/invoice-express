@@ -1,5 +1,4 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -14,7 +13,7 @@ public class ClientCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * 
@@ -32,7 +31,7 @@ public class ClientCreateCommand
         /*
          * 
          */
-        var client = JsonSerializer.Deserialize<Client>( json )!;
+        var client = jss.Deserialize<Client>( json )!;
 
 
         /*

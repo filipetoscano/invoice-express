@@ -20,13 +20,13 @@ public class EstimateUpdateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath! );
-        var estimate = JsonSerializer.Deserialize<EstimateData>( json )!;
+        var estimate = jss.Deserialize<EstimateData>( json );
 
         if ( this.EstimateId.HasValue == true )
             estimate.Id = this.EstimateId.Value;

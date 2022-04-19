@@ -1,6 +1,5 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -31,14 +30,14 @@ public class GuideListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         var search = new GuideSearch();
 
         if ( this.SearchQueryFilePath != null )
         {
             var json = await File.ReadAllTextAsync( this.SearchQueryFilePath );
-            search = JsonSerializer.Deserialize<GuideSearch>( json )!;
+            search = jss.Deserialize<GuideSearch>( json );
         }
 
 
@@ -108,7 +107,7 @@ public class GuideListCommand
                 CurrencyCode = x.CurrencyCode,
             } );
 
-            var json = JsonSerializer.Serialize( data );
+            var json = jss.Serialize( data );
             Console.Write( json );
         }
 

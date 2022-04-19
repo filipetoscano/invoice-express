@@ -1,6 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -16,13 +15,13 @@ public class EstimateCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath! );
-        var estimate = JsonSerializer.Deserialize<EstimateData>( json )!;
+        var estimate = jss.Deserialize<EstimateData>( json );
 
 
         /*

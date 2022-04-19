@@ -1,6 +1,5 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -31,14 +30,14 @@ public class InvoiceListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         var search = new InvoiceSearch();
 
         if ( this.SearchQueryFilePath != null )
         {
             var json = await File.ReadAllTextAsync( this.SearchQueryFilePath );
-            search = JsonSerializer.Deserialize<InvoiceSearch>( json )!;
+            search = jss.Deserialize<InvoiceSearch>( json );
         }
 
 
@@ -109,7 +108,7 @@ public class InvoiceListCommand
                 ForeignCurrency = x.ForeignCurrency?.CurrencyCode,
             } );
 
-            var json = JsonSerializer.Serialize( data );
+            var json = jss.Serialize( data );
             Console.Write( json );
         }
 

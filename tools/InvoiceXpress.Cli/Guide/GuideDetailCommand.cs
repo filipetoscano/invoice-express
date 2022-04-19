@@ -1,6 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -20,7 +19,7 @@ public class GuideDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         var res = await api.GuideGetAsync( this.GuideType!.Value, this.EstimateId!.Value );
 
@@ -31,7 +30,7 @@ public class GuideDetailCommand
         /*
          * 
          */
-        var json = JsonSerializer.Serialize( res.Result!, new JsonSerializerOptions() { WriteIndented = true } );
+        var json = jss.Serialize( res.Result! );
         Console.WriteLine( json );
 
         return 0;

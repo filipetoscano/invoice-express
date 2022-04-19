@@ -1,6 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -16,13 +15,13 @@ public class SequenceCreateCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * 
          */
         var json = await File.ReadAllTextAsync( this.FilePath! );
-        var seq = JsonSerializer.Deserialize<SequenceData>( json )!;
+        var seq = jss.Deserialize<SequenceData>( json );
 
 
         /*

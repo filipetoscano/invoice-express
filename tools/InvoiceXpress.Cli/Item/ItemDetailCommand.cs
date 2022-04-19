@@ -1,6 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -15,7 +14,7 @@ public class ItemDetailCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         var res = await api.ItemGetAsync( this.ItemId );
 
@@ -26,7 +25,7 @@ public class ItemDetailCommand
         /*
          * 
          */
-        var json = JsonSerializer.Serialize( res.Result!, new JsonSerializerOptions() { WriteIndented = true } );
+        var json = jss.Serialize( res.Result! );
         Console.WriteLine( json );
 
         return 0;

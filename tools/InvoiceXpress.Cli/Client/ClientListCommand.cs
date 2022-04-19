@@ -1,6 +1,5 @@
 ﻿using ConsoleTables;
 using McMaster.Extensions.CommandLineUtils;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -26,7 +25,7 @@ public class ClientListCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * 
@@ -92,7 +91,7 @@ public class ClientListCommand
                 TaxNumber = x.TaxNumber ?? null,
             } );
 
-            var json = JsonSerializer.Serialize( data );
+            var json = jss.Serialize( data );
             Console.Write( json );
         }
 

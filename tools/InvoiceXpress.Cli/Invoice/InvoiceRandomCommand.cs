@@ -1,6 +1,5 @@
 ﻿using InvoiceXpress.Cli.Faker;
 using McMaster.Extensions.CommandLineUtils;
-using System.Text.Json;
 
 namespace InvoiceXpress.Cli;
 
@@ -14,7 +13,7 @@ public class InvoiceRandomCommand
 
 
     /// <summary />
-    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, IConsole console )
+    private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
         /*
          * Randomize client
@@ -26,7 +25,7 @@ public class InvoiceRandomCommand
         /*
          * 
          */
-        var json = JsonSerializer.Serialize( invoice, new JsonSerializerOptions() { WriteIndented = true } );
+        var json = jss.Serialize( invoice );
 
         if ( this.FilePath == null )
             Console.WriteLine( json );
