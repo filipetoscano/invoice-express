@@ -15,17 +15,12 @@ public partial class InvoiceXpressClient : IDisposable
     {
         _options = options.Value;
 
-
-        var rco = new RestClientOptions( $"https://{ _options.AccountName }.app.invoicexpress.com/" )
-        {
-            ConfigureMessageHandler = _options.ConfigureMessageHandler,
-        };
+        var rco = new RestClientOptions( $"https://{ _options.AccountName }.app.invoicexpress.com/" );
 
         _rest = new RestClient( client, rco )
             .UseJson()
             .AddDefaultHeader( "User-Agent", "invoicexpress-dotnet/1.0" )
             .AddDefaultQueryParameter( "api_key", _options.ApiKey );
-
         _rest.AcceptedContentTypes = new string[] { "application/json" };
 
         _client = client;

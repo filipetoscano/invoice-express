@@ -1,6 +1,4 @@
-﻿using HttpTracer;
-using HttpTracer.Logger;
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -42,13 +40,22 @@ public class Program
          */
         var services = new ServiceCollection();
 
-        services.AddHttpClient<InvoiceXpressClient>();
+        services.AddTransient<DebugDelegatingHandler>();
+
+        services.AddHttpClient<InvoiceXpressClient>()
+            .AddHttpMessageHandler<DebugDelegatingHandler>();
+
+        services.AddOptions<DebugDelegatingHandlerOptions>().Configure( ( opt ) =>
+        {
+            var debug = Environment.GetEnvironmentVariable( "INVXP_DEBUG" );
+
+            opt.Enabled = app.Model.Debug == true || debug == "1";
+        } );
 
         services.AddOptions<InvoiceXpressOptions>().Configure( ( opt ) =>
         {
             var apiKey = Environment.GetEnvironmentVariable( "INVXP_APIKEY" );
             var account = Environment.GetEnvironmentVariable( "INVXP_ACCOUNT" );
-            var debug = Environment.GetEnvironmentVariable( "INVXP_DEBUG" );
 
             if ( apiKey == null )
                 throw new ConfigException( "Environment variable 'INVXP_APIKEY' not set" );
@@ -58,12 +65,7 @@ public class Program
 
             opt.AccountName = account;
             opt.ApiKey = apiKey;
-
-            if ( app.Model.Debug == true || debug == "1" )
-                opt.ConfigureMessageHandler = handler => new HttpTracerHandler( handler, new ConsoleLogger(), HttpMessageParts.All );
         } );
-
-        services.AddSingleton<InvoiceXpressClient>();
 
         var sp = services.BuildServiceProvider();
 
