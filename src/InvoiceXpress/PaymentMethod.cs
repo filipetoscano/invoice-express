@@ -1,6 +1,4 @@
-﻿using InvoiceXpress.Json;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace InvoiceXpress;
 
@@ -10,26 +8,35 @@ namespace InvoiceXpress;
 /// <remarks>
 /// See https://invoicexpress.com/api-v2/documentation/appendix
 /// </remarks>
-[JsonConverter( typeof( EnumConverter ) )]
 public enum PaymentMethod
 {
-    /// <summary />
+    /// <summary>
+    /// Credit card.
+    /// </summary>
     [EnumMember( Value = "CC" )]
     CreditCard,
 
-    /// <summary />
+    /// <summary>
+    /// Debit card.
+    /// </summary>
     [EnumMember( Value = "CD" )]
     DebitCard,
 
-    /// <summary />
+    /// <summary>
+    /// Check.
+    /// </summary>
     [EnumMember( Value = "CH" )]
     BankCheck,
 
-    /// <summary />
+    /// <summary>
+    /// Check, or voucher.
+    /// </summary>
     [EnumMember( Value = "CO" )]
     CheckOrVoucher,
 
-    /// <summary />
+    /// <summary>
+    /// Current account balance compensation.
+    /// </summary>
     [EnumMember( Value = "CS" )]
     BalanceCompensation,
 
@@ -37,27 +44,39 @@ public enum PaymentMethod
     [EnumMember( Value = "DE" )]
     ECash,
 
-    /// <summary />
+    /// <summary>
+    /// Commercial paper.
+    /// </summary>
     [EnumMember( Value = "LC" )]
     CommercialPaper,
 
-    /// <summary />
+    /// <summary>
+    /// Multibanco.
+    /// </summary>
     [EnumMember( Value = "MB" )]
     Multibanco,
 
-    /// <summary />
+    /// <summary>
+    /// Cash.
+    /// </summary>
     [EnumMember( Value = "NU" )]
     Cash,
 
-    /// <summary />
+    /// <summary>
+    /// Other.
+    /// </summary>
     [EnumMember( Value = "OU" )]
     Other,
 
-    /// <summary />
+    /// <summary>
+    /// Bank transfer.
+    /// </summary>
     [EnumMember( Value = "TB" )]
     BankTransfer,
 
-    /// <summary />
+    /// <summary>
+    /// Restaurant ticket.
+    /// </summary>
     [EnumMember( Value = "TR" )]
     RestaurantTicket,
 }

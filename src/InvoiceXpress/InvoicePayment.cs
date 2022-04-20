@@ -8,6 +8,7 @@ public class InvoicePayment
 {
     /// <summary />
     [JsonPropertyName( "payment_mechanism" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     public PaymentMethod PaymentMethod { get; set; }
 
     /// <summary />
