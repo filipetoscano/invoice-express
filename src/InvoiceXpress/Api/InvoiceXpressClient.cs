@@ -15,7 +15,23 @@ public partial class InvoiceXpressClient : IDisposable
     {
         _options = options.Value;
 
-        var rco = new RestClientOptions( $"https://{ _options.AccountName }.app.invoicexpress.com/" );
+
+        /*
+         * If the HttpClient already comes pre-configured with a .BaseAddress,
+         * then use that value instead! For example, it could be that the caller
+         * wants to route all outbound requests through a proxy. Otherwise,
+         * construct the hostname using the default rule.
+         */
+        var baseAddress = $"https://{ _options.AccountName }.app.invoicexpress.com/";
+
+        if ( client.BaseAddress != null )
+            baseAddress = client.BaseAddress.ToString();
+
+
+        /*
+         * 
+         */
+        var rco = new RestClientOptions( baseAddress );
 
         _rest = new RestClient( client, rco )
             .UseJson()
