@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-public class DocumentItemRef
+public class DocumentItemData
 {
     /// <summary>
     /// Unique item code.

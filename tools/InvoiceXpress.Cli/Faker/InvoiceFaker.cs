@@ -32,14 +32,14 @@ public class InvoiceFaker : BaseFaker, IFaker<InvoiceData>
         /*
          * 
          */
-        var item = new DocumentItemRef();
+        var item = new DocumentItemData();
         item.Code = "CODE";
         item.Quantity = 1;
         item.UnitPrice = 1;
         item.VatRate = new VatRateRef();
         item.VatRate.Code = "VAT23";
 
-        obj.Items = new List<DocumentItemRef>();
+        obj.Items = new List<DocumentItemData>();
         obj.Items.Add( item );
 
         return obj;

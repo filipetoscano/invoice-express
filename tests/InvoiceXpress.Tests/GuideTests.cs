@@ -56,7 +56,7 @@ public class GuideTests
                 Code = "XS001",
                 Name = "Client #1",
             },
-            Items = new List<DocumentItemRef>(),
+            Items = new List<DocumentItemData>(),
             LoadedOn = today.AddDays( 1 ),
             VehicleLicensePlate = "AA-00-BB",
             AddressFrom = new Address()
@@ -75,7 +75,7 @@ public class GuideTests
             },
         };
 
-        data.Items.Add( new DocumentItemRef()
+        data.Items.Add( new DocumentItemData()
         {
             Code = "XPTO001",
             Description = "Description 1",
@@ -85,7 +85,7 @@ public class GuideTests
             VatRate = new VatRateRef() { Code = "IVA22" },
         } );
 
-        data.Items.Add( new DocumentItemRef()
+        data.Items.Add( new DocumentItemData()
         {
             Code = "XPTO002",
             Description = "Description 2",

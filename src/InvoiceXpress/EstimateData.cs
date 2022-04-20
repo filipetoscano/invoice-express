@@ -42,7 +42,7 @@ public class EstimateData
 
     /// <summary />
     [JsonPropertyName( "items" )]
-    public List<DocumentItemRef> Items { get; set; } = default!;
+    public List<DocumentItemData> Items { get; set; } = default!;
 
 
     /// <summary />

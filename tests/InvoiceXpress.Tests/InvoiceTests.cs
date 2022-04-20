@@ -51,10 +51,10 @@ public class InvoiceTests
                 Code = "XS001",
                 Name = "Client #1",
             },
-            Items = new List<DocumentItemRef>(),
+            Items = new List<DocumentItemData>(),
         };
 
-        data.Items.Add( new DocumentItemRef()
+        data.Items.Add( new DocumentItemData()
         {
             Code = "XPTO001",
             Description = "Description 1",
@@ -64,7 +64,7 @@ public class InvoiceTests
             VatRate = new VatRateRef() { Code = "IVA22" },
         } );
 
-        data.Items.Add( new DocumentItemRef()
+        data.Items.Add( new DocumentItemData()
         {
             Code = "XPTO002",
             Description = "Description 2",
