@@ -22,6 +22,7 @@ internal class VatRateEx
 
     /// <summary />
     [JsonPropertyName( "region" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     [JsonIgnore( Condition = JsonIgnoreCondition.WhenWritingNull )]
     public TaxRegion? Region { get; set; }
 

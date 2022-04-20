@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 namespace InvoiceXpress;
 
 /// <summary />
-[JsonConverter( typeof( EnumConverter ) )]
 public enum TaxRegion
 {
     /// <summary>
