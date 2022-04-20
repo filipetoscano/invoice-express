@@ -5,7 +5,15 @@ namespace InvoiceXpress;
 
 public partial class InvoiceXpressClient
 {
-    /// <summary />
+    /// <summary>
+    /// Creates a VAT rate.
+    /// </summary>
+    /// <param name="rate">VAT rate, with a null .Id value.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// Result of execution. If the operation completes successfully, the newly
+    /// created VAT rate is returned.
+    /// </returns>
     public async Task<ApiResult<VatRate>> VatRateCreateAsync( VatRate rate,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
@@ -38,7 +46,15 @@ public partial class InvoiceXpressClient
     }
 
 
-    /// <summary />
+    /// <summary>
+    /// Retrieves a VAT rate.
+    /// </summary>
+    /// <param name="rateId">VAT rate id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// Result of execution. If the operation completes successfully, the VAT
+    /// rate is returned.
+    /// </returns>
     public async Task<ApiResult<VatRate>> VatRateGetAsync( int rateId,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
@@ -56,7 +72,14 @@ public partial class InvoiceXpressClient
     }
 
 
-    /// <summary />
+    /// <summary>
+    /// Updates a VAT rate.
+    /// </summary>
+    /// <param name="rate">VAT rate.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// Result of execution.
+    /// </returns>
     public async Task<ApiResult> VatRateUpdateAsync( VatRate rate,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
@@ -75,7 +98,14 @@ public partial class InvoiceXpressClient
     }
 
 
-    /// <summary />
+    /// <summary>
+    /// Deletes a VAT rate.
+    /// </summary>
+    /// <param name="rateId">VAT rate id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// Result of execution.
+    /// </returns>
     public async Task<ApiResult> VatRateDeleteAsync( int rateId,
         CancellationToken cancellationToken = default( CancellationToken ) )
     {
@@ -90,7 +120,14 @@ public partial class InvoiceXpressClient
     }
 
 
-    /// <summary />
+    /// <summary>
+    /// Lists all defined VAT rates.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// Result of execution. If the operation completes successfully, the full
+    /// list of VAT rates is returned.
+    /// </returns>
     public async Task<ApiResult<List<VatRate>>> VatRateListAsync( CancellationToken cancellationToken = default( CancellationToken ) )
     {
         var req = new RestRequest( "/taxes.json" );
