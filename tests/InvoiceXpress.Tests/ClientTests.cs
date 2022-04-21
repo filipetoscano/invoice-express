@@ -42,6 +42,7 @@ public class ClientTests
         Assert.True( list1.IsSuccessful );
         Assert.NotNull( list1.Result );
 
+        int count = list1.Result!.Count;
         int maxId = list1.Result!.Select( x => x.Id!.Value ).Max();
 
 
@@ -112,6 +113,6 @@ public class ClientTests
         Assert.NotNull( list2 );
         Assert.True( list2.IsSuccessful );
         Assert.NotNull( list2.Result );
-        Assert.Equal( maxId + 1, list2.Result!.Count );
+        Assert.Equal( count + 1, list2.Result!.Count );
     }
 }
