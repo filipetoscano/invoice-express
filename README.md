@@ -58,6 +58,44 @@ Install-Package InvoiceXpress
 ```
 
 
+`invxp` cli tool
+--------------------------------------------------------------------------
+
+In addition to the .NET library, this repository also releases a cross
+platform command line interface program to invoke the invoicexpress API
+without programming.
+
+```
+> invxp
+
+Execute operations on a invoicexpress account
+
+Usage: invxp [command] [options]
+
+Options:
+  --version     Show version information.
+  -?|-h|--help  Show help information.
+  --debug       Trace HTTP traffic to console
+
+Commands:
+  account       Account operations
+  client        Client/customer operations
+  estimate      Estimate operations (quotes, proformas, fee notes)
+  guide         Guide operations (delivery, shipping and return delivery notes)
+  invoice       Invoice operations (invoice, receipts, debit & credit notes, etc)
+  item          Item operations
+  saft          SAF-T operations
+  sequence      Sequence operations
+  vat           VAT rate operations
+
+Run 'invxp [command] -?|-h|--help' for more information about a command.
+```
+
+Each command has sub-commands to list, create, update, and otherwise
+manipulate the corresponding entities. You can enumerate the sub-commands
+with the `--help` flag, eg `invxp invoice --help`.
+
+
 Running cli locally
 --------------------------------------------------------------------------
 
@@ -87,6 +125,4 @@ References
 
 * https://www.invoicexpress.com/api-v2/documentation/getting-started
 * https://nif.marcosantos.me/
-* https://github.com/actions/setup-dotnet
-* https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 * https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list_one.xml (ISO 4217 currency codes)
