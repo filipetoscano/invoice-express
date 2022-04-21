@@ -6,6 +6,7 @@ namespace InvoiceXpress.Cli;
 
 /// <summary />
 [Command( "invxp", Description = "Execute operations on a invoicexpress account" )]
+[Subcommand( typeof( AccountCommand ) )]
 [Subcommand( typeof( ClientCommand ) )]
 [Subcommand( typeof( EstimateCommand ) )]
 [Subcommand( typeof( GuideCommand ) )]

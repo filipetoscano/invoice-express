@@ -10,9 +10,9 @@
 | Items             | 100% | 5/5      |
 | Sequences         | 100% | 4/4      |
 | Taxes / VAT rates | 100% | 5/5      |
-| Accounts          |   0% | 0/4      |
+| Accounts          |  50% | 2/4      |
 | SAF-T             | 100% | 1/1      | ⚠️ Can't test on trial account
-| *Overall*         |  90% | 47/52    |
+| *Overall*         |  94% | 49/52    |
 
 
 Legend:
@@ -119,14 +119,14 @@ VAT rates (5/5)
 | ✔️ | `VatRateDeleteAsync` | [Delete](https://www.invoicexpress.com/api-v2/taxes/delete-7) |
 
 
-Accounts (0/4)
+Accounts (2/4)
 -------------------------------------------------------------------------------
 
 | I? | Method            | Method                                      | Notes |
 |----|-------------------|---------------------------------------------|-------|
-| ❌ | | [Get](https://www.invoicexpress.com/api-v2/accounts/get-8) |
+| ✔️ | | [Get](https://www.invoicexpress.com/api-v2/accounts/get-8) |
 | ❌ | | [Create](https://www.invoicexpress.com/api-v2/accounts/create-8) |
-| ❌ | | [Update](https://www.invoicexpress.com/api-v2/accounts/update-8) |
+| ✔️ | | [Update](https://www.invoicexpress.com/api-v2/accounts/update-8) |
 | ❌ | | [Create for existing user](https://www.invoicexpress.com/api-v2/accounts/create-for-existing-user) |
 
 
