@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace InvoiceXpress.Tests;
@@ -41,7 +42,7 @@ public class ClientTests
         Assert.True( list1.IsSuccessful );
         Assert.NotNull( list1.Result );
 
-        int count = list1.Result!.Count;
+        int maxId = list1.Result!.Select( x => x.Id!.Value ).Max();
 
 
         /*
@@ -49,8 +50,8 @@ public class ClientTests
          */
         var client = new Client()
         {
-            Code = "UTXX" + count,
-            Name = "Unit Test #" + count,
+            Code = "UTXX" + maxId,
+            Name = "Unit Test #" + maxId,
             Language = "en",
             Email = "ut@example.com",
             Address = "Address Line 1",
@@ -111,6 +112,6 @@ public class ClientTests
         Assert.NotNull( list2 );
         Assert.True( list2.IsSuccessful );
         Assert.NotNull( list2.Result );
-        Assert.Equal( count + 1, list2.Result!.Count );
+        Assert.Equal( maxId + 1, list2.Result!.Count );
     }
 }
