@@ -1,4 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using static InvoiceXpress.Cli.StaticUtils;
 
 namespace InvoiceXpress.Cli;
 
@@ -15,23 +16,8 @@ public class ClientCreateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
-        /*
-         * 
-         */
-        string json;
-
-        if ( console.IsInputRedirected == true )
-            json = await console.In.ReadToEndAsync();
-        else if ( this.FilePath != null )
-            json = await File.ReadAllTextAsync( this.FilePath! );
-        else
-            return console.WriteError( "The FilePath field is required, or pipe JSON to stdin" );
-
-
-        /*
-         * 
-         */
-        var client = jss.Deserialize<Client>( json )!;
+        if ( TryLoad<Client>( console, this.FilePath, jss, out var client ) == false )
+            return 599;
 
 
         /*
@@ -42,7 +28,7 @@ public class ClientCreateCommand
         if ( res.IsSuccessful == false )
             return console.WriteError( res );
 
-        Console.WriteLine( "ClientId: {0}", res.Result!.Id );
+        Console.WriteLine( res.Result!.Id );
 
         return 0;
     }

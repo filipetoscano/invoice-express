@@ -1,5 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using System.ComponentModel.DataAnnotations;
+using static InvoiceXpress.Cli.StaticUtils;
 
 namespace InvoiceXpress.Cli;
 
@@ -9,7 +9,6 @@ public class VatCreateCommand
 {
     /// <summary />
     [Argument( 0, Description = "VAT rate, in JSON file" )]
-    [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
@@ -17,11 +16,8 @@ public class VatCreateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
-        /*
-         * 
-         */
-        var json = await File.ReadAllTextAsync( this.FilePath! );
-        var vat = jss.Deserialize<VatRate>( json );
+        if ( TryLoad<VatRate>( console, this.FilePath, jss, out var vat ) == false )
+            return 599;
 
 
         /*
@@ -32,7 +28,7 @@ public class VatCreateCommand
         if ( res.IsSuccessful == false )
             return console.WriteError( res );
 
-        Console.Write( res.Result!.Id );
+        Console.WriteLine( res.Result!.Id );
 
         return 0;
     }

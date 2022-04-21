@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
+using static InvoiceXpress.Cli.StaticUtils;
 
 namespace InvoiceXpress.Cli;
 
@@ -10,7 +10,6 @@ public class EstimateUpdateCommand
 {
     /// <summary />
     [Argument( 0, Description = "Estimate record, in JSON file" )]
-    [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
@@ -22,11 +21,8 @@ public class EstimateUpdateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
-        /*
-         * 
-         */
-        var json = await File.ReadAllTextAsync( this.FilePath! );
-        var estimate = jss.Deserialize<EstimateData>( json );
+        if ( TryLoad<EstimateData>( console, this.FilePath, jss, out var estimate ) == false )
+            return 599;
 
         if ( this.EstimateId.HasValue == true )
             estimate.Id = this.EstimateId.Value;

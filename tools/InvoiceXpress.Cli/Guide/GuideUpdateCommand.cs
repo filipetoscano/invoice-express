@@ -1,5 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using System.ComponentModel.DataAnnotations;
+using static InvoiceXpress.Cli.StaticUtils;
 
 namespace InvoiceXpress.Cli;
 
@@ -9,7 +9,6 @@ public class GuideUpdateCommand
 {
     /// <summary />
     [Argument( 0, Description = "Guide record, in JSON file" )]
-    [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
@@ -21,11 +20,8 @@ public class GuideUpdateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
-        /*
-         * 
-         */
-        var json = await File.ReadAllTextAsync( this.FilePath! );
-        var guide = jss.Deserialize<GuideData>( json );
+        if ( TryLoad<GuideData>( console, this.FilePath, jss, out var guide ) == false )
+            return 599;
 
         if ( this.GuideId.HasValue == true )
             guide.Id = this.GuideId.Value;

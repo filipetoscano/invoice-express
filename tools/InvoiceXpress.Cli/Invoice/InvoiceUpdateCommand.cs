@@ -1,5 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using System.ComponentModel.DataAnnotations;
+using static InvoiceXpress.Cli.StaticUtils;
 
 namespace InvoiceXpress.Cli;
 
@@ -9,7 +9,6 @@ public class InvoiceUpdateCommand
 {
     /// <summary />
     [Argument( 0, Description = "Invoice record, in JSON file" )]
-    [Required]
     [FileExists]
     public string? FilePath { get; set; }
 
@@ -21,11 +20,8 @@ public class InvoiceUpdateCommand
     /// <summary />
     private async Task<int> OnExecuteAsync( InvoiceXpressClient api, Jsonizer jss, IConsole console )
     {
-        /*
-         * 
-         */
-        var json = await File.ReadAllTextAsync( this.FilePath! );
-        var invoice = jss.Deserialize<InvoiceData>( json );
+        if ( TryLoad<InvoiceData>( console, this.FilePath, jss, out var invoice ) == false )
+            return 599;
 
         if ( this.InvoiceId.HasValue == true )
             invoice.Id = this.InvoiceId.Value;
