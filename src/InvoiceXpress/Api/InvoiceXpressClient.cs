@@ -180,6 +180,17 @@ public partial class InvoiceXpressClient : IDisposable
 
 
     /// <summary />
+    private async Task<ApiResult<byte[]>> FileDownload( string url, CancellationToken cancellationToken )
+    {
+        // TODO: Error handling
+
+        var bytes = await _client.GetByteArrayAsync( url, cancellationToken );
+
+        return Ok( HttpStatusCode.OK, bytes );
+    }
+
+
+    /// <summary />
     private static ResponseStatus ToResponseStatus( RestSharp.ResponseStatus status )
     {
         return Enum.Parse<ResponseStatus>( status.ToString() );

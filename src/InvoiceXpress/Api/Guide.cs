@@ -246,13 +246,7 @@ public partial class InvoiceXpressClient
         if ( resp.StatusCode != HttpStatusCode.OK )
             return resp.As<byte[]>();
 
-
-        /*
-         * TODO: Error handling
-         */
-        var document = await _client.GetByteArrayAsync( resp.Result!.Url );
-
-        return Ok( HttpStatusCode.OK, document );
+        return await FileDownload( resp.Result!.Url, cancellationToken );
     }
 
 
@@ -281,22 +275,9 @@ public partial class InvoiceXpressClient
         var resp = await GuideQrCodeUrlAsync( type, guideId, cancellationToken );
 
         if ( resp.IsSuccessful == false )
-        {
-            return new ApiResult<byte[]>()
-            {
-                IsSuccessful = resp.IsSuccessful,
-                StatusCode = resp.StatusCode,
-                Errors = resp.Errors,
-            };
-        }
+            return resp.As<byte[]>();
 
-
-        /*
-         * TODO: error handling
-         */
-        var image = await _client.GetByteArrayAsync( resp.Result );
-
-        return Ok( resp.StatusCode, image );
+        return await FileDownload( resp.Result!, cancellationToken );
     }
 
 

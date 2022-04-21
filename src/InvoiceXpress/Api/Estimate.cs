@@ -240,13 +240,7 @@ public partial class InvoiceXpressClient
         if ( resp.StatusCode != HttpStatusCode.OK )
             return resp.As<byte[]>();
 
-
-        /*
-         * TODO: Error handling
-         */
-        var document = await _client.GetByteArrayAsync( resp.Result!.Url );
-
-        return Ok( HttpStatusCode.OK, document );
+        return await FileDownload( resp.Result!.Url, cancellationToken );
     }
 
 
