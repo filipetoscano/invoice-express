@@ -75,9 +75,9 @@ dotnet publish -c Release --no-restore --no-build --runtime=osx-x64   --self-con
 mkdir -p artifacts
 rm -f artifacts/*.zip
 
-zip -j -r artifacts/invexp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
-zip -j -r artifacts/invexp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
-zip -j -r artifacts/invexp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
+zip -j -r artifacts/invxp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
+zip -j -r artifacts/invxp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
+zip -j -r artifacts/invxp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
 
 
 #
@@ -85,8 +85,8 @@ zip -j -r artifacts/invexp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
 # ------------------------------------------------------------------------
 
 hub release create v${VERSION} --message="Release v${VERSION}" \
-   -a artifacts/invexp-win-x64-${VERSION}.zip \
-   -a artifacts/invexp-linux-x64-${VERSION}.zip \
-   -a artifacts/invexp-osx-x64-${VERSION}.zip
+   -a artifacts/invxp-win-x64-${VERSION}.zip \
+   -a artifacts/invxp-linux-x64-${VERSION}.zip \
+   -a artifacts/invxp-osx-x64-${VERSION}.zip
 
 # eof
