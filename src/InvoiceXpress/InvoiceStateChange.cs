@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
@@ -7,6 +8,7 @@ public class InvoiceStateChange
 {
     /// <summary />
     [JsonPropertyName( "state" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     public InvoiceAction Action { get; set; }
 
     /// <summary />

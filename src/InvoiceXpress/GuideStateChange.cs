@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
@@ -7,6 +8,7 @@ public class GuideStateChange
 {
     /// <summary />
     [JsonPropertyName( "state" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     public GuideAction Action { get; set; }
 
     /// <summary />

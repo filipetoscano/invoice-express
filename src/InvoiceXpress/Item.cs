@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using InvoiceXpress.Json;
+using System.Text.Json.Serialization;
 
 namespace InvoiceXpress;
 
@@ -37,6 +38,7 @@ public class Item
     /// Unit of Measure.
     /// </summary>
     [JsonPropertyName( "unit" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     public ItemUnitType? Unit { get; set; }
 
     /// <summary>

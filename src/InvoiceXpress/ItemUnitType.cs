@@ -1,13 +1,10 @@
-﻿using InvoiceXpress.Json;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace InvoiceXpress;
 
 /// <summary>
 /// Unit type by which the item is measured.
 /// </summary>
-[JsonConverter( typeof( EnumConverter ) )]
 public enum ItemUnitType
 {
     /// <summary>

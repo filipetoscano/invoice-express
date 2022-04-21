@@ -4,12 +4,18 @@
 [Flags]
 public enum ArchiveFilter
 {
-    /// <summary />
+    /// <summary>
+    /// Return active documents.
+    /// </summary>
     Active = 1,
 
-    /// <summary />
+    /// <summary>
+    /// Return archived documents.
+    /// </summary>
     Archived = 2,
 
-    /// <summary />
+    /// <summary>
+    /// Return all documents, including archived documents.
+    /// </summary>
     All = 3,
 }

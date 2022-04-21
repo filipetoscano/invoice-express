@@ -1,10 +1,6 @@
-﻿using InvoiceXpress.Json;
-using System.Text.Json.Serialization;
-
-namespace InvoiceXpress;
+﻿namespace InvoiceXpress;
 
 /// <summary />
-[JsonConverter( typeof( EnumAsNumberConverter ) )]
 public enum SendOptions
 {
     /// <summary>

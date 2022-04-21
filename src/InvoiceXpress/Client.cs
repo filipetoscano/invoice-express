@@ -114,6 +114,7 @@ public class Client
     /// In UI, field is set in 'Billing preferences > Send Options'.
     /// </remarks>
     [JsonPropertyName( "send_options" )]
+    [JsonConverter( typeof( EnumAsNumberConverter ) )]
     public SendOptions? DocumentSendOptions { get; set; }
 
     /// <summary />

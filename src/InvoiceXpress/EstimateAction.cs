@@ -1,11 +1,8 @@
-﻿using InvoiceXpress.Json;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace InvoiceXpress;
 
 /// <summary />
-[JsonConverter( typeof( EnumConverter ) )]
 public enum EstimateAction
 {
     /// <summary />

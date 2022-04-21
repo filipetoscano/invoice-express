@@ -35,6 +35,7 @@ public class DocumentItem
     /// Unit of Measure.
     /// </summary>
     [JsonPropertyName( "unit" )]
+    [JsonConverter( typeof( EnumConverter ) )]
     public ItemUnitType? Unit { get; set; }
 
     /// <summary>
