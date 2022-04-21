@@ -53,6 +53,23 @@ dotnet test    -c Release --no-restore --no-build --verbosity=normal
 
 
 #
+# Build cli tool for multiple platforms
+# RID catalog: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
+# ------------------------------------------------------------------------
+
+dotnet publish -c Release --no-restore --runtime=win-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/win-x64
+dotnet publish -c Release --no-restore --runtime=linux-x64 --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/linux-x64
+dotnet publish -c Release --no-restore --runtime=osx-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/osx-x64
+
+mkdir -p artifacts
+rm -f artifacts/*.zip
+
+zip -j -r artifacts/invxp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
+zip -j -r artifacts/invxp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
+zip -j -r artifacts/invxp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
+
+
+#
 # Publish to nuget.org
 # ------------------------------------------------------------------------
 
@@ -61,23 +78,6 @@ rm -f nupkg/*.*
 
 dotnet pack    -c Release --no-restore --no-build src/InvoiceXpress -o nupkg -p:Version=${VERSION}
 dotnet nuget push "nupkg/*.nupkg" --api-key ${NUGET_APIKEY} --source=https://api.nuget.org/v3/index.json
-
-
-#
-# Build cli tool for multiple platforms
-# RID catalog: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
-# ------------------------------------------------------------------------
-
-dotnet publish -c Release --no-restore --no-build --runtime=win-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/win-x64
-dotnet publish -c Release --no-restore --no-build --runtime=linux-x64 --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/linux-x64
-dotnet publish -c Release --no-restore --no-build --runtime=osx-x64   --self-contained tools/InvoiceXpress.Cli/InvoiceXpress.Cli.csproj -p:Version=${VERSION} -o tmp/osx-x64
-
-mkdir -p artifacts
-rm -f artifacts/*.zip
-
-zip -j -r artifacts/invxp-win-x64-${VERSION}.zip   tmp/win-x64/invxp.exe
-zip -j -r artifacts/invxp-linux-x64-${VERSION}.zip tmp/linux-x64/invxp
-zip -j -r artifacts/invxp-osx-x64-${VERSION}.zip   tmp/osx-x64/invxp
 
 
 #
