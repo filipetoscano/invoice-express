@@ -3,13 +3,19 @@
 /// <summary />
 public class EmailMessage
 {
-    /// <summary />
+    /// <summary>
+    /// Email address to which the email will be sent.
+    /// </summary>
     public string To { get; set; } = default!;
 
-    /// <summary />
+    /// <summary>
+    /// Subject of the email.
+    /// </summary>
     public string Subject { get; set; } = default!;
 
-    /// <summary />
+    /// <summary>
+    /// Text to appear in the email body.
+    /// </summary>
     public string Body { get; set; } = default!;
 
     /// <summary>
