@@ -29,7 +29,7 @@ public class ClientFaker : BaseFaker, IFaker<Client>
         obj.PreferredContact = new ClientContact();
         obj.Name = RandomName();
 
-        obj.DocumentSendOptions = RandomEnum<SendOptions>();
+        obj.DocumentSendOptions = RandomEnum<DocumentSendOptions>();
         obj.PaymentDays = PickRandom( 0, 0, 15, 30 );
         obj.TaxExemptionCode = PickRandom( VatExemption.M00, VatExemption.M00, VatExemption.M00, VatExemption.M00, VatExemption.M01 );
 

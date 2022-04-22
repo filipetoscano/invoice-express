@@ -69,7 +69,7 @@ public class ClientTests
                 Email = "person@example.com",
             },
             Remarks = "Remarks",
-            DocumentSendOptions = SendOptions.OriginalOnly,
+            DocumentSendOptions = DocumentSendOptions.OriginalOnly,
             PaymentDays = 30,
             TaxExemptionCode = VatExemption.M00,
         };

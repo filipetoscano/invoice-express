@@ -1,7 +1,7 @@
 ﻿namespace InvoiceXpress;
 
 /// <summary />
-public enum SendOptions
+public enum DocumentSendOptions
 {
     /// <summary>
     /// Original only.

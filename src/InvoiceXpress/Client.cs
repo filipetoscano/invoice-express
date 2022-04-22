@@ -115,7 +115,7 @@ public class Client
     /// </remarks>
     [JsonPropertyName( "send_options" )]
     [JsonConverter( typeof( EnumAsNumberConverter ) )]
-    public SendOptions? DocumentSendOptions { get; set; }
+    public DocumentSendOptions? DocumentSendOptions { get; set; }
 
     /// <summary />
     /// <remarks>
